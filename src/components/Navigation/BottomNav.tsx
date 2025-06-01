@@ -18,21 +18,25 @@ const BottomNav = ({ activeTab, onTabChange }: BottomNavProps) => {
   ];
 
   return (
-    <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2 max-w-sm w-full bg-card border-t safe-area-bottom">
-      <div className="flex justify-around py-2">
-        {tabs.map(({ id, icon: Icon, label }) => (
-          <button
-            key={id}
-            onClick={() => onTabChange(id)}
-            className={cn(
-              "flex flex-col items-center p-2 min-w-0 flex-1",
-              activeTab === id ? "text-primary" : "text-muted-foreground"
-            )}
-          >
-            <Icon size={24} />
-            <span className="text-xs mt-1 truncate">{label}</span>
-          </button>
-        ))}
+    <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50">
+      <div className="bg-card/90 backdrop-blur-lg border border-border/50 rounded-2xl shadow-lg px-2 py-3 mx-4 animate-fade-in">
+        <div className="flex justify-center gap-1">
+          {tabs.map(({ id, icon: Icon, label }) => (
+            <button
+              key={id}
+              onClick={() => onTabChange(id)}
+              className={cn(
+                "flex flex-col items-center p-3 min-w-0 rounded-xl transition-all duration-300 ease-out hover:scale-110 hover:bg-accent/20 active:scale-95",
+                activeTab === id 
+                  ? "text-primary bg-primary/10 shadow-sm" 
+                  : "text-muted-foreground hover:text-primary"
+              )}
+            >
+              <Icon size={20} className="transition-transform duration-200" />
+              <span className="text-xs mt-1 font-medium">{label}</span>
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   );

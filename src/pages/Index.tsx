@@ -5,9 +5,10 @@ import LoginScreen from '@/components/Auth/LoginScreen';
 import RegisterScreen from '@/components/Auth/RegisterScreen';
 import HomeScreen from '@/components/Jobs/HomeScreen';
 import JobDetailsScreen from '@/components/Jobs/JobDetailsScreen';
+import ProfileScreen from '@/components/Profile/ProfileScreen';
 import BottomNav from '@/components/Navigation/BottomNav';
 
-type Screen = 'onboarding' | 'login' | 'register' | 'home' | 'jobDetails' | 'saved' | 'chat' | 'notifications' | 'profile';
+type Screen = 'onboarding' | 'login' | 'register' | 'home' | 'jobDetails' | 'saved' | 'chat' | 'notifications' | 'profile' | 'editProfile' | 'settings';
 
 const Index = () => {
   const [currentScreen, setCurrentScreen] = useState<Screen>('onboarding');
@@ -39,9 +40,7 @@ const Index = () => {
   };
 
   const handleApplyJob = () => {
-    // Handle job application
     console.log('Applied for job:', selectedJobId);
-    // Could show a success message or navigate to applied jobs
   };
 
   const handleTabChange = (tab: string) => {
@@ -63,6 +62,14 @@ const Index = () => {
         setCurrentScreen('profile');
         break;
     }
+  };
+
+  const handleEditProfile = () => {
+    setCurrentScreen('editProfile');
+  };
+
+  const handleSettings = () => {
+    setCurrentScreen('settings');
   };
 
   const renderScreen = () => {
@@ -98,12 +105,21 @@ const Index = () => {
           />
         );
       
+      case 'profile':
+        return (
+          <ProfileScreen 
+            onEditProfile={handleEditProfile}
+            onSettings={handleSettings}
+          />
+        );
+      
       case 'saved':
       case 'chat':
       case 'notifications':
-      case 'profile':
+      case 'editProfile':
+      case 'settings':
         return (
-          <div className="max-w-sm mx-auto bg-background min-h-screen flex items-center justify-center">
+          <div className="max-w-sm mx-auto bg-background min-h-screen flex items-center justify-center animate-fade-in">
             <div className="text-center p-8">
               <h2 className="text-xl font-semibold text-foreground mb-2">
                 {currentScreen.charAt(0).toUpperCase() + currentScreen.slice(1)} Screen
@@ -123,8 +139,10 @@ const Index = () => {
   const showBottomNav = ['home', 'saved', 'chat', 'notifications', 'profile'].includes(currentScreen);
 
   return (
-    <div className="relative">
-      {renderScreen()}
+    <div className="relative min-h-screen">
+      <div className="transition-all duration-300 ease-out">
+        {renderScreen()}
+      </div>
       {showBottomNav && (
         <BottomNav 
           activeTab={activeTab}
