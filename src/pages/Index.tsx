@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import OnboardingScreen from '@/components/Onboarding/OnboardingScreen';
 import LoginScreen from '@/components/Auth/LoginScreen';
@@ -8,6 +7,7 @@ import JobDetailsScreen from '@/components/Jobs/JobDetailsScreen';
 import ProfileScreen from '@/components/Profile/ProfileScreen';
 import EditProfileScreen from '@/components/Profile/EditProfileScreen';
 import BottomNav from '@/components/Navigation/BottomNav';
+import AlertsScreen from '@/components/Alerts/AlertsScreen';
 
 type Screen = 'onboarding' | 'login' | 'register' | 'home' | 'jobDetails' | 'saved' | 'chat' | 'notifications' | 'profile' | 'editProfile' | 'settings';
 
@@ -127,17 +127,45 @@ const Index = () => {
         );
       
       case 'saved':
+        return (
+          <div className="max-w-sm mx-auto bg-background min-h-screen flex items-center justify-center animate-fade-in">
+            <div className="text-center p-8">
+              <h2 className="text-xl font-semibold text-foreground mb-2">
+                Saved Jobs
+              </h2>
+              <p className="text-muted-foreground">
+                Your saved jobs will appear here
+              </p>
+            </div>
+          </div>
+        );
+
       case 'chat':
+        return (
+          <div className="max-w-sm mx-auto bg-background min-h-screen flex items-center justify-center animate-fade-in">
+            <div className="text-center p-8">
+              <h2 className="text-xl font-semibold text-foreground mb-2">
+                Messages
+              </h2>
+              <p className="text-muted-foreground">
+                Chat with employers here
+              </p>
+            </div>
+          </div>
+        );
+
       case 'notifications':
+        return <AlertsScreen />;
+      
       case 'settings':
         return (
           <div className="max-w-sm mx-auto bg-background min-h-screen flex items-center justify-center animate-fade-in">
             <div className="text-center p-8">
               <h2 className="text-xl font-semibold text-foreground mb-2">
-                {currentScreen.charAt(0).toUpperCase() + currentScreen.slice(1)} Screen
+                Settings
               </h2>
               <p className="text-muted-foreground">
-                This screen will be implemented next
+                App settings will be available here
               </p>
             </div>
           </div>

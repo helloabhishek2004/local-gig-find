@@ -1,7 +1,8 @@
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Search, Filter, MapPin, ChevronDown } from 'lucide-react';
 import MobileLayout from '@/components/Layout/MobileLayout';
 import JobCard from './JobCard';
@@ -13,6 +14,19 @@ interface HomeScreenProps {
 const HomeScreen = ({ onJobClick }: HomeScreenProps) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [savedJobs, setSavedJobs] = useState<Set<string>>(new Set());
+  const [selectedLocation, setSelectedLocation] = useState('Varkala, Kerala');
+  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [showLocationDropdown, setShowLocationDropdown] = useState(false);
+
+  const locations = [
+    'Varkala, Kerala',
+    'Trivandrum, Kerala', 
+    'Kollam, Kerala',
+    'Kochi, Kerala',
+    'Kozhikode, Kerala'
+  ];
+
+  const categories = ['All', 'Restaurant', 'Delivery', 'Retail', 'Events', 'Helper'];
 
   const mockJobs = [
     {
@@ -25,7 +39,8 @@ const HomeScreen = ({ onJobClick }: HomeScreenProps) => {
       payType: 'daily' as const,
       postedTime: '2h ago',
       isUrgent: true,
-      isSaved: false
+      isSaved: false,
+      category: 'Restaurant'
     },
     {
       id: '2',
@@ -36,7 +51,8 @@ const HomeScreen = ({ onJobClick }: HomeScreenProps) => {
       pay: '80',
       payType: 'hourly' as const,
       postedTime: '4h ago',
-      isSaved: false
+      isSaved: false,
+      category: 'Delivery'
     },
     {
       id: '3',
@@ -47,7 +63,8 @@ const HomeScreen = ({ onJobClick }: HomeScreenProps) => {
       pay: '400',
       payType: 'daily' as const,
       postedTime: '1d ago',
-      isSaved: true
+      isSaved: true,
+      category: 'Retail'
     },
     {
       id: '4',
@@ -58,7 +75,32 @@ const HomeScreen = ({ onJobClick }: HomeScreenProps) => {
       pay: '1500',
       payType: 'fixed' as const,
       postedTime: '2d ago',
-      isSaved: false
+      isSaved: false,
+      category: 'Events'
+    },
+    {
+      id: '5',
+      title: 'Kitchen Helper',
+      company: 'Hotel Paradise',
+      location: 'North Cliff',
+      distance: '900 m',
+      pay: '250',
+      payType: 'daily' as const,
+      postedTime: '3h ago',
+      isSaved: false,
+      category: 'Restaurant'
+    },
+    {
+      id: '6',
+      title: 'House Cleaner',
+      company: 'Home Services',
+      location: 'Sivagiri',
+      distance: '2.3 km',
+      pay: '400',
+      payType: 'fixed' as const,
+      postedTime: '5h ago',
+      isSaved: false,
+      category: 'Helper'
     }
   ];
 
@@ -74,45 +116,68 @@ const HomeScreen = ({ onJobClick }: HomeScreenProps) => {
     });
   };
 
-  const jobsWithSaveState = mockJobs.map(job => ({
-    ...job,
-    isSaved: savedJobs.has(job.id) || job.isSaved
-  }));
+  const filteredJobs = useMemo(() => {
+    return mockJobs.filter(job => {
+      const matchesSearch = job.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                           job.company.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                           job.location.toLowerCase().includes(searchQuery.toLowerCase());
+      
+      const matchesCategory = selectedCategory === 'All' || job.category === selectedCategory;
+      
+      return matchesSearch && matchesCategory;
+    }).map(job => ({
+      ...job,
+      isSaved: savedJobs.has(job.id) || job.isSaved
+    }));
+  }, [mockJobs, searchQuery, selectedCategory, savedJobs]);
 
   return (
     <MobileLayout>
       <div className="flex flex-col h-full">
         {/* Header */}
-        <div className="p-4 bg-background border-b">
-          <div className="flex items-center justify-between mb-4">
+        <div className="p-6 bg-background border-b">
+          <div className="flex items-center justify-between mb-6">
             <div>
-              <h1 className="text-xl font-bold text-foreground">Find Jobs</h1>
-              <div className="flex items-center text-muted-foreground text-sm mt-1">
-                <MapPin size={14} className="mr-1" />
-                <span>Varkala, Kerala</span>
-                <ChevronDown size={14} className="ml-1" />
+              <h1 className="text-2xl font-bold text-foreground">Find Jobs</h1>
+              <div className="flex items-center text-muted-foreground text-sm mt-2">
+                <MapPin size={16} className="mr-2" />
+                <Select value={selectedLocation} onValueChange={setSelectedLocation}>
+                  <SelectTrigger className="border-none p-0 h-auto bg-transparent text-muted-foreground hover:text-foreground transition-colors">
+                    <div className="flex items-center">
+                      <SelectValue />
+                      <ChevronDown size={14} className="ml-1" />
+                    </div>
+                  </SelectTrigger>
+                  <SelectContent>
+                    {locations.map((location) => (
+                      <SelectItem key={location} value={location}>
+                        {location}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
             </div>
-            <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
-              <span className="text-primary font-semibold">👤</span>
+            <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+              <span className="text-primary font-semibold text-lg">👤</span>
             </div>
           </div>
 
           {/* Search and Filter */}
           <div className="flex space-x-3">
             <div className="flex-1 relative">
-              <Search size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
+              <Search size={20} className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
               <Input
-                placeholder="Search jobs..."
+                placeholder="Search jobs, companies..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 h-12 bg-muted/50"
+                className="pl-12 h-14 bg-muted/30 border-border rounded-xl text-base"
               />
             </div>
             <Button
               variant="outline"
               size="icon"
-              className="h-12 w-12 border-muted"
+              className="h-14 w-14 border-border rounded-xl"
             >
               <Filter size={20} />
             </Button>
@@ -120,15 +185,16 @@ const HomeScreen = ({ onJobClick }: HomeScreenProps) => {
         </div>
 
         {/* Job Categories - Quick Filters */}
-        <div className="p-4 border-b">
+        <div className="px-6 py-4 border-b">
           <div className="flex space-x-3 overflow-x-auto pb-2">
-            {['All', 'Restaurant', 'Delivery', 'Retail', 'Events', 'Helper'].map((category) => (
+            {categories.map((category) => (
               <button
                 key={category}
-                className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap ${
-                  category === 'All' 
-                    ? 'bg-primary text-primary-foreground' 
-                    : 'bg-muted text-muted-foreground'
+                onClick={() => setSelectedCategory(category)}
+                className={`px-5 py-3 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-200 ${
+                  category === selectedCategory
+                    ? 'bg-primary text-primary-foreground shadow-md' 
+                    : 'bg-muted/50 text-muted-foreground hover:bg-muted hover:text-foreground'
                 }`}
               >
                 {category}
@@ -139,22 +205,30 @@ const HomeScreen = ({ onJobClick }: HomeScreenProps) => {
 
         {/* Jobs List */}
         <div className="flex-1 overflow-y-auto">
-          <div className="p-4">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-semibold text-foreground">Available Jobs</h2>
-              <span className="text-muted-foreground text-sm">{jobsWithSaveState.length} jobs found</span>
+          <div className="p-6">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-xl font-semibold text-foreground">Available Jobs</h2>
+              <span className="text-muted-foreground text-sm">{filteredJobs.length} jobs found</span>
             </div>
 
-            <div className="space-y-4">
-              {jobsWithSaveState.map((job) => (
-                <JobCard
-                  key={job.id}
-                  job={job}
-                  onJobClick={onJobClick}
-                  onSaveToggle={handleSaveToggle}
-                />
-              ))}
-            </div>
+            {filteredJobs.length === 0 ? (
+              <div className="text-center py-12">
+                <div className="text-6xl mb-4">🔍</div>
+                <h3 className="text-lg font-medium text-foreground mb-2">No jobs found</h3>
+                <p className="text-muted-foreground">Try adjusting your search or filters</p>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {filteredJobs.map((job) => (
+                  <JobCard
+                    key={job.id}
+                    job={job}
+                    onJobClick={onJobClick}
+                    onSaveToggle={handleSaveToggle}
+                  />
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>

@@ -1,0 +1,180 @@
+
+import React from 'react';
+import { Bell, BellRing, Clock, MapPin, Star, TrendingUp } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import MobileLayout from '@/components/Layout/MobileLayout';
+
+const AlertsScreen = () => {
+  const notifications = [
+    {
+      id: '1',
+      type: 'job_match',
+      title: 'New Job Match!',
+      message: 'Restaurant Server position at Ocean View Cafe matches your preferences',
+      time: '5 min ago',
+      isRead: false,
+      icon: '🎯',
+      action: 'View Job'
+    },
+    {
+      id: '2',
+      type: 'application_update',
+      title: 'Application Update',
+      message: 'Your application for Delivery Boy at QuickMart has been viewed',
+      time: '1 hour ago',
+      isRead: false,
+      icon: '📄',
+      action: 'View Status'
+    },
+    {
+      id: '3',
+      type: 'urgent_job',
+      title: 'Urgent Hiring',
+      message: 'Event Helper needed immediately for tomorrow\'s wedding in Varkala',
+      time: '2 hours ago',
+      isRead: true,
+      icon: '🔥',
+      action: 'Apply Now',
+      isUrgent: true
+    },
+    {
+      id: '4',
+      type: 'payment',
+      title: 'Payment Received',
+      message: 'You received ₹300 for your work at Beach Cafe Varkala',
+      time: '1 day ago',
+      isRead: true,
+      icon: '💰',
+      action: 'View Details'
+    },
+    {
+      id: '5',
+      type: 'tip',
+      title: 'Job Search Tip',
+      message: 'Complete your profile to get 3x more job matches',
+      time: '2 days ago',
+      isRead: true,
+      icon: '💡',
+      action: 'Complete Profile'
+    },
+    {
+      id: '6',
+      type: 'weekly_summary',
+      title: 'Weekly Summary',
+      message: 'You applied to 5 jobs this week and earned ₹1,200',
+      time: '3 days ago',
+      isRead: true,
+      icon: '📊',
+      action: 'View Report'
+    }
+  ];
+
+  const unreadCount = notifications.filter(n => !n.isRead).length;
+
+  return (
+    <MobileLayout>
+      <div className="flex flex-col h-full">
+        {/* Header */}
+        <div className="p-6 bg-background border-b">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h1 className="text-2xl font-bold text-foreground">Notifications</h1>
+              <p className="text-muted-foreground mt-1">
+                {unreadCount > 0 ? `${unreadCount} new notifications` : 'All caught up!'}
+              </p>
+            </div>
+            <div className="relative">
+              <Bell size={24} className="text-muted-foreground" />
+              {unreadCount > 0 && (
+                <div className="absolute -top-2 -right-2 bg-accent text-accent-foreground text-xs rounded-full w-5 h-5 flex items-center justify-center font-medium">
+                  {unreadCount}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Quick Actions */}
+          <div className="flex space-x-3">
+            <Button variant="outline" size="sm" className="flex-1">
+              Mark All Read
+            </Button>
+            <Button variant="outline" size="sm" className="flex-1">
+              Settings
+            </Button>
+          </div>
+        </div>
+
+        {/* Notifications List */}
+        <div className="flex-1 overflow-y-auto">
+          <div className="p-4">
+            {notifications.length === 0 ? (
+              <div className="text-center py-16">
+                <div className="text-6xl mb-4">🔔</div>
+                <h3 className="text-lg font-medium text-foreground mb-2">No notifications yet</h3>
+                <p className="text-muted-foreground">We'll notify you about job matches and updates</p>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {notifications.map((notification) => (
+                  <div
+                    key={notification.id}
+                    className={`p-4 rounded-xl border transition-all duration-200 ${
+                      !notification.isRead 
+                        ? 'bg-primary/5 border-primary/20' 
+                        : 'bg-card border-border hover:bg-muted/30'
+                    } ${notification.isUrgent ? 'ring-2 ring-accent/50' : ''}`}
+                  >
+                    <div className="flex items-start space-x-3">
+                      <div className="text-2xl flex-shrink-0 mt-1">
+                        {notification.icon}
+                      </div>
+                      
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-start justify-between mb-2">
+                          <h3 className={`font-medium text-sm ${
+                            !notification.isRead ? 'text-foreground' : 'text-muted-foreground'
+                          }`}>
+                            {notification.title}
+                            {notification.isUrgent && (
+                              <span className="ml-2 text-xs bg-accent text-accent-foreground px-2 py-1 rounded-full">
+                                Urgent
+                              </span>
+                            )}
+                          </h3>
+                          {!notification.isRead && (
+                            <div className="w-2 h-2 bg-primary rounded-full flex-shrink-0 mt-1"></div>
+                          )}
+                        </div>
+                        
+                        <p className="text-muted-foreground text-sm mb-3 leading-relaxed">
+                          {notification.message}
+                        </p>
+                        
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center text-xs text-muted-foreground">
+                            <Clock size={12} className="mr-1" />
+                            {notification.time}
+                          </div>
+                          
+                          <Button 
+                            size="sm" 
+                            variant={notification.isUrgent ? "default" : "ghost"}
+                            className="text-xs h-8"
+                          >
+                            {notification.action}
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </MobileLayout>
+  );
+};
+
+export default AlertsScreen;
