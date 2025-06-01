@@ -6,6 +6,7 @@ import RegisterScreen from '@/components/Auth/RegisterScreen';
 import HomeScreen from '@/components/Jobs/HomeScreen';
 import JobDetailsScreen from '@/components/Jobs/JobDetailsScreen';
 import ProfileScreen from '@/components/Profile/ProfileScreen';
+import EditProfileScreen from '@/components/Profile/EditProfileScreen';
 import BottomNav from '@/components/Navigation/BottomNav';
 
 type Screen = 'onboarding' | 'login' | 'register' | 'home' | 'jobDetails' | 'saved' | 'chat' | 'notifications' | 'profile' | 'editProfile' | 'settings';
