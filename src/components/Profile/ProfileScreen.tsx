@@ -29,7 +29,6 @@ const ProfileScreen = ({ onEditProfile, onSettings }: ProfileScreenProps) => {
   ];
 
   const menuItems = [
-    { id: 'edit', label: 'Edit Profile', icon: Edit3, action: onEditProfile },
     { id: 'settings', label: 'Settings', icon: Settings, action: onSettings },
   ];
 
@@ -121,21 +120,23 @@ const ProfileScreen = ({ onEditProfile, onSettings }: ProfileScreenProps) => {
           </div>
 
           {/* Menu Items */}
-          <div className="bg-card rounded-2xl shadow-sm border border-border/50 overflow-hidden">
-            {menuItems.map((item, index) => (
-              <button
-                key={item.id}
-                onClick={item.action}
-                className="w-full flex items-center justify-between p-5 hover:bg-accent/5 transition-colors duration-200 border-b border-border/50 last:border-b-0 active:scale-[0.98] transition-transform"
-              >
-                <div className="flex items-center gap-4">
-                  <item.icon size={20} className="text-muted-foreground" />
-                  <span className="font-medium text-foreground text-base">{item.label}</span>
-                </div>
-                <ChevronRight size={20} className="text-muted-foreground" />
-              </button>
-            ))}
-          </div>
+          {menuItems.length > 0 && (
+            <div className="bg-card rounded-2xl shadow-sm border border-border/50 overflow-hidden">
+              {menuItems.map((item, index) => (
+                <button
+                  key={item.id}
+                  onClick={item.action}
+                  className="w-full flex items-center justify-between p-5 hover:bg-accent/5 transition-colors duration-200 border-b border-border/50 last:border-b-0 active:scale-[0.98] transition-transform"
+                >
+                  <div className="flex items-center gap-4">
+                    <item.icon size={20} className="text-muted-foreground" />
+                    <span className="font-medium text-foreground text-base">{item.label}</span>
+                  </div>
+                  <ChevronRight size={20} className="text-muted-foreground" />
+                </button>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </MobileLayout>

@@ -1,9 +1,12 @@
+
 import React, { useState } from 'react';
 import OnboardingScreen from '@/components/Onboarding/OnboardingScreen';
 import LoginScreen from '@/components/Auth/LoginScreen';
 import RegisterScreen from '@/components/Auth/RegisterScreen';
 import HomeScreen from '@/components/Jobs/HomeScreen';
 import JobDetailsScreen from '@/components/Jobs/JobDetailsScreen';
+import SavedJobsScreen from '@/components/Jobs/SavedJobsScreen';
+import ChatScreen from '@/components/Chat/ChatScreen';
 import ProfileScreen from '@/components/Profile/ProfileScreen';
 import EditProfileScreen from '@/components/Profile/EditProfileScreen';
 import BottomNav from '@/components/Navigation/BottomNav';
@@ -127,32 +130,10 @@ const Index = () => {
         );
       
       case 'saved':
-        return (
-          <div className="max-w-sm mx-auto bg-background min-h-screen flex items-center justify-center animate-fade-in">
-            <div className="text-center p-8">
-              <h2 className="text-xl font-semibold text-foreground mb-2">
-                Saved Jobs
-              </h2>
-              <p className="text-muted-foreground">
-                Your saved jobs will appear here
-              </p>
-            </div>
-          </div>
-        );
+        return <SavedJobsScreen onJobClick={handleJobClick} />;
 
       case 'chat':
-        return (
-          <div className="max-w-sm mx-auto bg-background min-h-screen flex items-center justify-center animate-fade-in">
-            <div className="text-center p-8">
-              <h2 className="text-xl font-semibold text-foreground mb-2">
-                Messages
-              </h2>
-              <p className="text-muted-foreground">
-                Chat with employers here
-              </p>
-            </div>
-          </div>
-        );
+        return <ChatScreen />;
 
       case 'notifications':
         return <AlertsScreen />;

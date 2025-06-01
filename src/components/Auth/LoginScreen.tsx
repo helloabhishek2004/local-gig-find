@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Eye, EyeOff, Mail, Phone } from 'lucide-react';
+import { Eye, EyeOff, Phone } from 'lucide-react';
 import MobileLayout from '@/components/Layout/MobileLayout';
 
 interface LoginScreenProps {
@@ -12,10 +12,9 @@ interface LoginScreenProps {
 }
 
 const LoginScreen = ({ onLogin, onRegister }: LoginScreenProps) => {
-  const [loginMethod, setLoginMethod] = useState<'email' | 'phone'>('phone');
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
-    emailOrPhone: '',
+    phoneNumber: '',
     password: ''
   });
 
@@ -29,43 +28,22 @@ const LoginScreen = ({ onLogin, onRegister }: LoginScreenProps) => {
         <div className="flex-1 flex flex-col justify-center space-y-8">
           <div className="text-center space-y-2">
             <h1 className="text-3xl font-bold text-foreground">Welcome Back</h1>
-            <p className="text-muted-foreground">Sign in to find local jobs</p>
+            <p className="text-muted-foreground">Sign in with your mobile number</p>
           </div>
 
           <div className="space-y-6">
-            {/* Login method toggle */}
-            <div className="flex bg-muted rounded-lg p-1">
-              <button
-                onClick={() => setLoginMethod('phone')}
-                className={`flex-1 flex items-center justify-center py-2 px-4 rounded-md transition-colors ${
-                  loginMethod === 'phone' ? 'bg-card text-foreground shadow-sm' : 'text-muted-foreground'
-                }`}
-              >
-                <Phone className="w-4 h-4 mr-2" />
-                Phone
-              </button>
-              <button
-                onClick={() => setLoginMethod('email')}
-                className={`flex-1 flex items-center justify-center py-2 px-4 rounded-md transition-colors ${
-                  loginMethod === 'email' ? 'bg-card text-foreground shadow-sm' : 'text-muted-foreground'
-                }`}
-              >
-                <Mail className="w-4 h-4 mr-2" />
-                Email
-              </button>
-            </div>
-
             <div className="space-y-4">
               <div>
-                <Label htmlFor="emailOrPhone">
-                  {loginMethod === 'email' ? 'Email' : 'Phone Number'}
+                <Label htmlFor="phoneNumber" className="flex items-center gap-2">
+                  <Phone size={16} />
+                  Phone Number
                 </Label>
                 <Input
-                  id="emailOrPhone"
-                  type={loginMethod === 'email' ? 'email' : 'tel'}
-                  placeholder={loginMethod === 'email' ? 'your@email.com' : '+91 9876543210'}
-                  value={formData.emailOrPhone}
-                  onChange={(e) => handleInputChange('emailOrPhone', e.target.value)}
+                  id="phoneNumber"
+                  type="tel"
+                  placeholder="+91 9876543210"
+                  value={formData.phoneNumber}
+                  onChange={(e) => handleInputChange('phoneNumber', e.target.value)}
                   className="h-12 text-base"
                 />
               </div>
@@ -95,6 +73,7 @@ const LoginScreen = ({ onLogin, onRegister }: LoginScreenProps) => {
             <Button 
               onClick={onLogin}
               className="w-full h-12 text-lg btn-accent"
+              disabled={!formData.phoneNumber || !formData.password}
             >
               Sign In
             </Button>
