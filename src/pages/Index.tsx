@@ -68,6 +68,10 @@ const Index = () => {
     setCurrentScreen('editProfile');
   };
 
+  const handleSaveProfile = () => {
+    setCurrentScreen('profile');
+  };
+
   const handleSettings = () => {
     setCurrentScreen('settings');
   };
@@ -112,11 +116,18 @@ const Index = () => {
             onSettings={handleSettings}
           />
         );
+
+      case 'editProfile':
+        return (
+          <EditProfileScreen 
+            onSave={handleSaveProfile}
+            onBack={() => setCurrentScreen('profile')}
+          />
+        );
       
       case 'saved':
       case 'chat':
       case 'notifications':
-      case 'editProfile':
       case 'settings':
         return (
           <div className="max-w-sm mx-auto bg-background min-h-screen flex items-center justify-center animate-fade-in">
