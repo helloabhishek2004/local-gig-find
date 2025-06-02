@@ -1,3 +1,4 @@
+
 import React, { useState, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -133,8 +134,8 @@ const HomeScreen = ({ onJobClick }: HomeScreenProps) => {
     <MobileLayout>
       <div className="flex flex-col h-screen bg-background">
         {/* Fixed Header */}
-        <div className="flex-shrink-0 px-6 pt-8 pb-6 bg-gradient-to-b from-primary/5 to-background">
-          <div className="flex items-center justify-between mb-6">
+        <div className="flex-shrink-0 px-4 pt-6 pb-4 bg-gradient-to-b from-primary/5 to-background">
+          <div className="flex items-center justify-between mb-4">
             <div className="flex-1">
               <h1 className="text-2xl font-bold text-foreground mb-2">Find Jobs</h1>
               
@@ -181,30 +182,30 @@ const HomeScreen = ({ onJobClick }: HomeScreenProps) => {
                 placeholder="Search jobs, companies..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-12 h-14 bg-card/50 backdrop-blur-sm border-border/50 rounded-2xl text-base shadow-sm focus:shadow-md transition-all"
+                className="pl-12 h-12 bg-card/50 backdrop-blur-sm border-border/50 rounded-2xl text-base shadow-sm focus:shadow-md transition-all"
               />
             </div>
             <Button
               variant="outline"
               size="icon"
-              className="h-14 w-14 border-border/50 rounded-2xl bg-card/50 backdrop-blur-sm shadow-sm hover:shadow-md transition-all"
+              className="h-12 w-12 border-border/50 rounded-2xl bg-card/50 backdrop-blur-sm shadow-sm hover:shadow-md transition-all"
             >
               <Filter size={20} />
             </Button>
           </div>
         </div>
 
-        {/* Fixed Job Categories - no scrollbar */}
-        <div className="flex-shrink-0 px-6 py-4 bg-background/95 backdrop-blur-sm border-b border-border/50">
-          <div className="flex space-x-3 overflow-x-auto overflow-y-hidden scrollbar-hide">
+        {/* Fixed Job Categories */}
+        <div className="flex-shrink-0 px-4 py-3 bg-background/95 backdrop-blur-sm border-b border-border/50">
+          <div className="flex space-x-3 overflow-x-scroll pb-2">
             {categories.map((category) => (
               <button
                 key={category}
                 onClick={() => setSelectedCategory(category)}
-                className={`px-6 py-3 rounded-2xl text-sm font-medium whitespace-nowrap transition-all duration-300 shadow-sm flex-shrink-0 ${
+                className={`px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-all duration-300 shadow-sm flex-shrink-0 ${
                   category === selectedCategory
-                    ? 'bg-primary text-primary-foreground shadow-lg scale-105' 
-                    : 'bg-card/80 text-muted-foreground hover:bg-muted/80 hover:text-foreground hover:scale-105'
+                    ? 'bg-primary text-primary-foreground shadow-lg' 
+                    : 'bg-card/80 text-muted-foreground hover:bg-muted/80 hover:text-foreground'
                 }`}
               >
                 {category}
@@ -215,8 +216,8 @@ const HomeScreen = ({ onJobClick }: HomeScreenProps) => {
 
         {/* Scrollable Jobs List with bottom padding for nav */}
         <div className="flex-1 overflow-y-auto">
-          <div className="p-6">
-            <div className="flex items-center justify-between mb-6">
+          <div className="p-4">
+            <div className="flex items-center justify-between mb-4">
               <h2 className="text-xl font-semibold text-foreground">Available Jobs</h2>
               <div className="flex items-center space-x-2">
                 <span className="text-muted-foreground text-sm">{filteredJobs.length} jobs</span>

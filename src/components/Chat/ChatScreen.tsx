@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { Send, Phone, Video, MoreVertical, Search, ArrowLeft, Image, Paperclip } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -11,30 +10,8 @@ interface ChatScreenProps {
 
 const ChatScreen = ({ onBack }: ChatScreenProps) => {
   const [newMessage, setNewMessage] = useState('');
-  const [activeChat, setActiveChat] = useState<string | null>('1');
-  const [keyboardHeight, setKeyboardHeight] = useState(0);
+  const [activeChat, setActiveChat] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  // Handle keyboard appearance on mobile
-  useEffect(() => {
-    const handleResize = () => {
-      const viewportHeight = window.visualViewport?.height || window.innerHeight;
-      const windowHeight = window.innerHeight;
-      const diff = windowHeight - viewportHeight;
-      setKeyboardHeight(diff > 50 ? diff : 0);
-    };
-
-    if (window.visualViewport) {
-      window.visualViewport.addEventListener('resize', handleResize);
-      return () => window.visualViewport?.removeEventListener('resize', handleResize);
-    }
-  }, []);
-
-  // Auto scroll to bottom when new messages arrive
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [activeChat]);
 
   const conversations = [
     {
@@ -108,6 +85,10 @@ const ChatScreen = ({ onBack }: ChatScreenProps) => {
     }
   ];
 
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [activeChat]);
+
   const handleSendMessage = () => {
     if (newMessage.trim()) {
       console.log('Sending message:', newMessage);
@@ -119,12 +100,12 @@ const ChatScreen = ({ onBack }: ChatScreenProps) => {
 
   return (
     <MobileLayout>
-      <div className="flex flex-col h-full" style={{ paddingBottom: keyboardHeight }}>
+      <div className="flex flex-col h-screen">
         {activeChat ? (
           // Chat View
           <>
             {/* Chat Header */}
-            <div className="p-4 bg-background/95 backdrop-blur-sm border-b border-border/50 flex items-center justify-between sticky top-0 z-10">
+            <div className="flex-shrink-0 p-4 bg-background/95 backdrop-blur-sm border-b border-border/50 flex items-center justify-between">
               <div className="flex items-center space-x-3">
                 <button 
                   onClick={() => setActiveChat(null)}
@@ -161,11 +142,11 @@ const ChatScreen = ({ onBack }: ChatScreenProps) => {
             </div>
 
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-muted/20">
+            <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4 bg-muted/20">
               {currentChatMessages.map((message) => (
                 <div
                   key={message.id}
-                  className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'} animate-fade-in`}
+                  className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
                   <div
                     className={`max-w-[75%] rounded-2xl px-4 py-3 ${
@@ -187,14 +168,13 @@ const ChatScreen = ({ onBack }: ChatScreenProps) => {
             </div>
 
             {/* Message Input */}
-            <div className="p-4 border-t border-border/50 bg-background/95 backdrop-blur-sm">
+            <div className="flex-shrink-0 p-4 border-t border-border/50 bg-background/95 backdrop-blur-sm pb-24">
               <div className="flex items-center space-x-2">
                 <Button variant="ghost" size="icon" className="h-10 w-10 shrink-0">
                   <Paperclip size={20} />
                 </Button>
                 <div className="flex-1 relative">
                   <Input
-                    ref={inputRef}
                     placeholder="Type a message..."
                     value={newMessage}
                     onChange={(e) => setNewMessage(e.target.value)}
@@ -224,18 +204,11 @@ const ChatScreen = ({ onBack }: ChatScreenProps) => {
           // Conversations List
           <>
             {/* Header */}
-            <div className="p-6 bg-background border-b border-border/50">
-              <div className="flex items-center justify-between mb-6">
-                <div className="flex items-center gap-3">
-                  {onBack && (
-                    <button onClick={onBack} className="text-muted-foreground hover:text-foreground transition-colors p-1">
-                      <ArrowLeft size={24} />
-                    </button>
-                  )}
-                  <div>
-                    <h1 className="text-2xl font-bold text-foreground">Messages</h1>
-                    <p className="text-muted-foreground mt-1">Chat with employers</p>
-                  </div>
+            <div className="flex-shrink-0 p-4 bg-background border-b border-border/50">
+              <div className="flex items-center justify-between mb-4">
+                <div>
+                  <h1 className="text-2xl font-bold text-foreground">Messages</h1>
+                  <p className="text-muted-foreground mt-1">Chat with employers</p>
                 </div>
                 <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
                   <span className="text-primary font-semibold text-lg">💬</span>
@@ -253,7 +226,7 @@ const ChatScreen = ({ onBack }: ChatScreenProps) => {
             </div>
 
             {/* Conversations */}
-            <div className="flex-1 overflow-y-auto">
+            <div className="flex-1 overflow-y-auto pb-24">
               <div className="p-4">
                 {conversations.map((conversation) => (
                   <button

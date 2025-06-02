@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Bell, BellRing, Clock, MapPin, Star, TrendingUp, Filter } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -93,9 +94,9 @@ const AlertsScreen = () => {
 
   return (
     <MobileLayout>
-      <div className="flex flex-col h-full">
+      <div className="flex flex-col h-screen">
         {/* Fixed Header */}
-        <div className="sticky top-0 z-10 bg-background/95 backdrop-blur-md border-b border-border/50">
+        <div className="flex-shrink-0 bg-background/95 backdrop-blur-md border-b border-border/50">
           <div className="p-4">
             <div className="flex items-center justify-between mb-4">
               <div>
@@ -115,14 +116,14 @@ const AlertsScreen = () => {
             </div>
 
             {/* Filter Buttons */}
-            <div className="flex space-x-2 overflow-x-auto scrollbar-hide pb-2">
+            <div className="flex space-x-2 overflow-x-scroll pb-2">
               {filterOptions.map((filter) => {
                 const IconComponent = filter.icon;
                 return (
                   <button
                     key={filter.id}
                     onClick={() => setSelectedFilter(filter.id)}
-                    className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-all ${
+                    className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-all flex-shrink-0 ${
                       selectedFilter === filter.id
                         ? 'bg-primary text-primary-foreground'
                         : 'bg-muted/50 text-muted-foreground hover:bg-muted'
@@ -142,7 +143,7 @@ const AlertsScreen = () => {
         </div>
 
         {/* Scrollable Notifications List */}
-        <div className="flex-1 overflow-y-auto scrollbar-hide pb-20">
+        <div className="flex-1 overflow-y-auto">
           <div className="p-4">
             {filteredNotifications.length === 0 ? (
               <div className="text-center py-16">
@@ -151,7 +152,7 @@ const AlertsScreen = () => {
                 <p className="text-muted-foreground px-4">No notifications in this category yet</p>
               </div>
             ) : (
-              <div className="space-y-3">
+              <div className="space-y-3 pb-24">
                 {filteredNotifications.map((notification) => (
                   <div
                     key={notification.id}
