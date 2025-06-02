@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { ArrowLeft, Camera, MapPin, Briefcase } from 'lucide-react';
+import { ArrowLeft, Camera, MapPin, Briefcase, Image, Upload } from 'lucide-react';
 import MobileLayout from '@/components/Layout/MobileLayout';
 
 interface EditProfileScreenProps {
@@ -21,10 +21,27 @@ const EditProfileScreen = ({ onSave, onBack }: EditProfileScreenProps) => {
     bio: 'Experienced in delivery, sales, and customer service. Available for immediate work.',
     skills: ['Delivery', 'Sales', 'Helper', 'Waiter'],
     availability: 'Available Now',
-    photo: null
+    photo: null as string | null
   });
 
   const [newSkill, setNewSkill] = useState('');
+  const [showImageOptions, setShowImageOptions] = useState(false);
+
+  const locationOptions = [
+    'Varkala, Kerala',
+    'Thiruvananthapuram, Kerala',
+    'Kollam, Kerala',
+    'Alappuzha, Kerala',
+    'Kottayam, Kerala',
+    'Ernakulam, Kerala',
+    'Thrissur, Kerala',
+    'Palakkad, Kerala',
+    'Malappuram, Kerala',
+    'Kozhikode, Kerala',
+    'Wayanad, Kerala',
+    'Kannur, Kerala',
+    'Kasaragod, Kerala'
+  ];
 
   const handleInputChange = (field: string, value: string) => {
     setProfile(prev => ({ ...prev, [field]: value }));
@@ -47,6 +64,45 @@ const EditProfileScreen = ({ onSave, onBack }: EditProfileScreenProps) => {
     }));
   };
 
+  const handleImageUpload = (source: 'camera' | 'gallery') => {
+    // In a real app, this would handle camera/gallery access
+    if (source === 'camera') {
+      // Trigger camera
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = 'image/*';
+      input.capture = 'environment';
+      input.onchange = (e) => {
+        const file = (e.target as HTMLInputElement).files?.[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            setProfile(prev => ({ ...prev, photo: e.target?.result as string }));
+          };
+          reader.readAsDataURL(file);
+        }
+      };
+      input.click();
+    } else {
+      // Trigger gallery
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = 'image/*';
+      input.onchange = (e) => {
+        const file = (e.target as HTMLInputElement).files?.[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            setProfile(prev => ({ ...prev, photo: e.target?.result as string }));
+          };
+          reader.readAsDataURL(file);
+        }
+      };
+      input.click();
+    }
+    setShowImageOptions(false);
+  };
+
   const handleSave = () => {
     console.log('Saving profile:', profile);
     onSave();
@@ -55,8 +111,11 @@ const EditProfileScreen = ({ onSave, onBack }: EditProfileScreenProps) => {
   return (
     <MobileLayout>
       <div className="flex flex-col h-full safe-area-top">
+        {/* Background decoration */}
+        <div className="bg-decoration" />
+        
         {/* Header */}
-        <div className="flex items-center justify-between px-4 py-3 border-b border-border/50">
+        <div className="flex items-center justify-between px-4 py-3 border-b border-border/50 bg-background/95 backdrop-blur-sm">
           <div className="flex items-center">
             <button onClick={onBack} className="text-muted-foreground hover:text-foreground transition-colors p-2 -ml-2">
               <ArrowLeft size={24} />
@@ -75,22 +134,59 @@ const EditProfileScreen = ({ onSave, onBack }: EditProfileScreenProps) => {
         <div className="flex-1 px-4 py-6 overflow-y-auto pb-6">
           <div className="max-w-sm mx-auto space-y-8">
             {/* Profile Photo */}
-            <div className="flex flex-col items-center space-y-4">
+            <div className="flex flex-col items-center space-y-4 animate-fade-in">
               <div className="relative">
-                <div className="w-24 h-24 bg-primary/10 rounded-full flex items-center justify-center">
+                <div className="w-24 h-24 bg-primary/10 rounded-full flex items-center justify-center overflow-hidden">
                   {profile.photo ? (
-                    <img src={profile.photo} alt="Profile" className="w-full h-full rounded-full object-cover" />
+                    <img src={profile.photo} alt="Profile" className="w-full h-full object-cover" />
                   ) : (
                     <span className="text-2xl font-bold text-primary">
                       {profile.name.split(' ').map(n => n[0]).join('')}
                     </span>
                   )}
                 </div>
-                <button className="absolute -bottom-2 -right-2 w-8 h-8 bg-accent rounded-full flex items-center justify-center shadow-md hover:scale-110 transition-transform">
+                <button 
+                  onClick={() => setShowImageOptions(true)}
+                  className="absolute -bottom-2 -right-2 w-8 h-8 bg-accent rounded-full flex items-center justify-center shadow-md hover:scale-110 transition-transform"
+                >
                   <Camera size={16} className="text-accent-foreground" />
                 </button>
               </div>
               <p className="text-sm text-muted-foreground">Tap to change photo</p>
+
+              {/* Image Upload Options Modal */}
+              {showImageOptions && (
+                <div className="fixed inset-0 bg-black/50 flex items-end justify-center z-50 animate-fade-in">
+                  <div className="bg-background rounded-t-2xl p-6 w-full max-w-sm animate-scale-in">
+                    <h3 className="text-lg font-semibold mb-4 text-center">Choose Photo</h3>
+                    <div className="space-y-3">
+                      <Button
+                        onClick={() => handleImageUpload('camera')}
+                        className="w-full flex items-center gap-3 h-12 justify-start"
+                        variant="outline"
+                      >
+                        <Camera size={20} />
+                        Take Photo
+                      </Button>
+                      <Button
+                        onClick={() => handleImageUpload('gallery')}
+                        className="w-full flex items-center gap-3 h-12 justify-start"
+                        variant="outline"
+                      >
+                        <Image size={20} />
+                        Choose from Gallery
+                      </Button>
+                      <Button
+                        onClick={() => setShowImageOptions(false)}
+                        className="w-full h-12"
+                        variant="ghost"
+                      >
+                        Cancel
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Basic Info */}
@@ -130,12 +226,18 @@ const EditProfileScreen = ({ onSave, onBack }: EditProfileScreenProps) => {
                   <MapPin size={16} />
                   Location
                 </Label>
-                <Input
+                <select
                   id="location"
                   value={profile.location}
                   onChange={(e) => handleInputChange('location', e.target.value)}
-                  className="h-12 text-base border-2 focus:border-primary transition-colors"
-                />
+                  className="w-full h-12 px-3 text-base border-2 border-input rounded-md bg-background focus:border-primary transition-colors"
+                >
+                  {locationOptions.map((location) => (
+                    <option key={location} value={location}>
+                      {location}
+                    </option>
+                  ))}
+                </select>
               </div>
 
               <div className="space-y-2">
@@ -162,7 +264,7 @@ const EditProfileScreen = ({ onSave, onBack }: EditProfileScreenProps) => {
                 {profile.skills.map((skill, index) => (
                   <span
                     key={index}
-                    className="bg-primary/10 text-primary px-3 py-2 rounded-lg text-sm font-medium flex items-center gap-2 group hover:bg-primary/20 transition-colors"
+                    className="bg-primary/10 text-primary px-3 py-2 rounded-lg text-sm font-medium flex items-center gap-2 group hover:bg-primary/20 transition-colors animate-scale-in"
                   >
                     {skill}
                     <button

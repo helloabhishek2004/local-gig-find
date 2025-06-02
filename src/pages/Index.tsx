@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import OnboardingScreen from '@/components/Onboarding/OnboardingScreen';
 import LoginScreen from '@/components/Auth/LoginScreen';
@@ -11,6 +10,7 @@ import ProfileScreen from '@/components/Profile/ProfileScreen';
 import EditProfileScreen from '@/components/Profile/EditProfileScreen';
 import BottomNav from '@/components/Navigation/BottomNav';
 import AlertsScreen from '@/components/Alerts/AlertsScreen';
+import SettingsScreen from '@/components/Settings/SettingsScreen';
 
 type Screen = 'onboarding' | 'login' | 'register' | 'home' | 'jobDetails' | 'saved' | 'chat' | 'notifications' | 'profile' | 'editProfile' | 'settings';
 
@@ -80,6 +80,10 @@ const Index = () => {
     setCurrentScreen('settings');
   };
 
+  const handleBackFromSettings = () => {
+    setCurrentScreen('profile');
+  };
+
   const renderScreen = () => {
     switch (currentScreen) {
       case 'onboarding':
@@ -140,16 +144,9 @@ const Index = () => {
       
       case 'settings':
         return (
-          <div className="max-w-sm mx-auto bg-background min-h-screen flex items-center justify-center animate-fade-in">
-            <div className="text-center p-8">
-              <h2 className="text-xl font-semibold text-foreground mb-2">
-                Settings
-              </h2>
-              <p className="text-muted-foreground">
-                App settings will be available here
-              </p>
-            </div>
-          </div>
+          <SettingsScreen 
+            onBack={handleBackFromSettings}
+          />
         );
       
       default:
