@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -132,14 +131,14 @@ const HomeScreen = ({ onJobClick }: HomeScreenProps) => {
 
   return (
     <MobileLayout>
-      <div className="flex flex-col h-full bg-background">
-        {/* Header with improved spacing */}
-        <div className="px-6 pt-8 pb-6 bg-gradient-to-b from-primary/5 to-background">
+      <div className="flex flex-col h-screen bg-background">
+        {/* Fixed Header */}
+        <div className="flex-shrink-0 px-6 pt-8 pb-6 bg-gradient-to-b from-primary/5 to-background">
           <div className="flex items-center justify-between mb-6">
             <div className="flex-1">
               <h1 className="text-2xl font-bold text-foreground mb-2">Find Jobs</h1>
               
-              {/* Single location selector */}
+              {/* Location selector */}
               <div className="relative">
                 <button
                   onClick={() => setShowLocationDropdown(!showLocationDropdown)}
@@ -177,7 +176,7 @@ const HomeScreen = ({ onJobClick }: HomeScreenProps) => {
           {/* Enhanced Search and Filter */}
           <div className="flex space-x-3">
             <div className="flex-1 relative">
-              <Search size={20} className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
+              <Search size={20} className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground z-10" />
               <Input
                 placeholder="Search jobs, companies..."
                 value={searchQuery}
@@ -195,14 +194,14 @@ const HomeScreen = ({ onJobClick }: HomeScreenProps) => {
           </div>
         </div>
 
-        {/* Enhanced Job Categories */}
-        <div className="px-6 py-4 bg-background/95 backdrop-blur-sm border-b border-border/50">
-          <div className="flex space-x-3 overflow-x-auto scrollbar-hide">
+        {/* Fixed Job Categories - no scrollbar */}
+        <div className="flex-shrink-0 px-6 py-4 bg-background/95 backdrop-blur-sm border-b border-border/50">
+          <div className="flex space-x-3 overflow-x-auto overflow-y-hidden scrollbar-hide">
             {categories.map((category) => (
               <button
                 key={category}
                 onClick={() => setSelectedCategory(category)}
-                className={`px-6 py-3 rounded-2xl text-sm font-medium whitespace-nowrap transition-all duration-300 shadow-sm ${
+                className={`px-6 py-3 rounded-2xl text-sm font-medium whitespace-nowrap transition-all duration-300 shadow-sm flex-shrink-0 ${
                   category === selectedCategory
                     ? 'bg-primary text-primary-foreground shadow-lg scale-105' 
                     : 'bg-card/80 text-muted-foreground hover:bg-muted/80 hover:text-foreground hover:scale-105'
@@ -214,7 +213,7 @@ const HomeScreen = ({ onJobClick }: HomeScreenProps) => {
           </div>
         </div>
 
-        {/* Jobs List with enhanced spacing */}
+        {/* Scrollable Jobs List with bottom padding for nav */}
         <div className="flex-1 overflow-y-auto">
           <div className="p-6">
             <div className="flex items-center justify-between mb-6">
@@ -238,7 +237,7 @@ const HomeScreen = ({ onJobClick }: HomeScreenProps) => {
                 </Button>
               </div>
             ) : (
-              <div className="space-y-4">
+              <div className="space-y-4 pb-24">
                 {filteredJobs.map((job) => (
                   <JobCard
                     key={job.id}

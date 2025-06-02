@@ -68,9 +68,9 @@ const JobDetailsScreen = ({ jobId, onBack, onApply }: JobDetailsScreenProps) => 
 
   return (
     <MobileLayout>
-      <div className="flex flex-col h-full">
-        {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b bg-background sticky top-0 z-10">
+      <div className="flex flex-col h-screen">
+        {/* Fixed Header */}
+        <div className="flex-shrink-0 flex items-center justify-between p-4 border-b bg-background/95 backdrop-blur-sm sticky top-0 z-20">
           <button onClick={onBack} className="text-muted-foreground hover:text-foreground transition-colors">
             <ArrowLeft size={24} />
           </button>
@@ -80,7 +80,7 @@ const JobDetailsScreen = ({ jobId, onBack, onApply }: JobDetailsScreenProps) => 
           </button>
         </div>
 
-        {/* Content */}
+        {/* Scrollable Content */}
         <div className="flex-1 overflow-y-auto">
           <div className="p-6 space-y-6">
             {/* Job Header */}
@@ -220,12 +220,13 @@ const JobDetailsScreen = ({ jobId, onBack, onApply }: JobDetailsScreenProps) => 
               </div>
             </div>
 
-            <div className="h-24"></div> {/* Spacer for fixed buttons */}
+            {/* Spacer for fixed buttons */}
+            <div className="h-32"></div>
           </div>
         </div>
 
-        {/* Fixed Bottom Actions */}
-        <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2 max-w-sm w-full bg-background/95 backdrop-blur-lg border-t p-4 safe-area-bottom">
+        {/* Fixed Bottom Actions with proper spacing */}
+        <div className="flex-shrink-0 bg-background/95 backdrop-blur-lg border-t p-6 safe-area-bottom">
           <div className="flex space-x-3">
             <Button
               variant="outline"

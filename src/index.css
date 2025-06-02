@@ -142,6 +142,16 @@
     padding-bottom: env(safe-area-inset-bottom);
   }
 
+  /* Hide scrollbars */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
   /* Floating animations */
   .floating {
     animation: floating 6s ease-in-out infinite;
@@ -156,9 +166,17 @@
       hsl(var(--primary)/0.1) 0%, 
       hsl(var(--accent)/0.1) 100%);
   }
+
+  /* Line clamp utility */
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
 }
 
-/* Keyframe animations */
+/* ... keep existing code (keyframe animations and bg-decoration styles) */
 @keyframes float {
   0%, 100% {
     transform: translate(0px, 0px) rotate(0deg);
