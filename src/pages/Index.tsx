@@ -18,6 +18,7 @@ const Index = () => {
   const [currentScreen, setCurrentScreen] = useState<Screen>('onboarding');
   const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState('home');
+  const [previousScreen, setPreviousScreen] = useState<Screen>('home');
 
   const handleCompleteOnboarding = () => {
     setCurrentScreen('login');
@@ -57,6 +58,7 @@ const Index = () => {
         setCurrentScreen('saved');
         break;
       case 'chat':
+        setPreviousScreen(currentScreen);
         setCurrentScreen('chat');
         break;
       case 'notifications':
@@ -66,6 +68,11 @@ const Index = () => {
         setCurrentScreen('profile');
         break;
     }
+  };
+
+  const handleBackFromChat = () => {
+    setCurrentScreen(previousScreen);
+    setActiveTab(previousScreen);
   };
 
   const handleEditProfile = () => {
@@ -137,7 +144,7 @@ const Index = () => {
         return <SavedJobsScreen onJobClick={handleJobClick} />;
 
       case 'chat':
-        return <ChatScreen />;
+        return <ChatScreen onBack={handleBackFromChat} />;
 
       case 'notifications':
         return <AlertsScreen />;
@@ -154,7 +161,8 @@ const Index = () => {
     }
   };
 
-  const showBottomNav = ['home', 'saved', 'chat', 'notifications', 'profile'].includes(currentScreen);
+  // Don't show bottom nav when in chat
+  const showBottomNav = ['home', 'saved', 'notifications', 'profile'].includes(currentScreen);
 
   return (
     <div className="relative min-h-screen">

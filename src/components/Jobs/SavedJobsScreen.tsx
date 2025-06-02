@@ -75,9 +75,9 @@ const SavedJobsScreen = ({ onJobClick }: SavedJobsScreenProps) => {
   return (
     <MobileLayout>
       <div className="flex flex-col h-full">
-        {/* Header */}
-        <div className="p-6 bg-background border-b">
-          <div className="flex items-center justify-between mb-6">
+        {/* Fixed Header */}
+        <div className="sticky top-0 z-10 p-4 bg-background/95 backdrop-blur-md border-b border-border/50">
+          <div className="flex items-center justify-between mb-4">
             <div>
               <h1 className="text-2xl font-bold text-foreground">Saved Jobs</h1>
               <p className="text-muted-foreground mt-1">{filteredJobs.length} jobs saved</p>
@@ -89,30 +89,30 @@ const SavedJobsScreen = ({ onJobClick }: SavedJobsScreenProps) => {
 
           {/* Search */}
           <div className="relative">
-            <Search size={20} className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
+            <Search size={18} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground z-10" />
             <Input
               placeholder="Search saved jobs..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-12 h-12 bg-muted/30 border-border rounded-xl"
+              className="pl-10 h-11 bg-muted/30 border-border/50 rounded-xl"
             />
           </div>
         </div>
 
-        {/* Jobs List */}
-        <div className="flex-1 overflow-y-auto">
-          <div className="p-6">
+        {/* Scrollable Jobs List */}
+        <div className="flex-1 overflow-y-auto scrollbar-hide pb-20">
+          <div className="p-4">
             {filteredJobs.length === 0 ? (
               <div className="text-center py-16">
                 <div className="text-6xl mb-4">📌</div>
                 <h3 className="text-lg font-medium text-foreground mb-2">No saved jobs</h3>
-                <p className="text-muted-foreground mb-6">Save jobs you're interested in to find them easily later</p>
+                <p className="text-muted-foreground mb-6 px-4">Save jobs you're interested in to find them easily later</p>
                 <Button onClick={() => window.history.back()}>
                   Browse Jobs
                 </Button>
               </div>
             ) : (
-              <div className="space-y-4">
+              <div className="space-y-3">
                 {filteredJobs.map((job) => (
                   <JobCard
                     key={job.id}
