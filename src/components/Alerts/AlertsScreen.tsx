@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Bell, BellRing, Clock, MapPin, Star, TrendingUp, Filter } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -13,7 +12,7 @@ const AlertsScreen = () => {
     { id: 'notifications', label: 'Updates', icon: Clock },
     { id: 'promotions', label: 'Promos', icon: Star },
     { id: 'tips', label: 'Tips', icon: TrendingUp },
-    { id: 'payment', label: 'Payment', icon: '💰' },
+    { id: 'payment', label: 'Payment', iconEmoji: '💰' },
   ];
 
   const notifications = [
@@ -118,7 +117,7 @@ const AlertsScreen = () => {
             {/* Filter Buttons */}
             <div className="flex space-x-2 overflow-x-auto scrollbar-hide pb-2">
               {filterOptions.map((filter) => {
-                const IconComponent = typeof filter.icon === 'string' ? null : filter.icon;
+                const IconComponent = filter.icon;
                 return (
                   <button
                     key={filter.id}
@@ -129,10 +128,10 @@ const AlertsScreen = () => {
                         : 'bg-muted/50 text-muted-foreground hover:bg-muted'
                     }`}
                   >
-                    {IconComponent ? (
-                      <IconComponent size={16} />
+                    {filter.iconEmoji ? (
+                      <span className="text-sm">{filter.iconEmoji}</span>
                     ) : (
-                      <span className="text-sm">{filter.icon}</span>
+                      <IconComponent size={16} />
                     )}
                     {filter.label}
                   </button>
