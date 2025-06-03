@@ -3,6 +3,9 @@ import React, { useState } from 'react';
 import { Edit3, MapPin, Phone, Mail, Star, Settings, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import MobileLayout from '@/components/Layout/MobileLayout';
+import ProfileCompletenessIndicator from './ProfileCompletenessIndicator';
+import ApplicationTracker from './ApplicationTracker';
+import ResumeUpload from './ResumeUpload';
 
 interface ProfileScreenProps {
   onEditProfile: () => void;
@@ -19,12 +22,53 @@ const ProfileScreen = ({ onEditProfile, onSettings }: ProfileScreenProps) => {
     jobsCompleted: 12,
     skills: ['Delivery', 'Sales', 'Helper', 'Waiter'],
     availability: 'Available Now',
-    photo: null
+    photo: null,
+    bio: 'Experienced in delivery, sales, and customer service. Available for immediate work.',
+    resume: null
   });
 
+  const [resume, setResume] = useState<File | null>(null);
+
+  // Mock completion data
+  const completionData = {
+    profilePhoto: !!profile.photo,
+    basicInfo: !!(profile.name && profile.phone && profile.email && profile.location),
+    skills: profile.skills.length > 0,
+    resume: !!resume,
+    bio: !!profile.bio
+  };
+
+  // Mock applications data
+  const applications = [
+    {
+      id: '1',
+      jobTitle: 'Restaurant Server',
+      company: 'Beach Cafe Varkala',
+      appliedDate: '2 days ago',
+      status: 'viewed' as const,
+      lastUpdate: '1 day ago'
+    },
+    {
+      id: '2',
+      jobTitle: 'Delivery Boy',
+      company: 'Local Grocery Store',
+      appliedDate: '5 days ago',
+      status: 'pending' as const,
+      lastUpdate: '5 days ago'
+    },
+    {
+      id: '3',
+      jobTitle: 'Event Helper',
+      company: 'Varkala Events',
+      appliedDate: '1 week ago',
+      status: 'interview' as const,
+      lastUpdate: '2 days ago'
+    }
+  ];
+
   const stats = [
-    { label: 'Jobs Applied', value: '24', color: 'text-blue-600' },
-    { label: 'Jobs Completed', value: profile.jobsCompleted.toString(), color: 'text-green-600' },
+    { label: 'Jobs Applied', value: '24', color: 'text-info' },
+    { label: 'Jobs Completed', value: profile.jobsCompleted.toString(), color: 'text-success' },
     { label: 'Rating', value: profile.rating.toString(), color: 'text-amber-600' },
   ];
 
@@ -32,11 +76,15 @@ const ProfileScreen = ({ onEditProfile, onSettings }: ProfileScreenProps) => {
     { id: 'settings', label: 'Settings', icon: Settings, action: onSettings },
   ];
 
+  const handleResumeChange = (file: File | null) => {
+    setResume(file);
+  };
+
   return (
     <MobileLayout>
       <div className="flex flex-col min-h-screen bg-background">
-        {/* Header - consistent with other pages */}
-        <div className="px-4 py-4 border-b border-border/20 bg-background safe-area-top">
+        {/* Header */}
+        <div className="px-4 py-4 border-b border-border/20 bg-background/95 backdrop-blur-sm safe-area-top">
           <div className="flex justify-between items-center">
             <h1 className="text-xl font-bold text-foreground">Profile</h1>
             <Button
@@ -95,6 +143,9 @@ const ProfileScreen = ({ onEditProfile, onSettings }: ProfileScreenProps) => {
               </div>
             </div>
 
+            {/* Profile Completeness */}
+            <ProfileCompletenessIndicator completionData={completionData} />
+
             {/* Stats */}
             <div className="grid grid-cols-3 gap-3">
               {stats.map((stat, index) => (
@@ -122,6 +173,12 @@ const ProfileScreen = ({ onEditProfile, onSettings }: ProfileScreenProps) => {
                 ))}
               </div>
             </div>
+
+            {/* Resume Upload */}
+            <ResumeUpload onResumeChange={handleResumeChange} currentResume={resume ? 'uploaded' : null} />
+
+            {/* Application Tracker */}
+            <ApplicationTracker applications={applications} />
 
             {/* Menu Items */}
             {menuItems.length > 0 && (

@@ -81,7 +81,7 @@ const JobDetailsScreen = ({ jobId, onBack, onApply }: JobDetailsScreenProps) => 
         </div>
 
         {/* Scrollable Content */}
-        <div className="flex-1 overflow-y-auto">
+        <div className="flex-1 overflow-y-auto pb-24">
           <div className="p-6 space-y-6">
             {/* Job Header */}
             <div className="space-y-4">
@@ -219,20 +219,17 @@ const JobDetailsScreen = ({ jobId, onBack, onApply }: JobDetailsScreenProps) => 
                 </div>
               </div>
             </div>
-
-            {/* Spacer for fixed buttons */}
-            <div className="h-32"></div>
           </div>
         </div>
 
         {/* Fixed Bottom Actions with proper spacing */}
-        <div className="flex-shrink-0 bg-background/95 backdrop-blur-lg border-t p-6 safe-area-bottom">
+        <div className="flex-shrink-0 bg-background/95 backdrop-blur-lg border-t p-4 safe-area-bottom">
           <div className="flex space-x-3">
             <Button
               variant="outline"
               size="icon"
               onClick={() => setIsSaved(!isSaved)}
-              className="h-14 w-14 rounded-xl"
+              className="h-12 w-12 rounded-xl"
             >
               {isSaved ? (
                 <BookmarkCheck size={20} className="text-accent" />
@@ -242,7 +239,7 @@ const JobDetailsScreen = ({ jobId, onBack, onApply }: JobDetailsScreenProps) => 
             </Button>
             <Button 
               onClick={handleApply}
-              className="flex-1 h-14 text-lg rounded-xl btn-accent font-semibold"
+              className="flex-1 h-12 text-base rounded-xl bg-accent hover:bg-accent/90 text-accent-foreground font-semibold"
             >
               Apply Now
             </Button>
