@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Edit3, MapPin, Phone, Mail, Star, Settings, ChevronRight } from 'lucide-react';
+import { Edit3, MapPin, Phone, Mail, Star, Settings, ChevronRight, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import MobileLayout from '@/components/Layout/MobileLayout';
 import ProfileCompletenessIndicator from './ProfileCompletenessIndicator';
@@ -83,26 +83,27 @@ const ProfileScreen = ({ onEditProfile, onSettings }: ProfileScreenProps) => {
   return (
     <MobileLayout>
       <div className="flex flex-col min-h-screen bg-background">
-        {/* Header */}
-        <div className="px-4 py-4 border-b border-border/20 bg-background/95 backdrop-blur-sm safe-area-top">
-          <div className="flex justify-between items-center">
-            <h1 className="text-xl font-bold text-foreground">Profile</h1>
+        {/* Header - Consistent with other pages */}
+        <div className="flex-shrink-0 px-4 pt-6 pb-4 bg-background/95 backdrop-blur-sm border-b border-border/20 safe-area-top">
+          <div className="flex items-center justify-between mb-2">
+            <h1 className="text-2xl font-bold text-foreground">My Profile</h1>
             <Button
               variant="ghost"
               size="icon"
               onClick={onEditProfile}
-              className="hover:bg-accent/20 transition-colors duration-200 rounded-xl"
+              className="hover:bg-accent/20 transition-colors duration-200 rounded-xl h-10 w-10"
             >
-              <Edit3 size={20} />
+              <Edit3 size={20} className="text-muted-foreground" />
             </Button>
           </div>
+          <p className="text-sm text-muted-foreground">Manage your profile and track applications</p>
         </div>
 
         {/* Content */}
-        <div className="flex-1 px-4 py-6 pb-28">
+        <div className="flex-1 px-4 py-6 pb-28 overflow-y-auto">
           <div className="max-w-sm mx-auto space-y-6">
             {/* Profile Card */}
-            <div className="bg-card rounded-2xl p-6 shadow-sm border border-border/50 hover:shadow-md transition-all duration-300">
+            <div className="card-enhanced p-6 hover:shadow-md transition-all duration-300">
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center hover:scale-105 transition-transform duration-200">
                   {profile.photo ? (
@@ -115,7 +116,7 @@ const ProfileScreen = ({ onEditProfile, onSettings }: ProfileScreenProps) => {
                 </div>
                 <div className="flex-1">
                   <h2 className="text-xl font-semibold text-foreground mb-2">{profile.name}</h2>
-                  <div className="flex items-center gap-1 text-amber-600 mb-2">
+                  <div className="flex items-center gap-1 text-amber-500 mb-2">
                     <Star size={16} fill="currentColor" />
                     <span className="font-medium">{profile.rating}</span>
                     <span className="text-muted-foreground text-sm">({profile.jobsCompleted} jobs)</span>
@@ -151,7 +152,7 @@ const ProfileScreen = ({ onEditProfile, onSettings }: ProfileScreenProps) => {
               {stats.map((stat, index) => (
                 <div 
                   key={index} 
-                  className="bg-card rounded-xl p-4 text-center shadow-sm border border-border/50 hover:shadow-md hover:scale-105 transition-all duration-200"
+                  className="card-enhanced p-4 text-center hover:shadow-md hover:scale-105 transition-all duration-200"
                 >
                   <div className={`text-2xl font-bold ${stat.color} mb-1`}>{stat.value}</div>
                   <div className="text-xs text-muted-foreground">{stat.label}</div>
@@ -160,7 +161,7 @@ const ProfileScreen = ({ onEditProfile, onSettings }: ProfileScreenProps) => {
             </div>
 
             {/* Skills */}
-            <div className="bg-card rounded-2xl p-6 shadow-sm border border-border/50">
+            <div className="card-enhanced p-6">
               <h3 className="font-semibold text-foreground mb-4">Skills & Expertise</h3>
               <div className="flex flex-wrap gap-2">
                 {profile.skills.map((skill, index) => (
@@ -182,7 +183,7 @@ const ProfileScreen = ({ onEditProfile, onSettings }: ProfileScreenProps) => {
 
             {/* Menu Items */}
             {menuItems.length > 0 && (
-              <div className="bg-card rounded-2xl shadow-sm border border-border/50 overflow-hidden">
+              <div className="card-enhanced overflow-hidden">
                 {menuItems.map((item, index) => (
                   <button
                     key={item.id}

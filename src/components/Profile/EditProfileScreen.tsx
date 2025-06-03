@@ -111,9 +111,6 @@ const EditProfileScreen = ({ onSave, onBack }: EditProfileScreenProps) => {
   return (
     <MobileLayout>
       <div className="flex flex-col h-full safe-area-top">
-        {/* Background decoration */}
-        <div className="bg-decoration" />
-        
         {/* Header */}
         <div className="flex items-center justify-between px-4 py-3 border-b border-border/50 bg-background/95 backdrop-blur-sm">
           <div className="flex items-center">
@@ -124,7 +121,7 @@ const EditProfileScreen = ({ onSave, onBack }: EditProfileScreenProps) => {
           </div>
           <Button 
             onClick={handleSave}
-            className="btn-accent px-6 h-9 text-sm font-semibold rounded-lg"
+            className="btn-accent px-6 h-9 text-sm font-semibold"
           >
             Save
           </Button>
@@ -153,40 +150,6 @@ const EditProfileScreen = ({ onSave, onBack }: EditProfileScreenProps) => {
                 </button>
               </div>
               <p className="text-sm text-muted-foreground">Tap to change photo</p>
-
-              {/* Image Upload Options Modal */}
-              {showImageOptions && (
-                <div className="fixed inset-0 bg-black/50 flex items-end justify-center z-50 animate-fade-in">
-                  <div className="bg-background rounded-t-2xl p-6 w-full max-w-sm animate-scale-in">
-                    <h3 className="text-lg font-semibold mb-4 text-center">Choose Photo</h3>
-                    <div className="space-y-3">
-                      <Button
-                        onClick={() => handleImageUpload('camera')}
-                        className="w-full flex items-center gap-3 h-12 justify-start"
-                        variant="outline"
-                      >
-                        <Camera size={20} />
-                        Take Photo
-                      </Button>
-                      <Button
-                        onClick={() => handleImageUpload('gallery')}
-                        className="w-full flex items-center gap-3 h-12 justify-start"
-                        variant="outline"
-                      >
-                        <Image size={20} />
-                        Choose from Gallery
-                      </Button>
-                      <Button
-                        onClick={() => setShowImageOptions(false)}
-                        className="w-full h-12"
-                        variant="ghost"
-                      >
-                        Cancel
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              )}
             </div>
 
             {/* Basic Info */}
@@ -197,7 +160,7 @@ const EditProfileScreen = ({ onSave, onBack }: EditProfileScreenProps) => {
                   id="name"
                   value={profile.name}
                   onChange={(e) => handleInputChange('name', e.target.value)}
-                  className="h-12 text-base border-2 focus:border-primary transition-colors"
+                  className="h-12 text-base border-2 focus:border-primary transition-colors rounded-xl"
                 />
               </div>
 
@@ -207,7 +170,7 @@ const EditProfileScreen = ({ onSave, onBack }: EditProfileScreenProps) => {
                   id="phone"
                   value={profile.phone}
                   onChange={(e) => handleInputChange('phone', e.target.value)}
-                  className="h-12 text-base border-2 focus:border-primary transition-colors"
+                  className="h-12 text-base border-2 focus:border-primary transition-colors rounded-xl"
                 />
               </div>
 
@@ -217,7 +180,7 @@ const EditProfileScreen = ({ onSave, onBack }: EditProfileScreenProps) => {
                   id="email"
                   value={profile.email}
                   onChange={(e) => handleInputChange('email', e.target.value)}
-                  className="h-12 text-base border-2 focus:border-primary transition-colors"
+                  className="h-12 text-base border-2 focus:border-primary transition-colors rounded-xl"
                 />
               </div>
 
@@ -230,7 +193,7 @@ const EditProfileScreen = ({ onSave, onBack }: EditProfileScreenProps) => {
                   id="location"
                   value={profile.location}
                   onChange={(e) => handleInputChange('location', e.target.value)}
-                  className="w-full h-12 px-3 text-base border-2 border-input rounded-md bg-background focus:border-primary transition-colors"
+                  className="w-full h-12 px-3 text-base border-2 border-input rounded-xl bg-background focus:border-primary transition-colors"
                 >
                   {locationOptions.map((location) => (
                     <option key={location} value={location}>
@@ -247,7 +210,7 @@ const EditProfileScreen = ({ onSave, onBack }: EditProfileScreenProps) => {
                   value={profile.bio}
                   onChange={(e) => handleInputChange('bio', e.target.value)}
                   placeholder="Tell employers about your experience and what makes you a great candidate..."
-                  className="min-h-[100px] text-base border-2 focus:border-primary transition-colors resize-none"
+                  className="min-h-[100px] text-base border-2 focus:border-primary transition-colors resize-none rounded-xl"
                 />
               </div>
             </div>
@@ -283,13 +246,13 @@ const EditProfileScreen = ({ onSave, onBack }: EditProfileScreenProps) => {
                   value={newSkill}
                   onChange={(e) => setNewSkill(e.target.value)}
                   placeholder="Add a skill"
-                  className="flex-1 h-10 text-sm border-2 focus:border-primary transition-colors"
+                  className="flex-1 h-10 text-sm border-2 focus:border-primary transition-colors rounded-lg"
                   onKeyPress={(e) => e.key === 'Enter' && addSkill()}
                 />
                 <Button
                   onClick={addSkill}
                   variant="outline"
-                  className="h-10 px-4 text-sm border-2 hover:border-primary transition-colors"
+                  className="h-10 px-4 text-sm border-2 hover:border-primary transition-colors rounded-lg"
                 >
                   Add
                 </Button>
@@ -303,7 +266,7 @@ const EditProfileScreen = ({ onSave, onBack }: EditProfileScreenProps) => {
                 id="availability"
                 value={profile.availability}
                 onChange={(e) => handleInputChange('availability', e.target.value)}
-                className="w-full h-12 px-3 text-base border-2 border-input rounded-md bg-background focus:border-primary transition-colors"
+                className="w-full h-12 px-3 text-base border-2 border-input rounded-xl bg-background focus:border-primary transition-colors"
               >
                 <option value="Available Now">Available Now</option>
                 <option value="Available This Week">Available This Week</option>
@@ -313,6 +276,40 @@ const EditProfileScreen = ({ onSave, onBack }: EditProfileScreenProps) => {
             </div>
           </div>
         </div>
+
+        {/* Fixed Modal for Image Upload Options */}
+        {showImageOptions && (
+          <div className="modal-backdrop">
+            <div className="modal-content">
+              <h3 className="text-lg font-semibold mb-4 text-center">Choose Photo</h3>
+              <div className="space-y-3">
+                <Button
+                  onClick={() => handleImageUpload('camera')}
+                  className="w-full flex items-center gap-3 h-12 justify-start rounded-xl"
+                  variant="outline"
+                >
+                  <Camera size={20} />
+                  Take Photo
+                </Button>
+                <Button
+                  onClick={() => handleImageUpload('gallery')}
+                  className="w-full flex items-center gap-3 h-12 justify-start rounded-xl"
+                  variant="outline"
+                >
+                  <Image size={20} />
+                  Choose from Gallery
+                </Button>
+                <Button
+                  onClick={() => setShowImageOptions(false)}
+                  className="w-full h-12 rounded-xl"
+                  variant="ghost"
+                >
+                  Cancel
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </MobileLayout>
   );
