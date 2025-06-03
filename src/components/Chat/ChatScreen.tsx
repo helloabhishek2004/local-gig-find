@@ -104,7 +104,7 @@ const ChatScreen = ({ onBack }: ChatScreenProps) => {
       <MobileLayout>
         <div className="flex flex-col h-screen bg-background">
           {/* Chat Header */}
-          <div className="flex items-center justify-between px-4 py-3 border-b border-border/50 bg-background/95 backdrop-blur-sm">
+          <div className="flex items-center justify-between px-4 py-4 border-b border-border/20 bg-background safe-area-top">
             <div className="flex items-center space-x-3">
               <button 
                 onClick={handleBackToChats}
@@ -167,7 +167,7 @@ const ChatScreen = ({ onBack }: ChatScreenProps) => {
           </div>
 
           {/* Message Input */}
-          <div className="px-4 py-3 border-t border-border/50 bg-background/95 backdrop-blur-sm">
+          <div className="px-4 py-3 border-t border-border/20 bg-background">
             <div className="flex items-center space-x-3">
               <Button variant="ghost" size="icon" className="h-10 w-10 text-muted-foreground">
                 <Paperclip size={20} />
@@ -202,13 +202,10 @@ const ChatScreen = ({ onBack }: ChatScreenProps) => {
   return (
     <MobileLayout>
       <div className="flex flex-col h-screen bg-background">
-        {/* Header */}
-        <div className="flex items-center justify-between px-4 py-3 border-b border-border/50 bg-background/95 backdrop-blur-sm">
-          <div className="flex items-center">
-            <button onClick={onBack} className="text-muted-foreground hover:text-foreground transition-colors p-2 -ml-2">
-              <ArrowLeft size={24} />
-            </button>
-            <h1 className="text-lg font-semibold ml-2">Messages</h1>
+        {/* Header - consistent with other pages */}
+        <div className="px-4 py-4 border-b border-border/20 bg-background safe-area-top">
+          <div className="flex items-center justify-between">
+            <h1 className="text-xl font-bold text-foreground">Messages</h1>
           </div>
         </div>
 
@@ -220,7 +217,7 @@ const ChatScreen = ({ onBack }: ChatScreenProps) => {
               placeholder="Search conversations..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 bg-muted/50 border-0 focus:bg-muted/80 transition-colors"
+              className="pl-10 bg-muted/30 border-0 focus:bg-muted/50 transition-colors rounded-xl"
             />
           </div>
         </div>
@@ -240,7 +237,7 @@ const ChatScreen = ({ onBack }: ChatScreenProps) => {
                   <button
                     key={chat.id}
                     onClick={() => setSelectedChat(chat)}
-                    className="w-full flex items-center space-x-3 p-3 rounded-2xl hover:bg-muted/50 transition-colors text-left"
+                    className="w-full flex items-center space-x-3 p-3 rounded-2xl hover:bg-muted/30 transition-colors text-left"
                   >
                     <div className="relative flex-shrink-0">
                       <span className="text-3xl">{chat.avatar}</span>

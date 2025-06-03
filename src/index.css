@@ -5,73 +5,64 @@
 
 @layer base {
   :root {
-    /* Light theme colors */
-    --background: 32 100% 98%; /* #FAF9F6 - soft ivory white */
-    --foreground: 0 0% 10%; /* #1A1A1A - primary text */
-
-    --card: 0 0% 100%; /* #FFFFFF - card background */
-    --card-foreground: 0 0% 10%;
-
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 10%;
-
-    --primary: 174 60% 47%; /* #2CB9B0 - teal brand color */
-    --primary-foreground: 0 0% 100%;
-
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 0 0% 29%; /* #4A4A4A - muted text */
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 0 0% 29%; /* #4A4A4A */
-
-    --accent: 44 100% 67%; /* #FFC857 - amber CTA color */
-    --accent-foreground: 0 0% 10%;
-
-    --destructive: 0 70% 70%; /* #FF6B6B - error color */
-    --destructive-foreground: 0 0% 100%;
-
-    --success: 122 39% 49%; /* #4CAF50 - success color */
-    --success-foreground: 0 0% 100%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 174 60% 47%;
-
-    --radius: 0.75rem;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 142.1 76.2% 36.3%;
+    --primary-foreground: 355.7 100% 97.3%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 142.1 76.2% 36.3%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
+    --success: 142.1 76.2% 36.3%;
+    --warning: 32 95% 44%;
+    --info: 221.2 83.2% 53.3%;
   }
 
   .dark {
-    /* Dark theme colors */
-    --background: 220 13% 11%; /* #1B1B1D */
-    --foreground: 0 0% 100%; /* #FFFFFF - primary text */
-
-    --card: 0 0% 17%; /* #2C2C2E - card background */
-    --card-foreground: 0 0% 100%;
-
-    --popover: 0 0% 17%;
-    --popover-foreground: 0 0% 100%;
-
-    --primary: 174 60% 47%; /* Same teal */
-    --primary-foreground: 0 0% 100%;
-
-    --secondary: 0 0% 17%;
-    --secondary-foreground: 0 0% 81%; /* #CFCFCF - muted text */
-
-    --muted: 0 0% 17%;
-    --muted-foreground: 0 0% 81%; /* #CFCFCF */
-
-    --accent: 44 100% 67%; /* Same amber */
-    --accent-foreground: 0 0% 10%;
-
-    --destructive: 0 70% 70%;
-    --destructive-foreground: 0 0% 100%;
-
-    --success: 122 39% 49%;
-    --success-foreground: 0 0% 100%;
-
-    --border: 0 0% 17%;
-    --input: 0 0% 17%;
-    --ring: 174 60% 47%;
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 142.1 70.6% 45.3%;
+    --primary-foreground: 144.9 80.4% 10%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 142.4 71.8% 29.2%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+    --success: 142.1 70.6% 45.3%;
+    --warning: 32 95% 44%;
+    --info: 221.2 83.2% 53.3%;
   }
 }
 
@@ -79,128 +70,13 @@
   * {
     @apply border-border;
   }
-
   body {
     @apply bg-background text-foreground;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    position: relative;
-    overflow-x: hidden;
-  }
-
-  /* Background animations */
-  body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: 
-      radial-gradient(circle at 20% 80%, rgba(44, 185, 176, 0.1) 0%, transparent 50%),
-      radial-gradient(circle at 80% 20%, rgba(255, 200, 87, 0.1) 0%, transparent 50%),
-      radial-gradient(circle at 40% 40%, rgba(44, 185, 176, 0.05) 0%, transparent 50%);
-    animation: float 20s ease-in-out infinite;
-    pointer-events: none;
-    z-index: -1;
-  }
-
-  .dark body::before {
-    background: 
-      radial-gradient(circle at 20% 80%, rgba(44, 185, 176, 0.05) 0%, transparent 50%),
-      radial-gradient(circle at 80% 20%, rgba(255, 200, 87, 0.05) 0%, transparent 50%),
-      radial-gradient(circle at 40% 40%, rgba(44, 185, 176, 0.03) 0%, transparent 50%);
   }
 }
 
-/* Custom utilities for the app */
-@layer utilities {
-  .btn-primary {
-    @apply bg-primary hover:bg-primary/90 text-primary-foreground;
-  }
-  
-  .btn-accent {
-    @apply bg-accent hover:bg-accent/90 text-accent-foreground;
-  }
-  
-  .text-success {
-    @apply text-[hsl(var(--success))];
-  }
-  
-  .bg-success {
-    @apply bg-[hsl(var(--success))] text-[hsl(var(--success-foreground))];
-  }
-  
-  .glass-morphism {
-    @apply bg-white/10 backdrop-blur-lg border border-white/20;
-  }
-  
-  .safe-area-top {
-    padding-top: env(safe-area-inset-top);
-  }
-  
-  .safe-area-bottom {
-    padding-bottom: env(safe-area-inset-bottom);
-  }
-
-  /* Enhanced scrollbar hiding */
-  .scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-  
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
-  }
-
-  /* Mobile-friendly spacing */
-  .mobile-spacing {
-    padding-left: max(16px, env(safe-area-inset-left));
-    padding-right: max(16px, env(safe-area-inset-right));
-  }
-
-  .mobile-bottom-spacing {
-    padding-bottom: max(80px, calc(env(safe-area-inset-bottom) + 80px));
-  }
-
-  /* Floating animations */
-  .floating {
-    animation: floating 6s ease-in-out infinite;
-  }
-
-  .floating-delayed {
-    animation: floating 6s ease-in-out infinite 2s;
-  }
-
-  .gradient-bg {
-    background: linear-gradient(135deg, 
-      hsl(var(--primary)/0.1) 0%, 
-      hsl(var(--accent)/0.1) 100%);
-  }
-
-  /* Line clamp utility */
-  .line-clamp-3 {
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
-}
-
-@keyframes floating {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-}
-
-.animate-fade-in {
-  animation: fadeIn 0.3s ease-out;
-}
-
-@keyframes fadeIn {
+/* Smooth fade-in animation for page content */
+@keyframes fade-in {
   from {
     opacity: 0;
     transform: translateY(10px);
@@ -211,12 +87,69 @@
   }
 }
 
-/* Custom mobile optimizations */
-@media (max-width: 640px) {
-  .mobile-container {
-    width: 100vw;
-    max-width: 100vw;
-    margin: 0;
-    padding: 0;
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
   }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.2s ease-out;
+}
+
+/* Safe area for mobile */
+.safe-area-top {
+  padding-top: env(safe-area-inset-top);
+}
+
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* Background decoration */
+.bg-decoration {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 40vh;
+  background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary)) 100%);
+  opacity: 0.05;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Button accent style */
+.btn-accent {
+  background: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+}
+
+.btn-accent:hover {
+  background: hsl(var(--primary) / 0.9);
+}
+
+/* Remove animations from bottom navigation */
+.bottom-nav {
+  transition: none !important;
+  animation: none !important;
+}
+
+/* Horizontal scroll for categories */
+.category-scroll {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.category-scroll::-webkit-scrollbar {
+  display: none;
 }

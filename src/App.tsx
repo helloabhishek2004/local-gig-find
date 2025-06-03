@@ -13,6 +13,7 @@ const JobSeekerDashboard = React.lazy(() => import("./pages/JobSeeker/Dashboard"
 const JobDetails = React.lazy(() => import("./pages/JobSeeker/JobDetails"));
 const SavedJobs = React.lazy(() => import("./pages/JobSeeker/SavedJobs"));
 const ProfilePage = React.lazy(() => import("./pages/JobSeeker/Profile"));
+const EditProfile = React.lazy(() => import("./pages/JobSeeker/EditProfile"));
 const ChatPage = React.lazy(() => import("./pages/JobSeeker/Chat"));
 const NotificationsPage = React.lazy(() => import("./pages/JobSeeker/Notifications"));
 const SettingsPage = React.lazy(() => import("./pages/JobSeeker/Settings"));
@@ -20,7 +21,7 @@ const NotFound = React.lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
 
-// Loading component for Suspense
+// Loading component for Suspense with smooth animation
 const LoadingSpinner = () => (
   <div className="min-h-screen flex items-center justify-center bg-background">
     <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
@@ -44,6 +45,7 @@ const App = () => (
               <Route path="/job/:jobId" element={<JobDetails />} />
               <Route path="/jobseeker/saved" element={<SavedJobs />} />
               <Route path="/jobseeker/profile" element={<ProfilePage />} />
+              <Route path="/jobseeker/profile/edit" element={<EditProfile />} />
               <Route path="/jobseeker/chat" element={<ChatPage />} />
               <Route path="/jobseeker/notifications" element={<NotificationsPage />} />
               <Route path="/jobseeker/settings" element={<SettingsPage />} />
