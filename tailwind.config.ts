@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -62,7 +61,11 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				}
+				},
+				success: 'hsl(var(--success))',
+				warning: 'hsl(var(--warning))',
+				info: 'hsl(var(--info))',
+				hover: 'hsl(var(--hover))'
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -134,6 +137,17 @@ export default {
 						transform: 'translateY(0)',
 						opacity: '1'
 					}
+				},
+				'gradient-shift': {
+					'0%': {
+						'background-position': '0% 50%'
+					},
+					'50%': {
+						'background-position': '100% 50%'
+					},
+					'100%': {
+						'background-position': '0% 50%'
+					}
 				}
 			},
 			animation: {
@@ -143,7 +157,8 @@ export default {
 				'scale-in': 'scale-in 0.2s ease-out',
 				'float': 'float 20s ease-in-out infinite',
 				'floating': 'floating 6s ease-in-out infinite',
-				'slideInUp': 'slideInUp 0.3s ease-out'
+				'slideInUp': 'slideInUp 0.3s ease-out',
+				'gradient-shift': 'gradient-shift 15s ease infinite'
 			}
 		}
 	},
