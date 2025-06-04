@@ -111,81 +111,81 @@ const EditProfileScreen = ({ onSave, onBack }: EditProfileScreenProps) => {
   return (
     <MobileLayout>
       <div className="flex flex-col h-full safe-area-top">
-        {/* Header */}
-        <div className="flex items-center justify-between px-4 py-3 border-b border-border/50 bg-background/95 backdrop-blur-sm">
+        {/* iOS-style Header */}
+        <div className="flex items-center justify-between px-ios-md py-ios-sm ios-navbar">
           <div className="flex items-center">
-            <button onClick={onBack} className="text-muted-foreground hover:text-foreground transition-colors p-2 -ml-2">
+            <button onClick={onBack} className="text-primary hover:text-primary/80 transition-colors p-ios-xs -ml-2 ios-button rounded-ios">
               <ArrowLeft size={24} />
             </button>
-            <h1 className="text-lg font-semibold ml-2">Edit Profile</h1>
+            <h1 className="text-ios-headline font-semibold ml-ios-xs">Edit Profile</h1>
           </div>
           <Button 
             onClick={handleSave}
-            className="btn-accent px-6 h-9 text-sm font-semibold"
+            className="btn-accent px-ios-lg h-10 text-ios-footnote font-semibold ios-button"
           >
             Save
           </Button>
         </div>
 
         {/* Content */}
-        <div className="flex-1 px-4 py-6 overflow-y-auto pb-6">
-          <div className="max-w-sm mx-auto space-y-8">
+        <div className="flex-1 px-ios-md py-ios-md overflow-y-auto pb-6">
+          <div className="max-w-sm mx-auto space-y-ios-xl">
             {/* Profile Photo */}
-            <div className="flex flex-col items-center space-y-4 animate-fade-in">
+            <div className="flex flex-col items-center space-y-ios-md animate-fade-in">
               <div className="relative">
-                <div className="w-24 h-24 bg-primary/10 rounded-full flex items-center justify-center overflow-hidden">
+                <div className="w-24 h-24 bg-primary/10 rounded-ios-xl flex items-center justify-center overflow-hidden shadow-ios">
                   {profile.photo ? (
                     <img src={profile.photo} alt="Profile" className="w-full h-full object-cover" />
                   ) : (
-                    <span className="text-2xl font-bold text-primary">
+                    <span className="text-ios-title2 font-bold text-primary">
                       {profile.name.split(' ').map(n => n[0]).join('')}
                     </span>
                   )}
                 </div>
                 <button 
                   onClick={() => setShowImageOptions(true)}
-                  className="absolute -bottom-2 -right-2 w-8 h-8 bg-accent rounded-full flex items-center justify-center shadow-md hover:scale-110 transition-transform"
+                  className="absolute -bottom-2 -right-2 w-8 h-8 bg-accent rounded-full flex items-center justify-center shadow-ios-md hover:scale-110 transition-transform ios-button"
                 >
                   <Camera size={16} className="text-accent-foreground" />
                 </button>
               </div>
-              <p className="text-sm text-muted-foreground">Tap to change photo</p>
+              <p className="text-ios-caption text-muted-foreground">Tap to change photo</p>
             </div>
 
             {/* Basic Info */}
-            <div className="space-y-5">
-              <div className="space-y-2">
-                <Label htmlFor="name" className="text-sm font-medium">Full Name</Label>
+            <div className="space-y-ios-lg">
+              <div className="space-y-ios-xs">
+                <Label htmlFor="name" className="text-ios-footnote font-medium ios-section-header">Full Name</Label>
                 <Input
                   id="name"
                   value={profile.name}
                   onChange={(e) => handleInputChange('name', e.target.value)}
-                  className="h-12 text-base border-2 focus:border-primary transition-colors rounded-xl"
+                  className="ios-input h-12 text-ios-callout"
                 />
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="phone" className="text-sm font-medium">Phone Number</Label>
+              <div className="space-y-ios-xs">
+                <Label htmlFor="phone" className="text-ios-footnote font-medium ios-section-header">Phone Number</Label>
                 <Input
                   id="phone"
                   value={profile.phone}
                   onChange={(e) => handleInputChange('phone', e.target.value)}
-                  className="h-12 text-base border-2 focus:border-primary transition-colors rounded-xl"
+                  className="ios-input h-12 text-ios-callout"
                 />
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="email" className="text-sm font-medium">Email Address</Label>
+              <div className="space-y-ios-xs">
+                <Label htmlFor="email" className="text-ios-footnote font-medium ios-section-header">Email Address</Label>
                 <Input
                   id="email"
                   value={profile.email}
                   onChange={(e) => handleInputChange('email', e.target.value)}
-                  className="h-12 text-base border-2 focus:border-primary transition-colors rounded-xl"
+                  className="ios-input h-12 text-ios-callout"
                 />
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="location" className="text-sm font-medium flex items-center gap-2">
+              <div className="space-y-ios-xs">
+                <Label htmlFor="location" className="text-ios-footnote font-medium flex items-center gap-2 ios-section-header">
                   <MapPin size={16} />
                   Location
                 </Label>
@@ -193,7 +193,7 @@ const EditProfileScreen = ({ onSave, onBack }: EditProfileScreenProps) => {
                   id="location"
                   value={profile.location}
                   onChange={(e) => handleInputChange('location', e.target.value)}
-                  className="w-full h-12 px-3 text-base border-2 border-input rounded-xl bg-background focus:border-primary transition-colors"
+                  className="w-full h-12 px-ios-sm text-ios-callout ios-input"
                 >
                   {locationOptions.map((location) => (
                     <option key={location} value={location}>
@@ -203,31 +203,31 @@ const EditProfileScreen = ({ onSave, onBack }: EditProfileScreenProps) => {
                 </select>
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="bio" className="text-sm font-medium">About Me</Label>
+              <div className="space-y-ios-xs">
+                <Label htmlFor="bio" className="text-ios-footnote font-medium ios-section-header">About Me</Label>
                 <Textarea
                   id="bio"
                   value={profile.bio}
                   onChange={(e) => handleInputChange('bio', e.target.value)}
                   placeholder="Tell employers about your experience and what makes you a great candidate..."
-                  className="min-h-[100px] text-base border-2 focus:border-primary transition-colors resize-none rounded-xl"
+                  className="min-h-[100px] text-ios-callout ios-input resize-none"
                 />
               </div>
             </div>
 
             {/* Skills Section */}
-            <div className="space-y-4">
-              <Label className="text-sm font-medium flex items-center gap-2">
+            <div className="space-y-ios-md">
+              <Label className="text-ios-footnote font-medium flex items-center gap-2 ios-section-header">
                 <Briefcase size={16} />
                 Skills & Expertise
               </Label>
               
               {/* Current Skills */}
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-ios-xs">
                 {profile.skills.map((skill, index) => (
                   <span
                     key={index}
-                    className="bg-primary/10 text-primary px-3 py-2 rounded-lg text-sm font-medium flex items-center gap-2 group hover:bg-primary/20 transition-colors animate-scale-in"
+                    className="bg-primary/10 text-primary px-ios-sm py-ios-xs rounded-ios text-ios-footnote font-medium flex items-center gap-2 group hover:bg-primary/20 transition-colors animate-scale-in shadow-ios"
                   >
                     {skill}
                     <button
@@ -241,18 +241,18 @@ const EditProfileScreen = ({ onSave, onBack }: EditProfileScreenProps) => {
               </div>
 
               {/* Add New Skill */}
-              <div className="flex gap-2">
+              <div className="flex gap-ios-xs">
                 <Input
                   value={newSkill}
                   onChange={(e) => setNewSkill(e.target.value)}
                   placeholder="Add a skill"
-                  className="flex-1 h-10 text-sm border-2 focus:border-primary transition-colors rounded-lg"
+                  className="flex-1 h-10 text-ios-footnote ios-input"
                   onKeyPress={(e) => e.key === 'Enter' && addSkill()}
                 />
                 <Button
                   onClick={addSkill}
                   variant="outline"
-                  className="h-10 px-4 text-sm border-2 hover:border-primary transition-colors rounded-lg"
+                  className="h-10 px-ios-md text-ios-footnote ios-button"
                 >
                   Add
                 </Button>
@@ -260,13 +260,13 @@ const EditProfileScreen = ({ onSave, onBack }: EditProfileScreenProps) => {
             </div>
 
             {/* Availability */}
-            <div className="space-y-2">
-              <Label htmlFor="availability" className="text-sm font-medium">Availability Status</Label>
+            <div className="space-y-ios-xs">
+              <Label htmlFor="availability" className="text-ios-footnote font-medium ios-section-header">Availability Status</Label>
               <select
                 id="availability"
                 value={profile.availability}
                 onChange={(e) => handleInputChange('availability', e.target.value)}
-                className="w-full h-12 px-3 text-base border-2 border-input rounded-xl bg-background focus:border-primary transition-colors"
+                className="w-full h-12 px-ios-sm text-ios-callout ios-input"
               >
                 <option value="Available Now">Available Now</option>
                 <option value="Available This Week">Available This Week</option>
@@ -277,31 +277,31 @@ const EditProfileScreen = ({ onSave, onBack }: EditProfileScreenProps) => {
           </div>
         </div>
 
-        {/* Fixed Modal for Image Upload Options */}
+        {/* iOS-style Modal for Image Upload Options */}
         {showImageOptions && (
           <div className="modal-backdrop">
             <div className="modal-content">
-              <h3 className="text-lg font-semibold mb-4 text-center">Choose Photo</h3>
-              <div className="space-y-3">
+              <h3 className="text-ios-headline font-semibold mb-ios-lg text-center">Choose Photo</h3>
+              <div className="space-y-ios-sm">
                 <Button
                   onClick={() => handleImageUpload('camera')}
-                  className="w-full flex items-center gap-3 h-12 justify-start rounded-xl"
+                  className="w-full flex items-center gap-ios-sm h-12 justify-start rounded-ios ios-button"
                   variant="outline"
                 >
                   <Camera size={20} />
-                  Take Photo
+                  <span className="text-ios-callout">Take Photo</span>
                 </Button>
                 <Button
                   onClick={() => handleImageUpload('gallery')}
-                  className="w-full flex items-center gap-3 h-12 justify-start rounded-xl"
+                  className="w-full flex items-center gap-ios-sm h-12 justify-start rounded-ios ios-button"
                   variant="outline"
                 >
                   <Image size={20} />
-                  Choose from Gallery
+                  <span className="text-ios-callout">Choose from Gallery</span>
                 </Button>
                 <Button
                   onClick={() => setShowImageOptions(false)}
-                  className="w-full h-12 rounded-xl"
+                  className="w-full h-12 rounded-ios ios-button text-ios-callout"
                   variant="ghost"
                 >
                   Cancel

@@ -25,22 +25,22 @@ const BottomNavWithRouter = () => {
   const activeTab = getActiveTab();
 
   return (
-    <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50 bottom-nav">
-      <div className="bg-card/90 backdrop-blur-lg border border-border/50 rounded-2xl shadow-lg px-2 py-3 mx-4">
+    <div className="fixed bottom-ios-md left-1/2 transform -translate-x-1/2 z-50 bottom-nav">
+      <div className="bg-card/95 backdrop-blur-ios border border-border/30 rounded-ios-xl shadow-ios-lg px-ios-xs py-ios-sm mx-ios-md">
         <div className="flex justify-center gap-1">
           {tabs.map(({ id, icon: Icon, label, path }) => (
             <button
               key={id}
               onClick={() => navigate(path)}
               className={cn(
-                "flex flex-col items-center p-3 min-w-0 rounded-xl transition-all duration-200 hover:scale-105 hover:bg-accent/20 active:scale-95",
+                "flex flex-col items-center p-ios-sm min-w-0 rounded-ios ios-button transition-all duration-200",
                 activeTab === id 
-                  ? "text-primary bg-primary/10 shadow-sm" 
-                  : "text-muted-foreground hover:text-primary"
+                  ? "text-primary bg-primary/10 shadow-ios" 
+                  : "text-muted-foreground hover:text-primary hover:bg-accent/10"
               )}
             >
               <Icon size={20} className="transition-transform duration-200" />
-              <span className="text-xs mt-1 font-medium">{label}</span>
+              <span className="text-ios-caption mt-1 font-medium">{label}</span>
             </button>
           ))}
         </div>

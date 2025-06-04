@@ -30,7 +30,7 @@
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
-    --radius: 0.75rem;
+    --radius: 1rem; /* More rounded for iOS feel */
     --success: 122 39% 49%; /* #4CAF50 - success color */
     --warning: 44 100% 67%; /* #FFC857 - warning amber */
     --info: 174 60% 47%; /* #2CB9B0 - teal info */
@@ -75,12 +75,14 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground font-sans;
-    font-family: 'Inter', 'Poppins', 'Nunito', system-ui, sans-serif;
+    @apply bg-background text-foreground;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', 'Segoe UI', 'Roboto', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 
-/* Animated gradient background */
+/* iOS-style animated gradient background */
 @keyframes gradient-shift {
   0% {
     background-position: 0% 50%;
@@ -102,20 +104,20 @@
   z-index: -2;
   background: linear-gradient(
     135deg,
+    hsl(var(--primary) / 0.015),
+    hsl(var(--secondary) / 0.01),
     hsl(var(--primary) / 0.02),
-    hsl(var(--secondary) / 0.015),
-    hsl(var(--primary) / 0.025),
-    hsl(var(--secondary) / 0.01)
+    hsl(var(--secondary) / 0.008)
   );
   background-size: 400% 400%;
-  animation: gradient-shift 20s ease infinite;
+  animation: gradient-shift 25s ease infinite;
 }
 
-/* Smooth animations */
+/* iOS-style smooth animations */
 @keyframes fade-in {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(8px);
   }
   to {
     opacity: 1;
@@ -126,7 +128,7 @@
 @keyframes scale-in {
   from {
     opacity: 0;
-    transform: scale(0.95);
+    transform: scale(0.96);
   }
   to {
     opacity: 1;
@@ -134,12 +136,23 @@
   }
 }
 
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
 .animate-fade-in {
-  animation: fade-in 0.3s ease-out;
+  animation: fade-in 0.4s ease-out;
 }
 
 .animate-scale-in {
-  animation: scale-in 0.2s ease-out;
+  animation: scale-in 0.3s ease-out;
 }
 
 /* Safe area for mobile */
@@ -151,31 +164,57 @@
   padding-bottom: env(safe-area-inset-bottom);
 }
 
-/* Button accent style */
+/* iOS-style button accent */
 .btn-accent {
-  background: hsl(var(--secondary));
-  color: hsl(var(--secondary-foreground));
+  background: hsl(var(--accent));
+  color: hsl(var(--accent-foreground));
   font-weight: 600;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px hsl(var(--secondary) / 0.2);
+  border-radius: 14px;
+  box-shadow: 0 2px 12px hsl(var(--accent) / 0.3), 
+              0 1px 4px hsl(var(--accent) / 0.2);
+  transition: all 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 
 .btn-accent:hover {
-  background: hsl(var(--secondary) / 0.9);
-  box-shadow: 0 4px 12px hsl(var(--secondary) / 0.25);
+  background: hsl(var(--accent) / 0.9);
+  box-shadow: 0 4px 16px hsl(var(--accent) / 0.35),
+              0 2px 8px hsl(var(--accent) / 0.25);
+  transform: translateY(-1px);
 }
 
-/* Enhanced card styling */
+.btn-accent:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 6px hsl(var(--accent) / 0.25);
+}
+
+/* iOS-style enhanced card styling */
 .card-enhanced {
   background: hsl(var(--card));
-  border: 1px solid hsl(var(--border));
-  border-radius: 16px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
-  transition: all 0.2s ease;
+  border: 1px solid hsl(var(--border) / 0.6);
+  border-radius: 18px;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.04), 
+              0 1px 6px rgba(0, 0, 0, 0.02);
+  transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+  backdrop-filter: blur(10px);
 }
 
 .card-enhanced:hover {
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08), 
+              0 2px 12px rgba(0, 0, 0, 0.04);
+  transform: translateY(-2px);
+}
+
+/* iOS-style buttons */
+.ios-button {
+  border-radius: 12px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  transition: all 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.ios-button:active {
+  transform: scale(0.96);
 }
 
 /* Remove animations from bottom navigation */
@@ -205,37 +244,80 @@
   overflow-wrap: break-word;
 }
 
-/* Modal positioning fix */
+/* iOS-style modal positioning */
 .modal-backdrop {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(10px);
   display: flex;
   align-items: end;
   justify-content: center;
   z-index: 50;
-  padding: 1rem;
+  padding: 0;
 }
 
 .modal-content {
   background: hsl(var(--card));
-  border-radius: 16px 16px 0 0;
+  border-radius: 20px 20px 0 0;
   width: 100%;
   max-width: 400px;
   padding: 1.5rem;
-  animation: slideUp 0.3s ease-out;
+  box-shadow: 0 -4px 32px rgba(0, 0, 0, 0.1);
+  animation: slideUp 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 
-@keyframes slideUp {
-  from {
-    transform: translateY(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+/* iOS-style inputs */
+.ios-input {
+  border-radius: 12px;
+  border: 1.5px solid hsl(var(--border));
+  background: hsl(var(--background));
+  transition: all 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+  font-size: 16px; /* Prevents zoom on iOS */
+}
+
+.ios-input:focus {
+  border-color: hsl(var(--primary));
+  box-shadow: 0 0 0 3px hsl(var(--primary) / 0.1);
+  outline: none;
+}
+
+/* iOS-style section headers */
+.ios-section-header {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: hsl(var(--muted-foreground));
+  margin-bottom: 8px;
+}
+
+/* iOS-style list items */
+.ios-list-item {
+  background: hsl(var(--card));
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 8px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.04);
+  transition: all 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.ios-list-item:active {
+  transform: scale(0.98);
+  background: hsl(var(--muted));
+}
+
+/* iOS-style navigation bar */
+.ios-navbar {
+  background: hsl(var(--background) / 0.8);
+  backdrop-filter: blur(20px);
+  border-bottom: 0.5px solid hsl(var(--border) / 0.3);
+}
+
+/* Status bar height simulation */
+.status-bar-height {
+  height: 44px; /* Standard iOS status bar */
 }

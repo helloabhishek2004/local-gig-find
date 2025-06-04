@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Edit3, MapPin, Phone, Mail, Star, Settings, ChevronRight, ArrowLeft } from 'lucide-react';
+import { Edit3, MapPin, Phone, Mail, Star, Settings, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import MobileLayout from '@/components/Layout/MobileLayout';
 import ProfileCompletenessIndicator from './ProfileCompletenessIndicator';
@@ -83,91 +83,98 @@ const ProfileScreen = ({ onEditProfile, onSettings }: ProfileScreenProps) => {
   return (
     <MobileLayout>
       <div className="flex flex-col min-h-screen bg-background">
-        {/* Header - Consistent with other pages */}
-        <div className="flex-shrink-0 px-4 pt-6 pb-4 bg-background/95 backdrop-blur-sm border-b border-border/20 safe-area-top">
-          <div className="flex items-center justify-between mb-2">
-            <h1 className="text-2xl font-bold text-foreground">My Profile</h1>
+        {/* iOS-style Header */}
+        <div className="flex-shrink-0 px-ios-md pt-ios-lg pb-ios-sm ios-navbar safe-area-top">
+          <div className="flex items-center justify-between mb-ios-xs">
+            <h1 className="text-ios-title1 font-bold text-foreground">Profile</h1>
             <Button
               variant="ghost"
               size="icon"
               onClick={onEditProfile}
-              className="hover:bg-accent/20 transition-colors duration-200 rounded-xl h-10 w-10"
+              className="hover:bg-accent/10 transition-all duration-200 rounded-ios h-11 w-11 ios-button"
             >
-              <Edit3 size={20} className="text-muted-foreground" />
+              <Edit3 size={20} className="text-primary" />
             </Button>
           </div>
-          <p className="text-sm text-muted-foreground">Manage your profile and track applications</p>
         </div>
 
         {/* Content */}
-        <div className="flex-1 px-4 py-6 pb-28 overflow-y-auto">
-          <div className="max-w-sm mx-auto space-y-6">
+        <div className="flex-1 px-ios-md py-ios-sm pb-32 overflow-y-auto">
+          <div className="max-w-sm mx-auto space-y-ios-lg">
             {/* Profile Card */}
-            <div className="card-enhanced p-6 hover:shadow-md transition-all duration-300">
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center hover:scale-105 transition-transform duration-200">
+            <div className="card-enhanced p-ios-xl animate-fade-in">
+              <div className="flex items-center gap-ios-md mb-ios-xl">
+                <div className="w-20 h-20 bg-primary/10 rounded-ios-xl flex items-center justify-center shadow-ios transition-transform duration-200 hover:scale-105">
                   {profile.photo ? (
-                    <img src={profile.photo} alt="Profile" className="w-full h-full rounded-full object-cover" />
+                    <img src={profile.photo} alt="Profile" className="w-full h-full rounded-ios-xl object-cover" />
                   ) : (
-                    <span className="text-2xl font-bold text-primary">
+                    <span className="text-ios-title2 font-bold text-primary">
                       {profile.name.split(' ').map(n => n[0]).join('')}
                     </span>
                   )}
                 </div>
                 <div className="flex-1">
-                  <h2 className="text-xl font-semibold text-foreground mb-2">{profile.name}</h2>
-                  <div className="flex items-center gap-1 text-amber-500 mb-2">
+                  <h2 className="text-ios-title2 font-bold text-foreground mb-ios-xs">{profile.name}</h2>
+                  <div className="flex items-center gap-1 text-amber-500 mb-ios-xs">
                     <Star size={16} fill="currentColor" />
-                    <span className="font-medium">{profile.rating}</span>
-                    <span className="text-muted-foreground text-sm">({profile.jobsCompleted} jobs)</span>
+                    <span className="font-semibold text-ios-footnote">{profile.rating}</span>
+                    <span className="text-muted-foreground text-ios-caption">({profile.jobsCompleted} jobs)</span>
                   </div>
-                  <span className="inline-block bg-success/10 text-success text-xs px-3 py-1.5 rounded-full font-medium">
+                  <span className="inline-block bg-success/10 text-success text-ios-caption px-ios-sm py-1.5 rounded-ios font-medium">
                     {profile.availability}
                   </span>
                 </div>
               </div>
 
               {/* Contact Info */}
-              <div className="space-y-4">
-                <div className="flex items-center gap-3 text-muted-foreground">
-                  <Phone size={18} className="text-primary" />
-                  <span className="text-base">{profile.phone}</span>
+              <div className="space-y-ios-sm">
+                <div className="flex items-center gap-ios-sm text-muted-foreground">
+                  <div className="w-8 h-8 bg-primary/10 rounded-ios flex items-center justify-center">
+                    <Phone size={16} className="text-primary" />
+                  </div>
+                  <span className="text-ios-callout">{profile.phone}</span>
                 </div>
-                <div className="flex items-center gap-3 text-muted-foreground">
-                  <Mail size={18} className="text-primary" />
-                  <span className="text-base">{profile.email}</span>
+                <div className="flex items-center gap-ios-sm text-muted-foreground">
+                  <div className="w-8 h-8 bg-primary/10 rounded-ios flex items-center justify-center">
+                    <Mail size={16} className="text-primary" />
+                  </div>
+                  <span className="text-ios-callout">{profile.email}</span>
                 </div>
-                <div className="flex items-center gap-3 text-muted-foreground">
-                  <MapPin size={18} className="text-primary" />
-                  <span className="text-base">{profile.location}</span>
+                <div className="flex items-center gap-ios-sm text-muted-foreground">
+                  <div className="w-8 h-8 bg-primary/10 rounded-ios flex items-center justify-center">
+                    <MapPin size={16} className="text-primary" />
+                  </div>
+                  <span className="text-ios-callout">{profile.location}</span>
                 </div>
               </div>
             </div>
 
             {/* Profile Completeness */}
-            <ProfileCompletenessIndicator completionData={completionData} />
+            <div className="animate-fade-in" style={{ animationDelay: '0.1s' }}>
+              <ProfileCompletenessIndicator completionData={completionData} />
+            </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-3 gap-ios-sm animate-fade-in" style={{ animationDelay: '0.2s' }}>
               {stats.map((stat, index) => (
                 <div 
                   key={index} 
-                  className="card-enhanced p-4 text-center hover:shadow-md hover:scale-105 transition-all duration-200"
+                  className="card-enhanced p-ios-md text-center ios-list-item"
                 >
-                  <div className={`text-2xl font-bold ${stat.color} mb-1`}>{stat.value}</div>
-                  <div className="text-xs text-muted-foreground">{stat.label}</div>
+                  <div className={`text-ios-title2 font-bold ${stat.color} mb-1`}>{stat.value}</div>
+                  <div className="text-ios-caption text-muted-foreground">{stat.label}</div>
                 </div>
               ))}
             </div>
 
             {/* Skills */}
-            <div className="card-enhanced p-6">
-              <h3 className="font-semibold text-foreground mb-4">Skills & Expertise</h3>
-              <div className="flex flex-wrap gap-2">
+            <div className="card-enhanced p-ios-xl animate-fade-in" style={{ animationDelay: '0.3s' }}>
+              <h3 className="font-semibold text-foreground mb-ios-md text-ios-headline">Skills & Expertise</h3>
+              <div className="flex flex-wrap gap-ios-xs">
                 {profile.skills.map((skill, index) => (
                   <span
                     key={index}
-                    className="bg-primary/10 text-primary px-4 py-2 rounded-lg text-sm font-medium hover:bg-primary/20 transition-colors duration-200"
+                    className="bg-primary/10 text-primary px-ios-sm py-ios-xs rounded-ios text-ios-footnote font-medium hover:bg-primary/20 transition-colors duration-200"
                   >
                     {skill}
                   </span>
@@ -176,25 +183,31 @@ const ProfileScreen = ({ onEditProfile, onSettings }: ProfileScreenProps) => {
             </div>
 
             {/* Resume Upload */}
-            <ResumeUpload onResumeChange={handleResumeChange} currentResume={resume ? 'uploaded' : null} />
+            <div className="animate-fade-in" style={{ animationDelay: '0.4s' }}>
+              <ResumeUpload onResumeChange={handleResumeChange} currentResume={resume ? 'uploaded' : null} />
+            </div>
 
             {/* Application Tracker */}
-            <ApplicationTracker applications={applications} />
+            <div className="animate-fade-in" style={{ animationDelay: '0.5s' }}>
+              <ApplicationTracker applications={applications} />
+            </div>
 
             {/* Menu Items */}
             {menuItems.length > 0 && (
-              <div className="card-enhanced overflow-hidden">
+              <div className="card-enhanced overflow-hidden animate-fade-in" style={{ animationDelay: '0.6s' }}>
                 {menuItems.map((item, index) => (
                   <button
                     key={item.id}
                     onClick={item.action}
-                    className="w-full flex items-center justify-between p-5 hover:bg-accent/5 transition-colors duration-200 border-b border-border/50 last:border-b-0 active:scale-[0.98] transition-transform"
+                    className="w-full flex items-center justify-between p-ios-lg hover:bg-accent/5 transition-colors duration-200 border-b border-border/30 last:border-b-0 ios-list-item active:scale-[0.98]"
                   >
-                    <div className="flex items-center gap-4">
-                      <item.icon size={20} className="text-muted-foreground" />
-                      <span className="font-medium text-foreground text-base">{item.label}</span>
+                    <div className="flex items-center gap-ios-md">
+                      <div className="w-8 h-8 bg-muted/50 rounded-ios flex items-center justify-center">
+                        <item.icon size={18} className="text-muted-foreground" />
+                      </div>
+                      <span className="font-medium text-foreground text-ios-callout">{item.label}</span>
                     </div>
-                    <ChevronRight size={20} className="text-muted-foreground" />
+                    <ChevronRight size={18} className="text-muted-foreground" />
                   </button>
                 ))}
               </div>
