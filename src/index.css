@@ -5,34 +5,34 @@
 
 @layer base {
   :root {
-    --background: 250 248 246; /* #FAF8F6 - Creamy off-white */
+    --background: 250 249 246; /* #FAF9F6 - Soft ivory white */
     --foreground: 26 26 26; /* #1A1A1A - Primary text */
     --card: 255 255 255; /* #FFFFFF - Card background */
     --card-foreground: 26 26 26; /* #1A1A1A - Primary text */
     --popover: 255 255 255;
     --popover-foreground: 26 26 26;
-    --primary: 0 196 160; /* #00C4A0 - Turquoise/Teal */
+    --primary: 44 185 176; /* #2CB9B0 - Teal brand color */
     --primary-foreground: 255 255 255;
-    --secondary: 252 211 77; /* #FCD34D - Warm yellow */
+    --secondary: 255 200 87; /* #FFC857 - Amber accent */
     --secondary-foreground: 26 26 26;
-    --muted: 248 250 252; /* #F8FAFC - Light muted background */
-    --muted-foreground: 100 116 139; /* #64748B - Medium gray */
-    --accent: 252 211 77; /* #FCD34D - Warm yellow accent */
+    --muted: 248 250 252; /* Light muted background */
+    --muted-foreground: 74 74 74; /* #4A4A4A - Muted text */
+    --accent: 255 200 87; /* #FFC857 - Amber accent */
     --accent-foreground: 26 26 26;
-    --destructive: 239 68 68; /* #EF4444 - Error red */
+    --destructive: 255 107 107; /* #FF6B6B - Error red */
     --destructive-foreground: 255 255 255;
-    --border: 226 232 240; /* #E2E8F0 - Light borders */
+    --border: 226 232 240; /* Light borders */
     --input: 226 232 240;
-    --ring: 0 196 160;
+    --ring: 44 185 176; /* Teal ring */
     --chart-1: 12 76% 61%;
     --chart-2: 173 58% 39%;
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.75rem;
-    --success: 34 197 94; /* #22C55E - Success green */
-    --warning: 251 191 36; /* #FBBF24 - Warning amber */
-    --info: 0 196 160; /* #00C4A0 - Teal info */
+    --success: 76 175 80; /* #4CAF50 - Success green */
+    --warning: 255 200 87; /* #FFC857 - Warning amber */
+    --info: 44 185 176; /* #2CB9B0 - Teal info */
     --hover: 240 253 250; /* Very light teal hover */
   }
 
@@ -43,27 +43,27 @@
     --card-foreground: 255 255 255;
     --popover: 44 44 46;
     --popover-foreground: 255 255 255;
-    --primary: 0 196 160; /* #00C4A0 - Same teal brand */
+    --primary: 44 185 176; /* #2CB9B0 - Same teal brand */
     --primary-foreground: 255 255 255;
-    --secondary: 252 211 77; /* #FCD34D - Same warm yellow */
+    --secondary: 255 200 87; /* #FFC857 - Same amber accent */
     --secondary-foreground: 26 26 26;
-    --muted: 58 58 60; /* #3A3A3C - Dark muted background */
+    --muted: 58 58 60; /* Dark muted background */
     --muted-foreground: 207 207 207; /* #CFCFCF - Muted text */
-    --accent: 252 211 77; /* #FCD34D - Same warm yellow */
+    --accent: 255 200 87; /* #FFC857 - Same amber accent */
     --accent-foreground: 26 26 26;
-    --destructive: 239 68 68; /* #EF4444 - Same error red */
+    --destructive: 255 107 107; /* #FF6B6B - Same error red */
     --destructive-foreground: 255 255 255;
-    --border: 58 58 60; /* #3A3A3C - Dark borders */
+    --border: 58 58 60; /* Dark borders */
     --input: 58 58 60;
-    --ring: 0 196 160;
+    --ring: 44 185 176;
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
-    --success: 34 197 94; /* #22C55E - Same success green */
-    --warning: 251 191 36; /* #FBBF24 - Same warning amber */
-    --info: 0 196 160; /* #00C4A0 - Same teal info */
+    --success: 76 175 80; /* #4CAF50 - Same success green */
+    --warning: 255 200 87; /* #FFC857 - Same warning amber */
+    --info: 44 185 176; /* #2CB9B0 - Same teal info */
     --hover: 55 65 81; /* Dark teal hover */
   }
 }
