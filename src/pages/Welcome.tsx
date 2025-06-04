@@ -48,7 +48,6 @@ const Welcome = () => {
               onClick={() => navigate('/employer/login')}
               className="w-full h-16 bg-card hover:bg-card/80 text-foreground border-2 border-accent/20 hover:border-accent/40 rounded-2xl flex items-center justify-between px-6 transition-all duration-200 shadow-sm hover:shadow-md"
               variant="outline"
-              disabled
             >
               <div className="flex items-center">
                 <div className="w-12 h-12 bg-accent/10 rounded-xl flex items-center justify-center mr-4">
@@ -59,7 +58,7 @@ const Welcome = () => {
                   <p className="text-sm text-muted-foreground">Hire local talent</p>
                 </div>
               </div>
-              <span className="text-xs bg-muted text-muted-foreground px-2 py-1 rounded">Coming Soon</span>
+              <ArrowRight size={20} className="text-muted-foreground" />
             </Button>
           </div>
         </div>

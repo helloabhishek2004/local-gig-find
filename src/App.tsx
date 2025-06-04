@@ -17,6 +17,13 @@ const EditProfile = React.lazy(() => import("./pages/JobSeeker/EditProfile"));
 const ChatPage = React.lazy(() => import("./pages/JobSeeker/Chat"));
 const NotificationsPage = React.lazy(() => import("./pages/JobSeeker/Notifications"));
 const SettingsPage = React.lazy(() => import("./pages/JobSeeker/Settings"));
+
+// Employer pages
+const EmployerLogin = React.lazy(() => import("./pages/Employer/Login"));
+const EmployerRegister = React.lazy(() => import("./pages/Employer/Register"));
+const EmployerDashboard = React.lazy(() => import("./pages/Employer/Dashboard"));
+const PostJob = React.lazy(() => import("./pages/Employer/PostJob"));
+
 const NotFound = React.lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
@@ -49,6 +56,12 @@ const App = () => (
               <Route path="/jobseeker/chat" element={<ChatPage />} />
               <Route path="/jobseeker/notifications" element={<NotificationsPage />} />
               <Route path="/jobseeker/settings" element={<SettingsPage />} />
+              
+              {/* Employer Routes */}
+              <Route path="/employer/login" element={<EmployerLogin />} />
+              <Route path="/employer/register" element={<EmployerRegister />} />
+              <Route path="/employer/dashboard" element={<EmployerDashboard />} />
+              <Route path="/employer/post-job" element={<PostJob />} />
               
               {/* Redirect old routes for backward compatibility */}
               <Route path="/login" element={<Navigate to="/jobseeker/login" replace />} />
