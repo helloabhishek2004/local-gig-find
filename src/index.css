@@ -1,180 +1,136 @@
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  :root {
-    /* Light theme colors */
-    --background: 32 100% 98%; /* #FAF9F6 - soft ivory white */
-    --foreground: 0 0% 10%; /* #1A1A1A - primary text */
-    --card: 0 0% 100%; /* #FFFFFF - card background */
-    --card-foreground: 0 0% 10%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 10%;
-    --primary: 174 60% 47%; /* #2CB9B0 - teal brand color */
-    --primary-foreground: 0 0% 100%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 0 0% 29%; /* #4A4A4A - muted text */
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 0 0% 29%; /* #4A4A4A */
-    --accent: 44 100% 67%; /* #FFC857 - amber CTA color */
-    --accent-foreground: 0 0% 10%;
-    --destructive: 0 70% 70%; /* #FF6B6B - error color */
-    --destructive-foreground: 0 0% 100%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 174 60% 47%;
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
-    --radius: 1rem; /* More rounded for iOS feel */
-    --success: 122 39% 49%; /* #4CAF50 - success color */
-    --warning: 44 100% 67%; /* #FFC857 - warning amber */
-    --info: 174 60% 47%; /* #2CB9B0 - teal info */
-    --hover: 240 253 250; /* Very light teal hover */
-  }
-
-  .dark {
-    /* Dark theme colors */
-    --background: 220 13% 11%; /* #1B1B1D */
-    --foreground: 0 0% 100%; /* #FFFFFF - primary text */
-    --card: 0 0% 17%; /* #2C2C2E - card background */
-    --card-foreground: 0 0% 100%;
-    --popover: 0 0% 17%;
-    --popover-foreground: 0 0% 100%;
-    --primary: 174 60% 47%; /* Same teal */
-    --primary-foreground: 0 0% 100%;
-    --secondary: 0 0% 17%;
-    --secondary-foreground: 0 0% 81%; /* #CFCFCF - muted text */
-    --muted: 0 0% 17%;
-    --muted-foreground: 0 0% 81%; /* #CFCFCF */
-    --accent: 44 100% 67%; /* Same amber */
-    --accent-foreground: 0 0% 10%;
-    --destructive: 0 70% 70%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 17%;
-    --input: 0 0% 17%;
-    --ring: 174 60% 47%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
-    --success: 122 39% 49%; /* Same success green */
-    --warning: 44 100% 67%; /* Same warning amber */
-    --info: 174 60% 47%; /* Same teal info */
-    --hover: 55 65 81; /* Dark teal hover */
-  }
+:root {
+  --background: 0 0% 100%;
+  --foreground: 222.2 84% 4.9%;
+  --card: 0 0% 100%;
+  --card-foreground: 222.2 84% 4.9%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 222.2 84% 4.9%;
+  --primary: 221.2 83.2% 53.3%;
+  --primary-foreground: 210 40% 98%;
+  --secondary: 210 40% 96%;
+  --secondary-foreground: 222.2 84% 4.9%;
+  --muted: 210 40% 96%;
+  --muted-foreground: 215.4 16.3% 46.9%;
+  --accent: 210 40% 96%;
+  --accent-foreground: 222.2 84% 4.9%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 214.3 31.8% 91.4%;
+  --input: 214.3 31.8% 91.4%;
+  --ring: 221.2 83.2% 53.3%;
+  --chart-1: 12 76% 61%;
+  --chart-2: 173 58% 39%;
+  --chart-3: 197 37% 24%;
+  --chart-4: 43 74% 66%;
+  --chart-5: 27 87% 67%;
+  --radius: 0.75rem;
 }
 
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', 'Segoe UI', 'Roboto', system-ui, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
+.dark {
+  --background: 222.2 84% 4.9%;
+  --foreground: 210 40% 98%;
+  --card: 222.2 84% 4.9%;
+  --card-foreground: 210 40% 98%;
+  --popover: 222.2 84% 4.9%;
+  --popover-foreground: 210 40% 98%;
+  --primary: 217.2 91.2% 59.8%;
+  --primary-foreground: 222.2 84% 4.9%;
+  --secondary: 217.2 32.6% 17.5%;
+  --secondary-foreground: 210 40% 98%;
+  --muted: 217.2 32.6% 17.5%;
+  --muted-foreground: 215 20.2% 65.1%;
+  --accent: 217.2 32.6% 17.5%;
+  --accent-foreground: 210 40% 98%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 217.2 32.6% 17.5%;
+  --input: 217.2 32.6% 17.5%;
+  --ring: 224.3 76.3% 94.1%;
+  --chart-1: 220 70% 50%;
+  --chart-2: 160 60% 45%;
+  --chart-3: 30 80% 55%;
+  --chart-4: 280 65% 60%;
+  --chart-5: 340 75% 55%;
 }
 
-/* iOS-style animated gradient background */
-@keyframes gradient-shift {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+* {
+  border-color: hsl(var(--border));
 }
 
-@keyframes aurora {
-  0% {
-    background-position: 0% 50%;
-    opacity: 0.7;
-  }
-  25% {
-    background-position: 100% 0%;
-    opacity: 0.9;
-  }
-  50% {
-    background-position: 100% 100%;
-    opacity: 0.6;
-  }
-  75% {
-    background-position: 0% 100%;
-    opacity: 0.8;
-  }
-  100% {
-    background-position: 0% 50%;
-    opacity: 0.7;
-  }
+body {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-feature-settings: 'cv11', 'ss01';
+  font-variation-settings: 'opsz' 32;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
+/* Animated gradient background */
 .gradient-bg {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -2;
-  background: radial-gradient(
-    circle at 20% 30%, 
-    hsl(var(--primary) / 0.05) 0%, 
-    transparent 40%
-  ),
-  radial-gradient(
-    circle at 80% 70%, 
-    hsl(var(--accent) / 0.04) 0%, 
-    transparent 40%
-  ),
-  radial-gradient(
-    circle at 60% 10%, 
-    hsl(var(--success) / 0.03) 0%, 
-    transparent 30%
-  ),
-  linear-gradient(
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
     135deg,
-    hsl(var(--primary) / 0.02),
-    hsl(var(--secondary) / 0.01),
-    hsl(var(--accent) / 0.015),
-    hsl(var(--primary) / 0.008)
+    hsla(var(--primary), 0.03) 0%,
+    hsla(var(--accent), 0.02) 25%,
+    transparent 50%,
+    hsla(var(--primary), 0.02) 75%,
+    hsla(var(--accent), 0.03) 100%
   );
-  background-size: 400% 400%, 300% 300%, 200% 200%, 400% 400%;
-  animation: aurora 20s ease infinite;
+  animation: gradientShift 15s ease-in-out infinite;
+  z-index: -1;
 }
 
-/* iOS-style smooth animations */
-@keyframes fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
+@keyframes gradientShift {
+  0%, 100% {
+    background: linear-gradient(
+      135deg,
+      hsla(var(--primary), 0.03) 0%,
+      hsla(var(--accent), 0.02) 25%,
+      transparent 50%,
+      hsla(var(--primary), 0.02) 75%,
+      hsla(var(--accent), 0.03) 100%
+    );
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  50% {
+    background: linear-gradient(
+      225deg,
+      hsla(var(--accent), 0.03) 0%,
+      hsla(var(--primary), 0.02) 25%,
+      transparent 50%,
+      hsla(var(--accent), 0.02) 75%,
+      hsla(var(--primary), 0.03) 100%
+    );
   }
 }
 
-@keyframes scale-in {
-  from {
-    opacity: 0;
-    transform: scale(0.96);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+/* Enhanced card styling */
+.card-enhanced {
+  @apply bg-card/90 backdrop-blur-sm border border-border/30 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300;
 }
 
-@keyframes slideUp {
+/* iOS-style elements */
+.ios-button {
+  @apply transition-all duration-200 active:scale-95;
+}
+
+.ios-list-item {
+  @apply transition-all duration-200 hover:bg-accent/5 active:scale-[0.98];
+}
+
+/* Animation for modal slide up */
+@keyframes slide-up {
   from {
     transform: translateY(100%);
     opacity: 0;
@@ -185,234 +141,47 @@
   }
 }
 
-@keyframes pulse-glow {
-  0%, 100% {
-    box-shadow: 0 0 20px hsl(var(--primary) / 0.2);
-  }
-  50% {
-    box-shadow: 0 0 30px hsl(var(--primary) / 0.4);
-  }
+.animate-slide-up {
+  animation: slide-up 0.3s ease-out;
 }
 
-.animate-fade-in {
-  animation: fade-in 0.4s ease-out;
+/* Safe area padding for devices with notches */
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
-.animate-scale-in {
-  animation: scale-in 0.3s ease-out;
-}
-
-.animate-pulse-glow {
-  animation: pulse-glow 2s ease-in-out infinite;
-}
-
-/* Safe area for mobile */
 .safe-area-top {
-  padding-top: env(safe-area-inset-top);
+  padding-top: env(safe-area-inset-top, 0px);
 }
 
 .safe-area-bottom {
-  padding-bottom: env(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
-/* iOS-style button accent */
+/* Button variants */
 .btn-accent {
-  background: linear-gradient(135deg, hsl(var(--accent)), hsl(var(--accent) / 0.9));
-  color: hsl(var(--accent-foreground));
-  font-weight: 600;
-  border-radius: 14px;
-  box-shadow: 0 4px 16px hsl(var(--accent) / 0.3), 
-              0 2px 8px hsl(var(--accent) / 0.2);
-  transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+  @apply bg-primary text-primary-foreground hover:bg-primary/90 rounded-2xl transition-all duration-200 shadow-lg hover:shadow-xl;
 }
 
-.btn-accent:hover {
-  background: linear-gradient(135deg, hsl(var(--accent) / 0.95), hsl(var(--accent) / 0.85));
-  box-shadow: 0 6px 20px hsl(var(--accent) / 0.4),
-              0 3px 12px hsl(var(--accent) / 0.3);
-  transform: translateY(-2px) scale(1.02);
-}
-
-.btn-accent:active {
-  transform: translateY(0) scale(0.98);
-  box-shadow: 0 2px 8px hsl(var(--accent) / 0.25);
-}
-
-/* iOS-style enhanced card styling */
-.card-enhanced {
-  background: hsl(var(--card) / 0.95);
-  border: 1px solid hsl(var(--border) / 0.5);
-  border-radius: 20px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06), 
-              0 2px 12px rgba(0, 0, 0, 0.04),
-              inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
-  backdrop-filter: blur(20px);
-  position: relative;
-}
-
-.card-enhanced:hover {
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1), 
-              0 4px 16px rgba(0, 0, 0, 0.06),
-              inset 0 1px 0 rgba(255, 255, 255, 0.15);
-  transform: translateY(-4px) scale(1.02);
-  border-color: hsl(var(--border) / 0.8);
-}
-
-.card-enhanced::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: linear-gradient(
-    135deg,
-    hsl(var(--primary) / 0.02) 0%,
-    transparent 50%,
-    hsl(var(--accent) / 0.01) 100%
-  );
-  pointer-events: none;
-}
-
-/* iOS-style buttons */
-.ios-button {
-  border-radius: 14px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  transition: all 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  position: relative;
-  overflow: hidden;
-}
-
-.ios-button::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    135deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0.1) 50%,
-    transparent 100%
-  );
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.ios-button:hover::before {
-  opacity: 1;
-}
-
-.ios-button:active {
-  transform: scale(0.96);
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-}
-
-/* Remove animations from bottom navigation */
-.bottom-nav {
-  transition: none !important;
-  animation: none !important;
-}
-
-/* Horizontal scroll for categories */
-.category-scroll {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-.category-scroll::-webkit-scrollbar {
-  display: none;
-}
-
-/* Chat optimizations */
-.chat-container {
-  max-width: 100%;
-  overflow-x: hidden;
-}
-
-.chat-message {
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-}
-
-/* iOS-style modal positioning */
-.modal-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(20px);
-  display: flex;
-  align-items: end;
-  justify-content: center;
-  z-index: 50;
-  padding: 0;
-}
-
-.modal-content {
-  background: hsl(var(--card) / 0.95);
-  border-radius: 24px 24px 0 0;
-  width: 100%;
-  max-width: 400px;
-  padding: 1.5rem;
-  box-shadow: 0 -8px 40px rgba(0, 0, 0, 0.15);
-  animation: slideUp 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
-  backdrop-filter: blur(20px);
-  border: 1px solid hsl(var(--border) / 0.3);
-}
-
-/* iOS-style inputs */
+/* Input styling */
 .ios-input {
-  border-radius: 14px;
-  border: 1.5px solid hsl(var(--border) / 0.6);
-  background: hsl(var(--background) / 0.8);
-  transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
-  font-size: 16px; /* Prevents zoom on iOS */
-  backdrop-filter: blur(10px);
+  @apply rounded-xl border border-border bg-background/50 backdrop-blur-sm transition-all duration-200 focus:ring-2 focus:ring-primary/20 focus:border-primary;
 }
 
-.ios-input:focus {
-  border-color: hsl(var(--primary));
-  box-shadow: 0 0 0 4px hsl(var(--primary) / 0.1);
-  outline: none;
-  background: hsl(var(--background));
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
 }
 
-/* iOS-style section headers */
-.ios-section-header {
-  font-size: 13px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: hsl(var(--muted-foreground));
-  margin-bottom: 8px;
+::-webkit-scrollbar-track {
+  background: transparent;
 }
 
-/* iOS-style list items */
-.ios-list-item {
-  background: hsl(var(--card) / 0.8);
-  border-radius: 16px;
-  padding: 16px;
-  margin-bottom: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-  transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
-  backdrop-filter: blur(10px);
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--border));
+  border-radius: 3px;
 }
 
-.ios-list-item:active {
-  transform: scale(0.98);
-  background: hsl(var(--muted) / 0.8);
-}
-
-/* iOS-style navigation bar */
-.ios-navbar {
-  background: hsl(var(--background) / 0.85);
-  backdrop-filter: blur(30px);
-  border-bottom: 0.5px solid hsl(var(--border) / 0.2);
-}
-
-/* Status bar height simulation */
-.status-bar-height {
-  height: 44px; /* Standard iOS status bar */
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground));
 }

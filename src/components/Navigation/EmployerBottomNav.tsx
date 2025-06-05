@@ -29,25 +29,25 @@ const EmployerBottomNav = ({ activeTab }: EmployerBottomNavProps) => {
   const currentActiveTab = getActiveTab();
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 safe-area-bottom bg-background/95 backdrop-blur-lg border-t border-border/30">
-      <div className="max-w-sm mx-auto px-2 py-1">
-        <div className="flex justify-around items-center">
+    <div className="fixed bottom-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-lg border-t border-border/20">
+      <div className="max-w-sm mx-auto px-4 py-2 pb-safe">
+        <div className="flex justify-center items-center gap-2">
           {tabs.map(({ id, icon: Icon, label, path }) => (
             <button
               key={id}
               onClick={() => navigate(path)}
               className={cn(
-                "flex flex-col items-center p-3 min-w-0 rounded-2xl ios-button transition-all duration-300 flex-1 group",
+                "flex flex-col items-center p-3 min-w-0 rounded-2xl transition-all duration-200 flex-1 group max-w-[80px]",
                 currentActiveTab === id 
-                  ? "text-primary bg-primary/15 scale-105" 
-                  : "text-muted-foreground hover:text-primary hover:bg-accent/10 hover:scale-105"
+                  ? "text-primary bg-primary/10" 
+                  : "text-muted-foreground hover:text-primary hover:bg-accent/10"
               )}
             >
               <Icon 
-                size={22} 
+                size={20} 
                 className={cn(
-                  "transition-all duration-300 mb-1",
-                  currentActiveTab === id ? "scale-110" : "group-hover:scale-110"
+                  "transition-all duration-200 mb-1",
+                  currentActiveTab === id ? "scale-110" : "group-hover:scale-105"
                 )} 
               />
               <span className="text-xs font-medium text-center leading-tight">{label}</span>

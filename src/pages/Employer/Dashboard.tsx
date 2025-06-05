@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import { Plus, Users, MessageCircle, TrendingUp, Eye, Clock, CheckCircle, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import MobileLayout from '@/components/Layout/MobileLayout';
 import EmployerBottomNav from '@/components/Navigation/EmployerBottomNav';
@@ -119,22 +118,17 @@ const Dashboard = () => {
   return (
     <MobileLayout>
       <div className="flex flex-col min-h-screen bg-background relative">
-        {/* Enhanced gradient background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/3 via-transparent to-accent/2 -z-10" />
-        <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-3xl -z-10" />
-        <div className="absolute bottom-1/4 left-0 w-24 h-24 bg-accent/5 rounded-full blur-2xl -z-10" />
-        
         {/* Header */}
-        <div className="flex-shrink-0 px-ios-md pt-ios-lg pb-ios-sm ios-navbar safe-area-top">
-          <div className="mb-ios-lg">
-            <h1 className="text-ios-title1 font-bold text-foreground mb-ios-xs">{greeting}! 👋</h1>
-            <p className="text-muted-foreground text-ios-callout">Beach Cafe Varkala</p>
+        <div className="flex-shrink-0 px-4 pt-16 pb-4 safe-area-top">
+          <div className="mb-6">
+            <h1 className="text-3xl font-bold text-foreground mb-2">{greeting}! 👋</h1>
+            <p className="text-muted-foreground text-lg">Beach Cafe Varkala</p>
           </div>
 
           {/* Quick Post Job Button */}
           <Button 
             onClick={() => navigate('/employer/post-job')}
-            className="w-full btn-accent ios-button h-14 text-ios-callout font-semibold shadow-ios-lg"
+            className="w-full btn-accent h-14 text-base font-semibold shadow-lg"
           >
             <Plus size={20} className="mr-2" />
             Post a New Job
@@ -142,52 +136,52 @@ const Dashboard = () => {
         </div>
 
         {/* Content */}
-        <div className="flex-1 px-ios-md py-ios-sm pb-24 overflow-y-auto">
-          <div className="max-w-sm mx-auto space-y-ios-lg">
+        <div className="flex-1 px-4 py-2 pb-28 overflow-y-auto">
+          <div className="max-w-sm mx-auto space-y-6">
             {/* Stats Grid */}
-            <div className="grid grid-cols-2 gap-ios-md animate-fade-in">
+            <div className="grid grid-cols-2 gap-3 animate-fade-in">
               {stats.map((stat, index) => (
                 <button
                   key={index}
                   onClick={stat.onClick}
-                  className="card-enhanced p-ios-lg ios-list-item group"
+                  className="card-enhanced p-4 ios-list-item group"
                 >
-                  <div className={`w-12 h-12 ${stat.bgColor} rounded-ios-lg flex items-center justify-center mb-ios-md group-hover:scale-110 transition-transform duration-200`}>
+                  <div className={`w-12 h-12 ${stat.bgColor} rounded-2xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-200`}>
                     <stat.icon size={24} className={stat.color} />
                   </div>
-                  <div className={`text-ios-title2 font-bold ${stat.color} mb-ios-xs`}>{stat.value}</div>
-                  <div className="text-ios-caption text-muted-foreground">{stat.label}</div>
+                  <div className={`text-2xl font-bold ${stat.color} mb-1`}>{stat.value}</div>
+                  <div className="text-xs text-muted-foreground">{stat.label}</div>
                 </button>
               ))}
             </div>
 
             {/* Recent Job Posts */}
             <div className="animate-fade-in" style={{ animationDelay: '0.1s' }}>
-              <div className="flex items-center justify-between mb-ios-md">
-                <h2 className="text-ios-headline font-semibold text-foreground">Recent Job Posts</h2>
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-xl font-semibold text-foreground">Recent Job Posts</h2>
                 <Button 
                   variant="ghost" 
                   size="sm"
                   onClick={() => navigate('/employer/applications')}
-                  className="text-primary hover:bg-primary/10 ios-button"
+                  className="text-primary hover:bg-primary/10"
                 >
                   View All
                 </Button>
               </div>
 
-              <div className="space-y-ios-sm">
+              <div className="space-y-3">
                 {recentJobs.map((job) => {
                   const StatusIcon = getStatusIcon(job.status);
                   return (
                     <button
                       key={job.id}
                       onClick={() => navigate('/employer/applications')}
-                      className="w-full card-enhanced p-ios-lg ios-list-item text-left group"
+                      className="w-full card-enhanced p-4 ios-list-item text-left group"
                     >
-                      <div className="flex items-start justify-between mb-ios-md">
+                      <div className="flex items-start justify-between mb-3">
                         <div className="flex-1">
-                          <h3 className="font-semibold text-foreground text-ios-callout mb-ios-xs group-hover:text-primary transition-colors">{job.title}</h3>
-                          <div className="flex items-center gap-ios-sm text-muted-foreground text-ios-caption">
+                          <h3 className="font-semibold text-foreground mb-1 group-hover:text-primary transition-colors">{job.title}</h3>
+                          <div className="flex items-center gap-2 text-muted-foreground text-sm">
                             <span>{job.salary}</span>
                             <span>•</span>
                             <span>{job.type}</span>
@@ -195,7 +189,7 @@ const Dashboard = () => {
                             <span>{job.postedDate}</span>
                           </div>
                         </div>
-                        <div className="flex items-center gap-ios-xs">
+                        <div className="flex items-center gap-2">
                           <Badge className={getStatusColor(job.status)}>
                             <StatusIcon size={12} className="mr-1" />
                             {job.status}
@@ -204,7 +198,7 @@ const Dashboard = () => {
                       </div>
 
                       <div className="flex items-center justify-between">
-                        <div className="flex gap-ios-lg text-ios-caption text-muted-foreground">
+                        <div className="flex gap-4 text-sm text-muted-foreground">
                           <div className="flex items-center gap-1">
                             <Eye size={14} />
                             <span>{job.views} views</span>
@@ -223,21 +217,21 @@ const Dashboard = () => {
 
             {/* Quick Actions */}
             <div className="animate-fade-in" style={{ animationDelay: '0.2s' }}>
-              <h2 className="text-ios-headline font-semibold text-foreground mb-ios-md">Quick Actions</h2>
-              <div className="grid grid-cols-2 gap-ios-sm">
+              <h2 className="text-xl font-semibold text-foreground mb-4">Quick Actions</h2>
+              <div className="grid grid-cols-2 gap-3">
                 <button 
                   onClick={() => navigate('/employer/applications')}
-                  className="card-enhanced p-ios-lg ios-list-item group"
+                  className="card-enhanced p-4 ios-list-item group"
                 >
-                  <Users size={24} className="text-primary mb-ios-sm group-hover:scale-110 transition-transform duration-200" />
-                  <span className="text-ios-footnote font-medium text-foreground">View Applications</span>
+                  <Users size={24} className="text-primary mb-2 group-hover:scale-110 transition-transform duration-200" />
+                  <span className="text-sm font-medium text-foreground">View Applications</span>
                 </button>
                 <button 
                   onClick={() => navigate('/employer/chat')}
-                  className="card-enhanced p-ios-lg ios-list-item group"
+                  className="card-enhanced p-4 ios-list-item group"
                 >
-                  <MessageCircle size={24} className="text-accent mb-ios-sm group-hover:scale-110 transition-transform duration-200" />
-                  <span className="text-ios-footnote font-medium text-foreground">Messages</span>
+                  <MessageCircle size={24} className="text-accent mb-2 group-hover:scale-110 transition-transform duration-200" />
+                  <span className="text-sm font-medium text-foreground">Messages</span>
                 </button>
               </div>
             </div>

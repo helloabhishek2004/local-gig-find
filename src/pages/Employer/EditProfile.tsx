@@ -80,20 +80,20 @@ const EditProfile = () => {
     <MobileLayout>
       <div className="flex flex-col min-h-screen bg-background animate-fade-in">
         {/* Header */}
-        <div className="flex-shrink-0 px-4 pt-12 pb-4 ios-navbar safe-area-top">
+        <div className="flex-shrink-0 px-4 pt-16 pb-4 safe-area-top">
           <div className="flex items-center justify-between">
             <div className="flex items-center">
               <button 
                 onClick={() => navigate('/employer/profile')} 
-                className="text-primary hover:text-primary/80 transition-colors p-2 -ml-2 ios-button rounded-full"
+                className="text-primary hover:text-primary/80 transition-colors p-2 -ml-2 rounded-full"
               >
                 <ArrowLeft size={24} />
               </button>
-              <h1 className="text-2xl font-bold ml-2">Edit Profile</h1>
+              <h1 className="text-3xl font-bold ml-2">Edit Profile</h1>
             </div>
             <Button 
               onClick={handleSave}
-              className="btn-accent px-6 h-10 text-sm font-semibold ios-button"
+              className="btn-accent px-6 h-10 text-sm font-semibold"
             >
               <Save size={16} className="mr-2" />
               Save
@@ -102,7 +102,7 @@ const EditProfile = () => {
         </div>
 
         {/* Content */}
-        <div className="flex-1 overflow-y-auto px-4 pb-24">
+        <div className="flex-1 overflow-y-auto px-4 pb-28">
           <div className="max-w-sm mx-auto space-y-8">
             {/* Business Logo */}
             <div className="flex flex-col items-center space-y-4 animate-fade-in">
@@ -118,7 +118,7 @@ const EditProfile = () => {
                 </div>
                 <button 
                   onClick={() => setShowImageOptions(true)}
-                  className="absolute -bottom-2 -right-2 w-8 h-8 bg-accent rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform ios-button"
+                  className="absolute -bottom-2 -right-2 w-8 h-8 bg-accent rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform"
                 >
                   <Camera size={16} className="text-accent-foreground" />
                 </button>
@@ -137,7 +137,7 @@ const EditProfile = () => {
                   id="businessName"
                   value={profile.businessName}
                   onChange={(e) => handleInputChange('businessName', e.target.value)}
-                  className="ios-input h-12"
+                  className="h-12"
                 />
               </div>
 
@@ -149,7 +149,7 @@ const EditProfile = () => {
                   id="ownerName"
                   value={profile.ownerName}
                   onChange={(e) => handleInputChange('ownerName', e.target.value)}
-                  className="ios-input h-12"
+                  className="h-12"
                 />
               </div>
 
@@ -161,7 +161,7 @@ const EditProfile = () => {
                   id="phone"
                   value={profile.phone}
                   onChange={(e) => handleInputChange('phone', e.target.value)}
-                  className="ios-input h-12"
+                  className="h-12"
                 />
               </div>
 
@@ -173,7 +173,7 @@ const EditProfile = () => {
                   id="email"
                   value={profile.email}
                   onChange={(e) => handleInputChange('email', e.target.value)}
-                  className="ios-input h-12"
+                  className="h-12"
                 />
               </div>
 
@@ -185,7 +185,7 @@ const EditProfile = () => {
                   id="category"
                   value={profile.category}
                   onChange={(e) => handleInputChange('category', e.target.value)}
-                  className="w-full h-12 px-3 ios-input"
+                  className="w-full h-12 px-3 border border-border rounded-lg bg-background"
                 >
                   {categories.map((category) => (
                     <option key={category} value={category}>
@@ -204,7 +204,7 @@ const EditProfile = () => {
                   id="location"
                   value={profile.location}
                   onChange={(e) => handleInputChange('location', e.target.value)}
-                  className="w-full h-12 px-3 ios-input"
+                  className="w-full h-12 px-3 border border-border rounded-lg bg-background"
                 >
                   {locationOptions.map((location) => (
                     <option key={location} value={location}>
@@ -223,22 +223,22 @@ const EditProfile = () => {
                   value={profile.description}
                   onChange={(e) => handleInputChange('description', e.target.value)}
                   placeholder="Describe your business and what makes it special..."
-                  className="min-h-[100px] ios-input resize-none"
+                  className="min-h-[100px] resize-none"
                 />
               </div>
             </div>
           </div>
         </div>
 
-        {/* Image Upload Modal */}
+        {/* Image Upload Modal - Fixed at bottom of screen */}
         {showImageOptions && (
-          <div className="modal-backdrop animate-fade-in">
-            <div className="modal-content animate-scale-in">
+          <div className="fixed inset-0 bg-black/50 z-50 flex items-end">
+            <div className="w-full bg-background rounded-t-3xl p-6 animate-slide-up">
               <h3 className="text-lg font-semibold mb-6 text-center">Choose Logo</h3>
               <div className="space-y-3">
                 <Button
                   onClick={() => handleImageUpload('camera')}
-                  className="w-full flex items-center gap-3 h-12 justify-start rounded-xl ios-button"
+                  className="w-full flex items-center gap-3 h-12 justify-start rounded-xl"
                   variant="outline"
                 >
                   <Camera size={20} />
@@ -246,7 +246,7 @@ const EditProfile = () => {
                 </Button>
                 <Button
                   onClick={() => handleImageUpload('gallery')}
-                  className="w-full flex items-center gap-3 h-12 justify-start rounded-xl ios-button"
+                  className="w-full flex items-center gap-3 h-12 justify-start rounded-xl"
                   variant="outline"
                 >
                   <Image size={20} />
@@ -254,7 +254,7 @@ const EditProfile = () => {
                 </Button>
                 <Button
                   onClick={() => setShowImageOptions(false)}
-                  className="w-full h-12 rounded-xl ios-button"
+                  className="w-full h-12 rounded-xl"
                   variant="ghost"
                 >
                   Cancel

@@ -39,14 +39,14 @@ const Profile = () => {
     <MobileLayout>
       <div className="flex flex-col min-h-screen bg-background animate-fade-in">
         {/* Header */}
-        <div className="flex-shrink-0 px-4 pt-12 pb-4 ios-navbar safe-area-top">
+        <div className="flex-shrink-0 px-4 pt-16 pb-4 safe-area-top">
           <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-bold text-foreground">Business Profile</h1>
+            <h1 className="text-3xl font-bold text-foreground">Business Profile</h1>
             <Button
               variant="ghost"
               size="icon"
               onClick={() => navigate('/employer/edit-profile')}
-              className="hover:bg-accent/10 transition-all duration-200 rounded-full h-11 w-11 ios-button hover:scale-110"
+              className="hover:bg-accent/10 transition-all duration-200 rounded-full h-11 w-11 hover:scale-110"
             >
               <Edit3 size={20} className="text-primary" />
             </Button>
@@ -54,7 +54,7 @@ const Profile = () => {
         </div>
 
         {/* Content */}
-        <div className="flex-1 px-4 py-2 pb-24 overflow-y-auto">
+        <div className="flex-1 px-4 py-2 pb-28 overflow-y-auto">
           <div className="max-w-sm mx-auto space-y-6">
             {/* Business Profile Card */}
             <div className="card-enhanced p-6 animate-fade-in">
