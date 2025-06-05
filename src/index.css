@@ -95,6 +95,29 @@
   }
 }
 
+@keyframes aurora {
+  0% {
+    background-position: 0% 50%;
+    opacity: 0.7;
+  }
+  25% {
+    background-position: 100% 0%;
+    opacity: 0.9;
+  }
+  50% {
+    background-position: 100% 100%;
+    opacity: 0.6;
+  }
+  75% {
+    background-position: 0% 100%;
+    opacity: 0.8;
+  }
+  100% {
+    background-position: 0% 50%;
+    opacity: 0.7;
+  }
+}
+
 .gradient-bg {
   position: fixed;
   top: 0;
@@ -102,15 +125,30 @@
   width: 100%;
   height: 100%;
   z-index: -2;
-  background: linear-gradient(
+  background: radial-gradient(
+    circle at 20% 30%, 
+    hsl(var(--primary) / 0.05) 0%, 
+    transparent 40%
+  ),
+  radial-gradient(
+    circle at 80% 70%, 
+    hsl(var(--accent) / 0.04) 0%, 
+    transparent 40%
+  ),
+  radial-gradient(
+    circle at 60% 10%, 
+    hsl(var(--success) / 0.03) 0%, 
+    transparent 30%
+  ),
+  linear-gradient(
     135deg,
-    hsl(var(--primary) / 0.015),
-    hsl(var(--secondary) / 0.01),
     hsl(var(--primary) / 0.02),
-    hsl(var(--secondary) / 0.008)
+    hsl(var(--secondary) / 0.01),
+    hsl(var(--accent) / 0.015),
+    hsl(var(--primary) / 0.008)
   );
-  background-size: 400% 400%;
-  animation: gradient-shift 25s ease infinite;
+  background-size: 400% 400%, 300% 300%, 200% 200%, 400% 400%;
+  animation: aurora 20s ease infinite;
 }
 
 /* iOS-style smooth animations */
@@ -147,12 +185,25 @@
   }
 }
 
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.2);
+  }
+  50% {
+    box-shadow: 0 0 30px hsl(var(--primary) / 0.4);
+  }
+}
+
 .animate-fade-in {
   animation: fade-in 0.4s ease-out;
 }
 
 .animate-scale-in {
   animation: scale-in 0.3s ease-out;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
 }
 
 /* Safe area for mobile */
@@ -166,55 +217,94 @@
 
 /* iOS-style button accent */
 .btn-accent {
-  background: hsl(var(--accent));
+  background: linear-gradient(135deg, hsl(var(--accent)), hsl(var(--accent) / 0.9));
   color: hsl(var(--accent-foreground));
   font-weight: 600;
   border-radius: 14px;
-  box-shadow: 0 2px 12px hsl(var(--accent) / 0.3), 
-              0 1px 4px hsl(var(--accent) / 0.2);
-  transition: all 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+  box-shadow: 0 4px 16px hsl(var(--accent) / 0.3), 
+              0 2px 8px hsl(var(--accent) / 0.2);
+  transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 
 .btn-accent:hover {
-  background: hsl(var(--accent) / 0.9);
-  box-shadow: 0 4px 16px hsl(var(--accent) / 0.35),
-              0 2px 8px hsl(var(--accent) / 0.25);
-  transform: translateY(-1px);
+  background: linear-gradient(135deg, hsl(var(--accent) / 0.95), hsl(var(--accent) / 0.85));
+  box-shadow: 0 6px 20px hsl(var(--accent) / 0.4),
+              0 3px 12px hsl(var(--accent) / 0.3);
+  transform: translateY(-2px) scale(1.02);
 }
 
 .btn-accent:active {
-  transform: translateY(0);
-  box-shadow: 0 1px 6px hsl(var(--accent) / 0.25);
+  transform: translateY(0) scale(0.98);
+  box-shadow: 0 2px 8px hsl(var(--accent) / 0.25);
 }
 
 /* iOS-style enhanced card styling */
 .card-enhanced {
-  background: hsl(var(--card));
-  border: 1px solid hsl(var(--border) / 0.6);
-  border-radius: 18px;
-  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.04), 
-              0 1px 6px rgba(0, 0, 0, 0.02);
+  background: hsl(var(--card) / 0.95);
+  border: 1px solid hsl(var(--border) / 0.5);
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06), 
+              0 2px 12px rgba(0, 0, 0, 0.04),
+              inset 0 1px 0 rgba(255, 255, 255, 0.1);
   transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(20px);
+  position: relative;
 }
 
 .card-enhanced:hover {
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08), 
-              0 2px 12px rgba(0, 0, 0, 0.04);
-  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1), 
+              0 4px 16px rgba(0, 0, 0, 0.06),
+              inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  transform: translateY(-4px) scale(1.02);
+  border-color: hsl(var(--border) / 0.8);
+}
+
+.card-enhanced::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    135deg,
+    hsl(var(--primary) / 0.02) 0%,
+    transparent 50%,
+    hsl(var(--accent) / 0.01) 100%
+  );
+  pointer-events: none;
 }
 
 /* iOS-style buttons */
 .ios-button {
-  border-radius: 12px;
+  border-radius: 14px;
   font-weight: 600;
   letter-spacing: -0.01em;
   transition: all 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.ios-button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 100%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.ios-button:hover::before {
+  opacity: 1;
 }
 
 .ios-button:active {
   transform: scale(0.96);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Remove animations from bottom navigation */
@@ -252,7 +342,7 @@
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(20px);
   display: flex;
   align-items: end;
   justify-content: center;
@@ -261,28 +351,32 @@
 }
 
 .modal-content {
-  background: hsl(var(--card));
-  border-radius: 20px 20px 0 0;
+  background: hsl(var(--card) / 0.95);
+  border-radius: 24px 24px 0 0;
   width: 100%;
   max-width: 400px;
   padding: 1.5rem;
-  box-shadow: 0 -4px 32px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 -8px 40px rgba(0, 0, 0, 0.15);
   animation: slideUp 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
+  backdrop-filter: blur(20px);
+  border: 1px solid hsl(var(--border) / 0.3);
 }
 
 /* iOS-style inputs */
 .ios-input {
-  border-radius: 12px;
-  border: 1.5px solid hsl(var(--border));
-  background: hsl(var(--background));
-  transition: all 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+  border-radius: 14px;
+  border: 1.5px solid hsl(var(--border) / 0.6);
+  background: hsl(var(--background) / 0.8);
+  transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
   font-size: 16px; /* Prevents zoom on iOS */
+  backdrop-filter: blur(10px);
 }
 
 .ios-input:focus {
   border-color: hsl(var(--primary));
-  box-shadow: 0 0 0 3px hsl(var(--primary) / 0.1);
+  box-shadow: 0 0 0 4px hsl(var(--primary) / 0.1);
   outline: none;
+  background: hsl(var(--background));
 }
 
 /* iOS-style section headers */
@@ -297,24 +391,25 @@
 
 /* iOS-style list items */
 .ios-list-item {
-  background: hsl(var(--card));
-  border-radius: 12px;
+  background: hsl(var(--card) / 0.8);
+  border-radius: 16px;
   padding: 16px;
   margin-bottom: 8px;
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.04);
-  transition: all 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+  backdrop-filter: blur(10px);
 }
 
 .ios-list-item:active {
   transform: scale(0.98);
-  background: hsl(var(--muted));
+  background: hsl(var(--muted) / 0.8);
 }
 
 /* iOS-style navigation bar */
 .ios-navbar {
-  background: hsl(var(--background) / 0.8);
-  backdrop-filter: blur(20px);
-  border-bottom: 0.5px solid hsl(var(--border) / 0.3);
+  background: hsl(var(--background) / 0.85);
+  backdrop-filter: blur(30px);
+  border-bottom: 0.5px solid hsl(var(--border) / 0.2);
 }
 
 /* Status bar height simulation */

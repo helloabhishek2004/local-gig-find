@@ -26,6 +26,8 @@ const PostJob = React.lazy(() => import("./pages/Employer/PostJob"));
 const EmployerApplications = React.lazy(() => import("./pages/Employer/Applications"));
 const EmployerChat = React.lazy(() => import("./pages/Employer/Chat"));
 const EmployerProfile = React.lazy(() => import("./pages/Employer/Profile"));
+const EmployerSettings = React.lazy(() => import("./pages/Employer/Settings"));
+const EmployerEditProfile = React.lazy(() => import("./pages/Employer/EditProfile"));
 
 const NotFound = React.lazy(() => import("./pages/NotFound"));
 
@@ -68,6 +70,8 @@ const App = () => (
               <Route path="/employer/applications" element={<EmployerApplications />} />
               <Route path="/employer/chat" element={<EmployerChat />} />
               <Route path="/employer/profile" element={<EmployerProfile />} />
+              <Route path="/employer/settings" element={<EmployerSettings />} />
+              <Route path="/employer/edit-profile" element={<EmployerEditProfile />} />
               
               {/* Redirect old routes for backward compatibility */}
               <Route path="/login" element={<Navigate to="/jobseeker/login" replace />} />
