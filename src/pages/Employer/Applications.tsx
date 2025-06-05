@@ -4,6 +4,7 @@ import { Filter, Search, MapPin, Phone, MessageCircle, Star, Eye, Clock } from '
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
+import { cn } from '@/lib/utils';
 import MobileLayout from '@/components/Layout/MobileLayout';
 import EmployerBottomNav from '@/components/Navigation/EmployerBottomNav';
 
