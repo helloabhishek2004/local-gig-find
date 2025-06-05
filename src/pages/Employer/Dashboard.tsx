@@ -117,29 +117,29 @@ const Dashboard = () => {
 
   return (
     <MobileLayout>
-      <div className="flex flex-col min-h-screen bg-background relative">
+      <div className="flex flex-col min-h-screen bg-background relative page-container">
         {/* Header */}
-        <div className="flex-shrink-0 px-4 pt-16 pb-4 safe-area-top">
-          <div className="mb-6">
+        <div className="page-header px-4 py-6">
+          <div className="max-w-sm mx-auto">
             <h1 className="text-3xl font-bold text-foreground mb-2">{greeting}! 👋</h1>
             <p className="text-muted-foreground text-lg">Beach Cafe Varkala</p>
           </div>
-
-          {/* Quick Post Job Button */}
-          <Button 
-            onClick={() => navigate('/employer/post-job')}
-            className="w-full btn-accent h-14 text-base font-semibold shadow-lg"
-          >
-            <Plus size={20} className="mr-2" />
-            Post a New Job
-          </Button>
         </div>
 
         {/* Content */}
-        <div className="flex-1 px-4 py-2 pb-28 overflow-y-auto">
+        <div className="flex-1 px-4 py-2 overflow-y-auto">
           <div className="max-w-sm mx-auto space-y-6">
+            {/* Quick Post Job Button */}
+            <Button 
+              onClick={() => navigate('/employer/post-job')}
+              className="w-full btn-primary h-14 text-base font-semibold shadow-lg animate-fade-in"
+            >
+              <Plus size={20} className="mr-2" />
+              Post a New Job
+            </Button>
+
             {/* Stats Grid */}
-            <div className="grid grid-cols-2 gap-3 animate-fade-in">
+            <div className="grid grid-cols-2 gap-3 animate-fade-in" style={{ animationDelay: '0.1s' }}>
               {stats.map((stat, index) => (
                 <button
                   key={index}
@@ -156,7 +156,7 @@ const Dashboard = () => {
             </div>
 
             {/* Recent Job Posts */}
-            <div className="animate-fade-in" style={{ animationDelay: '0.1s' }}>
+            <div className="animate-fade-in" style={{ animationDelay: '0.2s' }}>
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-xl font-semibold text-foreground">Recent Job Posts</h2>
                 <Button 
@@ -216,7 +216,7 @@ const Dashboard = () => {
             </div>
 
             {/* Quick Actions */}
-            <div className="animate-fade-in" style={{ animationDelay: '0.2s' }}>
+            <div className="animate-fade-in" style={{ animationDelay: '0.3s' }}>
               <h2 className="text-xl font-semibold text-foreground mb-4">Quick Actions</h2>
               <div className="grid grid-cols-2 gap-3">
                 <button 
