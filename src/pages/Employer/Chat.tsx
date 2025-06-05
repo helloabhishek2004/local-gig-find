@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Search, Phone, Video, MoreVertical, Send, Paperclip, Smile, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -29,6 +29,9 @@ const Chat = () => {
   const [selectedChat, setSelectedChat] = useState<Chat | null>(null);
   const [newMessage, setNewMessage] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const chatContainerRef = useRef<HTMLDivElement>(null);
 
   const mockChats: Chat[] = [
     {
@@ -84,6 +87,29 @@ const Chat = () => {
     }
   ];
 
+  // Handle keyboard visibility on mobile
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.visualViewport) {
+        const viewport = window.visualViewport;
+        const keyboardHeight = window.innerHeight - viewport.height;
+        setKeyboardHeight(keyboardHeight > 0 ? keyboardHeight : 0);
+      }
+    };
+
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', handleResize);
+      return () => window.visualViewport?.removeEventListener('resize', handleResize);
+    }
+  }, []);
+
+  // Scroll to bottom when keyboard appears or messages change
+  useEffect(() => {
+    if (selectedChat && messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [selectedChat, keyboardHeight]);
+
   const filteredChats = mockChats.filter(chat =>
     chat.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
     chat.jobTitle.toLowerCase().includes(searchQuery.toLowerCase())
@@ -107,28 +133,34 @@ const Chat = () => {
   if (selectedChat) {
     return (
       <MobileLayout>
-        <div className="flex flex-col h-screen bg-background chat-container">
+        <div 
+          ref={chatContainerRef}
+          className="flex flex-col h-screen bg-background"
+          style={{ 
+            height: keyboardHeight > 0 ? `calc(100vh - ${keyboardHeight}px)` : '100vh' 
+          }}
+        >
           {/* Chat Header */}
-          <div className="flex items-center justify-between px-ios-md py-ios-sm border-b border-border bg-background/95 backdrop-blur-sm safe-area-top">
-            <div className="flex items-center space-x-ios-sm">
+          <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-background/95 backdrop-blur-sm pt-safe">
+            <div className="flex items-center space-x-3">
               <button 
                 onClick={handleBackToChats}
                 className="text-muted-foreground hover:text-foreground transition-colors p-2 -ml-2"
               >
                 <ArrowLeft size={24} />
               </button>
-              <div className="flex items-center space-x-ios-sm">
+              <div className="flex items-center space-x-3">
                 <div className="relative">
-                  <div className="w-10 h-10 bg-primary/10 rounded-ios-lg flex items-center justify-center">
-                    <span className="text-ios-footnote font-semibold text-primary">{selectedChat.avatar}</span>
+                  <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center">
+                    <span className="text-sm font-semibold text-primary">{selectedChat.avatar}</span>
                   </div>
                   {selectedChat.online && (
                     <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-success rounded-full border-2 border-background"></div>
                   )}
                 </div>
                 <div>
-                  <h3 className="font-semibold text-foreground text-ios-callout">{selectedChat.name}</h3>
-                  <p className="text-ios-caption text-muted-foreground">
+                  <h3 className="font-semibold text-foreground">{selectedChat.name}</h3>
+                  <p className="text-xs text-muted-foreground">
                     Applied for {selectedChat.jobTitle}
                   </p>
                 </div>
@@ -148,34 +180,35 @@ const Chat = () => {
           </div>
 
           {/* Messages */}
-          <div className="flex-1 overflow-y-auto px-ios-md py-ios-md space-y-ios-md">
+          <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4">
             {mockMessages.map((message) => (
               <div
                 key={message.id}
                 className={`flex ${message.sender === 'me' ? 'justify-end' : 'justify-start'}`}
               >
                 <div
-                  className={`max-w-[75%] px-ios-md py-ios-sm rounded-ios-lg chat-message ${
+                  className={`max-w-[75%] px-4 py-2 rounded-2xl ${
                     message.sender === 'me'
                       ? 'bg-primary text-primary-foreground'
                       : 'bg-card border border-border text-foreground'
                   }`}
                 >
-                  <p className="text-ios-callout">{message.text}</p>
+                  <p className="text-sm">{message.text}</p>
                   <div className="flex items-center justify-end space-x-1 mt-1">
-                    <span className="text-ios-caption opacity-70">{message.time}</span>
+                    <span className="text-xs opacity-70">{message.time}</span>
                     {message.sender === 'me' && message.status && (
-                      <span className="text-ios-caption opacity-70">✓✓</span>
+                      <span className="text-xs opacity-70">✓✓</span>
                     )}
                   </div>
                 </div>
               </div>
             ))}
+            <div ref={messagesEndRef} />
           </div>
 
           {/* Message Input */}
-          <div className="px-ios-md py-ios-sm border-t border-border bg-background/95 backdrop-blur-sm">
-            <div className="flex items-center space-x-ios-sm">
+          <div className="px-4 py-3 border-t border-border bg-background/95 backdrop-blur-sm">
+            <div className="flex items-center space-x-3">
               <Button variant="ghost" size="icon" className="h-9 w-9 text-muted-foreground ios-button">
                 <Paperclip size={18} />
               </Button>
@@ -194,7 +227,7 @@ const Chat = () => {
               <Button 
                 onClick={handleSendMessage}
                 size="icon" 
-                className="h-9 w-9 bg-primary text-primary-foreground rounded-ios-lg hover:bg-primary/90 ios-button"
+                className="h-9 w-9 bg-primary text-primary-foreground rounded-xl hover:bg-primary/90 ios-button"
                 disabled={!newMessage.trim()}
               >
                 <Send size={16} />
@@ -208,10 +241,10 @@ const Chat = () => {
 
   return (
     <MobileLayout>
-      <div className="flex flex-col h-screen bg-background animate-fade-in">
+      <div className="flex flex-col h-screen bg-background">
         {/* Header */}
-        <div className="px-ios-md py-ios-lg border-b border-border bg-background/95 backdrop-blur-sm safe-area-top">
-          <h1 className="text-ios-title1 font-bold text-foreground mb-ios-md">Messages</h1>
+        <div className="px-4 py-6 border-b border-border bg-background/95 backdrop-blur-sm pt-safe">
+          <h1 className="text-3xl font-bold text-foreground mb-4">Messages</h1>
           
           {/* Search */}
           <div className="relative">
@@ -226,25 +259,25 @@ const Chat = () => {
         </div>
 
         {/* Chat List */}
-        <div className="flex-1 overflow-y-auto px-ios-md py-ios-md pb-24">
+        <div className="flex-1 overflow-y-auto px-4 py-4 pb-24">
           {filteredChats.length === 0 ? (
             <div className="text-center py-16">
               <div className="text-6xl mb-4">💬</div>
-              <h3 className="text-ios-headline text-foreground mb-2">No conversations</h3>
-              <p className="text-muted-foreground text-ios-callout">Chat with job applicants here</p>
+              <h3 className="text-lg font-medium text-foreground mb-2">No conversations</h3>
+              <p className="text-muted-foreground">Chat with job applicants here</p>
             </div>
           ) : (
-            <div className="space-y-ios-sm">
+            <div className="space-y-3">
               {filteredChats.map((chat) => (
                 <button
                   key={chat.id}
                   onClick={() => handleChatSelect(chat)}
-                  className="w-full card-enhanced p-ios-lg ios-list-item text-left"
+                  className="w-full card-enhanced p-4 ios-list-item text-left"
                 >
-                  <div className="flex items-center space-x-ios-md">
+                  <div className="flex items-center space-x-4">
                     <div className="relative flex-shrink-0">
-                      <div className="w-12 h-12 bg-primary/10 rounded-ios-lg flex items-center justify-center">
-                        <span className="text-ios-callout font-semibold text-primary">{chat.avatar}</span>
+                      <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
+                        <span className="text-sm font-semibold text-primary">{chat.avatar}</span>
                       </div>
                       {chat.online && (
                         <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-success rounded-full border-2 border-background"></div>
@@ -252,14 +285,14 @@ const Chat = () => {
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between mb-1">
-                        <h3 className="font-semibold text-foreground truncate text-ios-callout">{chat.name}</h3>
-                        <span className="text-ios-caption text-muted-foreground flex-shrink-0">{chat.time}</span>
+                        <h3 className="font-semibold text-foreground truncate">{chat.name}</h3>
+                        <span className="text-xs text-muted-foreground flex-shrink-0">{chat.time}</span>
                       </div>
-                      <p className="text-ios-caption text-muted-foreground mb-1">Applied for: {chat.jobTitle}</p>
+                      <p className="text-xs text-muted-foreground mb-1">Applied for: {chat.jobTitle}</p>
                       <div className="flex items-center justify-between">
-                        <p className="text-ios-footnote text-muted-foreground truncate">{chat.lastMessage}</p>
+                        <p className="text-sm text-muted-foreground truncate">{chat.lastMessage}</p>
                         {chat.unread > 0 && (
-                          <span className="bg-primary text-primary-foreground text-ios-caption rounded-full px-2 py-1 min-w-[20px] text-center flex-shrink-0 ml-2">
+                          <span className="bg-primary text-primary-foreground text-xs rounded-full px-2 py-1 min-w-[20px] text-center flex-shrink-0 ml-2">
                             {chat.unread}
                           </span>
                         )}
