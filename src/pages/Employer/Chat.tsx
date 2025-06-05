@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { Search, Phone, Video, MoreVertical, Send, Paperclip, Smile, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -135,13 +134,13 @@ const Chat = () => {
       <MobileLayout>
         <div 
           ref={chatContainerRef}
-          className="flex flex-col h-screen bg-background"
+          className="flex flex-col bg-background fixed inset-0"
           style={{ 
             height: keyboardHeight > 0 ? `calc(100vh - ${keyboardHeight}px)` : '100vh' 
           }}
         >
           {/* Chat Header */}
-          <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-background/95 backdrop-blur-sm pt-safe">
+          <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-background/95 backdrop-blur-sm safe-area-top">
             <div className="flex items-center space-x-3">
               <button 
                 onClick={handleBackToChats}
@@ -206,8 +205,11 @@ const Chat = () => {
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Message Input */}
-          <div className="px-4 py-3 border-t border-border bg-background/95 backdrop-blur-sm">
+          {/* Message Input - Fixed at bottom */}
+          <div 
+            className="px-4 py-3 border-t border-border bg-background/95 backdrop-blur-sm"
+            style={{ marginBottom: keyboardHeight > 0 ? 0 : 'env(safe-area-inset-bottom)' }}
+          >
             <div className="flex items-center space-x-3">
               <Button variant="ghost" size="icon" className="h-9 w-9 text-muted-foreground ios-button">
                 <Paperclip size={18} />
@@ -241,68 +243,75 @@ const Chat = () => {
 
   return (
     <MobileLayout>
-      <div className="flex flex-col h-screen bg-background">
+      <div className="flex flex-col min-h-screen bg-background pb-20">
+        <div className="gradient-bg" />
+        
         {/* Header */}
-        <div className="px-4 py-6 border-b border-border bg-background/95 backdrop-blur-sm pt-safe">
-          <h1 className="text-3xl font-bold text-foreground mb-4">Messages</h1>
-          
-          {/* Search */}
-          <div className="relative">
-            <Search size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
-            <Input
-              placeholder="Search conversations..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 ios-input"
-            />
+        <div className="px-4 pt-safe pb-6 bg-background/95 backdrop-blur-sm relative z-10">
+          <div className="max-w-sm mx-auto">
+            <h1 className="text-3xl font-bold text-foreground mb-4 animate-fade-in">Messages</h1>
+            
+            {/* Search */}
+            <div className="relative animate-fade-in" style={{ animationDelay: '0.1s' }}>
+              <Search size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
+              <Input
+                placeholder="Search conversations..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-10 ios-input"
+              />
+            </div>
           </div>
         </div>
 
         {/* Chat List */}
-        <div className="flex-1 overflow-y-auto px-4 py-4 pb-24">
-          {filteredChats.length === 0 ? (
-            <div className="text-center py-16">
-              <div className="text-6xl mb-4">💬</div>
-              <h3 className="text-lg font-medium text-foreground mb-2">No conversations</h3>
-              <p className="text-muted-foreground">Chat with job applicants here</p>
-            </div>
-          ) : (
-            <div className="space-y-3">
-              {filteredChats.map((chat) => (
-                <button
-                  key={chat.id}
-                  onClick={() => handleChatSelect(chat)}
-                  className="w-full card-enhanced p-4 ios-list-item text-left"
-                >
-                  <div className="flex items-center space-x-4">
-                    <div className="relative flex-shrink-0">
-                      <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
-                        <span className="text-sm font-semibold text-primary">{chat.avatar}</span>
-                      </div>
-                      {chat.online && (
-                        <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-success rounded-full border-2 border-background"></div>
-                      )}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between mb-1">
-                        <h3 className="font-semibold text-foreground truncate">{chat.name}</h3>
-                        <span className="text-xs text-muted-foreground flex-shrink-0">{chat.time}</span>
-                      </div>
-                      <p className="text-xs text-muted-foreground mb-1">Applied for: {chat.jobTitle}</p>
-                      <div className="flex items-center justify-between">
-                        <p className="text-sm text-muted-foreground truncate">{chat.lastMessage}</p>
-                        {chat.unread > 0 && (
-                          <span className="bg-primary text-primary-foreground text-xs rounded-full px-2 py-1 min-w-[20px] text-center flex-shrink-0 ml-2">
-                            {chat.unread}
-                          </span>
+        <div className="flex-1 px-4 overflow-y-auto relative z-10">
+          <div className="max-w-sm mx-auto">
+            {filteredChats.length === 0 ? (
+              <div className="text-center py-16 animate-fade-in">
+                <div className="text-6xl mb-4">💬</div>
+                <h3 className="text-lg font-medium text-foreground mb-2">No conversations</h3>
+                <p className="text-muted-foreground">Chat with job applicants here</p>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {filteredChats.map((chat, index) => (
+                  <button
+                    key={chat.id}
+                    onClick={() => handleChatSelect(chat)}
+                    className="w-full card-enhanced p-4 ios-list-item text-left group animate-fade-in"
+                    style={{ animationDelay: `${0.1 + index * 0.05}s` }}
+                  >
+                    <div className="flex items-center space-x-4">
+                      <div className="relative flex-shrink-0">
+                        <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
+                          <span className="text-sm font-semibold text-primary">{chat.avatar}</span>
+                        </div>
+                        {chat.online && (
+                          <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-success rounded-full border-2 border-background"></div>
                         )}
                       </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center justify-between mb-1">
+                          <h3 className="font-semibold text-foreground truncate">{chat.name}</h3>
+                          <span className="text-xs text-muted-foreground flex-shrink-0">{chat.time}</span>
+                        </div>
+                        <p className="text-xs text-muted-foreground mb-1">Applied for: {chat.jobTitle}</p>
+                        <div className="flex items-center justify-between">
+                          <p className="text-sm text-muted-foreground truncate">{chat.lastMessage}</p>
+                          {chat.unread > 0 && (
+                            <span className="bg-primary text-primary-foreground text-xs rounded-full px-2 py-1 min-w-[20px] text-center flex-shrink-0 ml-2">
+                              {chat.unread}
+                            </span>
+                          )}
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </button>
-              ))}
-            </div>
-          )}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
 
         <EmployerBottomNav />

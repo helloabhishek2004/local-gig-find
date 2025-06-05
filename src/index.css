@@ -105,6 +105,7 @@ body {
   font-variation-settings: 'opsz' 32;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 /* Animated gradient background */
@@ -234,4 +235,20 @@ body {
 
 .animate-fade-in {
   animation: fade-in 0.3s ease-out;
+}
+
+/* Chat specific styles for mobile keyboard handling */
+.chat-input-area {
+  transition: margin-bottom 0.3s ease;
+}
+
+/* Prevent body scroll when modal is open */
+.modal-open {
+  overflow: hidden;
+}
+
+/* Mobile viewport height fix for chat */
+.chat-container {
+  height: 100vh;
+  height: 100dvh; /* Use dynamic viewport height if supported */
 }

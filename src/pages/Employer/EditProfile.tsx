@@ -78,31 +78,35 @@ const EditProfile = () => {
 
   return (
     <MobileLayout>
-      <div className="flex flex-col min-h-screen bg-background animate-fade-in">
+      <div className="flex flex-col min-h-screen bg-background animate-fade-in pb-20">
+        <div className="gradient-bg" />
+        
         {/* Header */}
-        <div className="flex-shrink-0 px-4 pt-16 pb-4 safe-area-top">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <button 
-                onClick={() => navigate('/employer/profile')} 
-                className="text-primary hover:text-primary/80 transition-colors p-2 -ml-2 rounded-full"
+        <div className="px-4 pt-safe pb-4 relative z-10">
+          <div className="max-w-sm mx-auto">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                <button 
+                  onClick={() => navigate('/employer/profile')} 
+                  className="text-primary hover:text-primary/80 transition-colors p-2 -ml-2 rounded-full"
+                >
+                  <ArrowLeft size={24} />
+                </button>
+                <h1 className="text-3xl font-bold ml-2">Edit Profile</h1>
+              </div>
+              <Button 
+                onClick={handleSave}
+                className="btn-accent px-6 h-10 text-sm font-semibold"
               >
-                <ArrowLeft size={24} />
-              </button>
-              <h1 className="text-3xl font-bold ml-2">Edit Profile</h1>
+                <Save size={16} className="mr-2" />
+                Save
+              </Button>
             </div>
-            <Button 
-              onClick={handleSave}
-              className="btn-accent px-6 h-10 text-sm font-semibold"
-            >
-              <Save size={16} className="mr-2" />
-              Save
-            </Button>
           </div>
         </div>
 
         {/* Content */}
-        <div className="flex-1 overflow-y-auto px-4 pb-28">
+        <div className="flex-1 overflow-y-auto px-4 relative z-10">
           <div className="max-w-sm mx-auto space-y-8">
             {/* Business Logo */}
             <div className="flex flex-col items-center space-y-4 animate-fade-in">
@@ -230,10 +234,10 @@ const EditProfile = () => {
           </div>
         </div>
 
-        {/* Image Upload Modal - Fixed at bottom of screen */}
+        {/* Image Upload Modal - Fixed to viewport bottom */}
         {showImageOptions && (
           <div className="fixed inset-0 bg-black/50 z-50 flex items-end">
-            <div className="w-full bg-background rounded-t-3xl p-6 animate-slide-up">
+            <div className="w-full bg-background rounded-t-3xl p-6 animate-slide-up safe-area-bottom">
               <h3 className="text-lg font-semibold mb-6 text-center">Choose Logo</h3>
               <div className="space-y-3">
                 <Button

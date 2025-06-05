@@ -29,9 +29,9 @@ const EmployerBottomNav = ({ activeTab }: EmployerBottomNavProps) => {
   const currentActiveTab = getActiveTab();
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-xl border-t border-border/20 pb-safe">
-      <div className="max-w-sm mx-auto px-2 py-2">
-        <div className="flex justify-between items-center gap-1">
+    <div className="fixed bottom-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-xl border-t border-border/20 safe-area-bottom">
+      <div className="max-w-sm mx-auto px-4 py-2">
+        <div className="flex justify-between items-center gap-2">
           {tabs.map(({ id, icon: Icon, label, path }) => (
             <button
               key={id}
