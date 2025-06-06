@@ -116,17 +116,17 @@ const Dashboard = () => {
 
   return (
     <MobileLayout>
-      <div className="flex flex-col min-h-screen bg-background relative pb-24">
+      <div className="flex flex-col h-screen bg-background overflow-hidden">
         {/* Header */}
-        <div className="pt-safe px-4 py-6 bg-background/95 backdrop-blur-sm">
+        <div className="flex-shrink-0 pt-safe px-4 py-6 bg-background/95 backdrop-blur-sm">
           <div className="max-w-sm mx-auto">
             <h1 className="text-3xl font-bold text-foreground mb-2">{greeting}! 👋</h1>
             <p className="text-muted-foreground text-lg">Beach Cafe Varkala</p>
           </div>
         </div>
 
-        {/* Content */}
-        <div className="flex-1 px-4 py-2 overflow-y-auto">
+        {/* Scrollable Content */}
+        <div className="flex-1 overflow-y-auto px-4 py-2 pb-24">
           <div className="max-w-sm mx-auto space-y-6">
             {/* Quick Post Job Button */}
             <Button 
@@ -237,6 +237,7 @@ const Dashboard = () => {
           </div>
         </div>
 
+        {/* Bottom Navigation */}
         <EmployerBottomNav />
       </div>
     </MobileLayout>

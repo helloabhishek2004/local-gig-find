@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Edit3, MapPin, Phone, Mail, Star, ChevronRight, Building2, Users, Calendar, Settings } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -37,24 +36,16 @@ const Profile = () => {
 
   return (
     <MobileLayout>
-      <div className="flex flex-col min-h-screen bg-background animate-fade-in">
+      <div className="flex flex-col h-screen bg-background overflow-hidden">
         {/* Header */}
-        <div className="flex-shrink-0 px-4 pt-16 pb-4 safe-area-top">
-          <div className="flex items-center justify-between">
-            <h1 className="text-3xl font-bold text-foreground">Business Profile</h1>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => navigate('/employer/edit-profile')}
-              className="hover:bg-accent/10 transition-all duration-200 rounded-full h-11 w-11 hover:scale-110"
-            >
-              <Edit3 size={20} className="text-primary" />
-            </Button>
+        <div className="flex-shrink-0 pt-safe px-4 py-6 bg-background/95 backdrop-blur-sm">
+          <div className="max-w-sm mx-auto">
+            <h1 className="text-2xl font-bold text-foreground">Profile</h1>
           </div>
         </div>
 
-        {/* Content */}
-        <div className="flex-1 px-4 py-2 pb-28 overflow-y-auto">
+        {/* Scrollable Content */}
+        <div className="flex-1 overflow-y-auto px-4 py-2 pb-24">
           <div className="max-w-sm mx-auto space-y-6">
             {/* Business Profile Card */}
             <div className="card-enhanced p-6 animate-fade-in">
@@ -161,6 +152,7 @@ const Profile = () => {
           </div>
         </div>
 
+        {/* Bottom Navigation */}
         <EmployerBottomNav />
       </div>
     </MobileLayout>

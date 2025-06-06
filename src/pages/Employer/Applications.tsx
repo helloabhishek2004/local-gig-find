@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Filter, Search, MapPin, Phone, MessageCircle, Star, Eye, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -88,107 +87,112 @@ const Applications = () => {
 
   return (
     <MobileLayout>
-      <div className="flex flex-col min-h-screen bg-background">
+      <div className="flex flex-col h-screen bg-background overflow-hidden">
         {/* Header */}
-        <div className="flex-shrink-0 px-ios-md pt-ios-lg pb-ios-sm ios-navbar safe-area-top">
-          <h1 className="text-ios-title1 font-bold text-foreground mb-ios-md">Applications</h1>
-          
-          {/* Search */}
-          <div className="relative mb-ios-md">
-            <Search size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
-            <Input
-              placeholder="Search applicants..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 ios-input"
-            />
-          </div>
-
-          {/* Filter Tabs */}
-          <div className="flex gap-2 overflow-x-auto category-scroll">
-            {filters.map((filter) => (
-              <button
-                key={filter.id}
-                onClick={() => setSelectedFilter(filter.id)}
-                className={cn(
-                  "flex-shrink-0 px-ios-md py-ios-sm rounded-ios-lg text-ios-footnote font-medium transition-all duration-200",
-                  selectedFilter === filter.id
-                    ? "bg-primary text-primary-foreground"
-                    : "bg-card text-muted-foreground hover:bg-accent/10"
-                )}
-              >
-                {filter.label} ({filter.count})
-              </button>
-            ))}
+        <div className="flex-shrink-0 pt-safe px-4 py-6 bg-background/95 backdrop-blur-sm">
+          <div className="max-w-sm mx-auto">
+            <h1 className="text-2xl font-bold text-foreground">Applications</h1>
           </div>
         </div>
 
-        {/* Content */}
-        <div className="flex-1 px-ios-md pb-24 overflow-y-auto">
-          {filteredApplications.length === 0 ? (
-            <div className="text-center py-16">
-              <div className="text-6xl mb-4">📄</div>
-              <h3 className="text-ios-headline text-foreground mb-2">No applications found</h3>
-              <p className="text-muted-foreground text-ios-callout">Applications will appear here when people apply to your jobs</p>
+        {/* Scrollable Content */}
+        <div className="flex-1 overflow-y-auto px-4 py-2 pb-24">
+          <div className="max-w-sm mx-auto space-y-6">
+            {/* Search and Filter */}
+            <div className="relative mb-ios-md">
+              <Search size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
+              <Input
+                placeholder="Search applicants..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-10 ios-input"
+              />
             </div>
-          ) : (
-            <div className="space-y-ios-md">
-              {filteredApplications.map((application) => (
-                <div key={application.id} className="card-enhanced p-ios-lg ios-list-item">
-                  <div className="flex items-start gap-ios-md mb-ios-md">
-                    <div className="w-12 h-12 bg-primary/10 rounded-ios-lg flex items-center justify-center">
-                      <span className="text-ios-body font-semibold text-primary">
-                        {application.applicantName.split(' ').map(n => n[0]).join('')}
-                      </span>
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-start justify-between mb-ios-xs">
-                        <h3 className="font-semibold text-foreground text-ios-callout">{application.applicantName}</h3>
-                        <Badge className={getStatusColor(application.status)}>
-                          {application.status}
-                        </Badge>
-                      </div>
-                      <p className="text-muted-foreground text-ios-footnote mb-ios-xs">Applied for: {application.jobTitle}</p>
-                      <div className="flex items-center gap-ios-sm text-muted-foreground text-ios-caption">
-                        <div className="flex items-center gap-1">
-                          <MapPin size={12} />
-                          <span>{application.location}</span>
-                        </div>
-                        <span>•</span>
-                        <span>{application.distance} away</span>
-                        <span>•</span>
-                        <div className="flex items-center gap-1">
-                          <Clock size={12} />
-                          <span>{application.appliedDate}</span>
-                        </div>
-                      </div>
-                      {application.rating && (
-                        <div className="flex items-center gap-1 mt-ios-xs">
-                          <Star size={14} fill="currentColor" className="text-amber-500" />
-                          <span className="text-ios-caption font-medium">{application.rating}</span>
-                        </div>
-                      )}
-                    </div>
-                  </div>
 
-                  <div className="flex gap-ios-sm">
-                    <Button size="sm" variant="outline" className="flex-1 ios-button">
-                      <Eye size={16} className="mr-1" />
-                      View Profile
-                    </Button>
-                    <Button size="sm" variant="outline" className="ios-button">
-                      <MessageCircle size={16} />
-                    </Button>
-                    <Button size="sm" variant="outline" className="ios-button">
-                      <Phone size={16} />
-                    </Button>
-                  </div>
-                </div>
+            <div className="flex gap-2 overflow-x-auto category-scroll">
+              {filters.map((filter) => (
+                <button
+                  key={filter.id}
+                  onClick={() => setSelectedFilter(filter.id)}
+                  className={cn(
+                    "flex-shrink-0 px-ios-md py-ios-sm rounded-ios-lg text-ios-footnote font-medium transition-all duration-200",
+                    selectedFilter === filter.id
+                      ? "bg-primary text-primary-foreground"
+                      : "bg-card text-muted-foreground hover:bg-accent/10"
+                  )}
+                >
+                  {filter.label} ({filter.count})
+                </button>
               ))}
             </div>
-          )}
+
+            {/* Content */}
+            {filteredApplications.length === 0 ? (
+              <div className="text-center py-16">
+                <div className="text-6xl mb-4">📄</div>
+                <h3 className="text-ios-headline text-foreground mb-2">No applications found</h3>
+                <p className="text-muted-foreground text-ios-callout">Applications will appear here when people apply to your jobs</p>
+              </div>
+            ) : (
+              <div className="space-y-ios-md">
+                {filteredApplications.map((application) => (
+                  <div key={application.id} className="card-enhanced p-ios-lg ios-list-item">
+                    <div className="flex items-start gap-ios-md mb-ios-md">
+                      <div className="w-12 h-12 bg-primary/10 rounded-ios-lg flex items-center justify-center">
+                        <span className="text-ios-body font-semibold text-primary">
+                          {application.applicantName.split(' ').map(n => n[0]).join('')}
+                        </span>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-start justify-between mb-ios-xs">
+                          <h3 className="font-semibold text-foreground text-ios-callout">{application.applicantName}</h3>
+                          <Badge className={getStatusColor(application.status)}>
+                            {application.status}
+                          </Badge>
+                        </div>
+                        <p className="text-muted-foreground text-ios-footnote mb-ios-xs">Applied for: {application.jobTitle}</p>
+                        <div className="flex items-center gap-ios-sm text-muted-foreground text-ios-caption">
+                          <div className="flex items-center gap-1">
+                            <MapPin size={12} />
+                            <span>{application.location}</span>
+                          </div>
+                          <span>•</span>
+                          <span>{application.distance} away</span>
+                          <span>•</span>
+                          <div className="flex items-center gap-1">
+                            <Clock size={12} />
+                            <span>{application.appliedDate}</span>
+                          </div>
+                        </div>
+                        {application.rating && (
+                          <div className="flex items-center gap-1 mt-ios-xs">
+                            <Star size={14} fill="currentColor" className="text-amber-500" />
+                            <span className="text-ios-caption font-medium">{application.rating}</span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="flex gap-ios-sm">
+                      <Button size="sm" variant="outline" className="flex-1 ios-button">
+                        <Eye size={16} className="mr-1" />
+                        View Profile
+                      </Button>
+                      <Button size="sm" variant="outline" className="ios-button">
+                        <MessageCircle size={16} />
+                      </Button>
+                      <Button size="sm" variant="outline" className="ios-button">
+                        <Phone size={16} />
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
 
+        {/* Bottom Navigation */}
         <EmployerBottomNav />
       </div>
     </MobileLayout>

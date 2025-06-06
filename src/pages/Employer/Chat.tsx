@@ -28,86 +28,26 @@ const Chat = () => {
   const [selectedChat, setSelectedChat] = useState<Chat | null>(null);
   const [newMessage, setNewMessage] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
-  const [keyboardHeight, setKeyboardHeight] = useState(0);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const chatContainerRef = useRef<HTMLDivElement>(null);
 
   const mockChats: Chat[] = [
-    {
-      id: '1',
-      name: 'Rajesh Kumar',
-      lastMessage: 'When should I start?',
-      time: '2:30 PM',
-      unread: 2,
-      avatar: 'RK',
-      online: true,
-      jobTitle: 'Restaurant Server'
-    },
-    {
-      id: '2',
-      name: 'Amit Sharma',
-      lastMessage: 'Thank you for considering my application',
-      time: '1:15 PM',
-      unread: 0,
-      avatar: 'AS',
-      online: false,
-      jobTitle: 'Delivery Boy'
-    },
-    {
-      id: '3',
-      name: 'Priya Nair',
-      lastMessage: 'I have experience in customer service',
-      time: '11:30 AM',
-      unread: 1,
-      avatar: 'PN',
-      online: true,
-      jobTitle: 'Restaurant Server'
-    }
+    { id: '1', name: 'Rajesh Kumar', lastMessage: 'When should I start?', time: '2:30 PM', unread: 2, avatar: 'RK', online: true, jobTitle: 'Restaurant Server' },
+    { id: '2', name: 'Amit Sharma', lastMessage: 'Thank you for considering my application', time: '1:15 PM', unread: 0, avatar: 'AS', online: false, jobTitle: 'Delivery Boy' },
+    { id: '3', name: 'Priya Nair', lastMessage: 'I have experience in customer service', time: '11:30 AM', unread: 1, avatar: 'PN', online: true, jobTitle: 'Restaurant Server' }
   ];
 
   const mockMessages: Message[] = [
-    {
-      id: '1',
-      text: 'Hi! I reviewed your application for the server position.',
-      time: '2:15 PM',
-      sender: 'me'
-    },
-    {
-      id: '2',
-      text: 'Thank you for considering my application!',
-      time: '2:16 PM',
-      sender: 'other'
-    },
-    {
-      id: '3',
-      text: 'When should I start?',
-      time: '2:30 PM',
-      sender: 'other'
-    }
+    { id: '1', text: 'Hi! I reviewed your application for the server position.', time: '2:15 PM', sender: 'me' },
+    { id: '2', text: 'Thank you for considering my application!', time: '2:16 PM', sender: 'other' },
+    { id: '3', text: 'When should I start?', time: '2:30 PM', sender: 'other' }
   ];
 
-  // Handle keyboard visibility on mobile
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.visualViewport) {
-        const viewport = window.visualViewport;
-        const keyboardHeight = window.innerHeight - viewport.height;
-        setKeyboardHeight(keyboardHeight > 0 ? keyboardHeight : 0);
-      }
-    };
-
-    if (window.visualViewport) {
-      window.visualViewport.addEventListener('resize', handleResize);
-      return () => window.visualViewport?.removeEventListener('resize', handleResize);
-    }
-  }, []);
-
-  // Scroll to bottom when keyboard appears or messages change
+  // Scroll to bottom when messages change
   useEffect(() => {
     if (selectedChat && messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
     }
-  }, [selectedChat, keyboardHeight]);
+  }, [selectedChat]);
 
   const filteredChats = mockChats.filter(chat =>
     chat.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -131,16 +71,10 @@ const Chat = () => {
 
   if (selectedChat) {
     return (
-      <MobileLayout>
-        <div 
-          ref={chatContainerRef}
-          className="flex flex-col bg-background fixed inset-0"
-          style={{ 
-            height: keyboardHeight > 0 ? `calc(100vh - ${keyboardHeight}px)` : '100vh' 
-          }}
-        >
-          {/* Chat Header */}
-          <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-background/95 backdrop-blur-sm safe-area-top">
+      <div className="flex flex-col h-screen bg-background">
+        {/* Chat Header */}
+        <div className="flex-shrink-0 px-4 py-3 border-b border-border bg-background/95 backdrop-blur-sm safe-area-top">
+          <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
               <button 
                 onClick={handleBackToChats}
@@ -177,80 +111,81 @@ const Chat = () => {
               </Button>
             </div>
           </div>
+        </div>
 
-          {/* Messages */}
-          <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4">
-            {mockMessages.map((message) => (
+        {/* Scrollable Messages Area */}
+        {/* Add pb- to account for message input. Approx message input height ~56px. Use 60px for padding. */}
+        <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4 pb-[60px]">
+          {mockMessages.map((message) => (
+            <div
+              key={message.id}
+              className={`flex ${message.sender === 'me' ? 'justify-end' : 'justify-start'}`}
+            >
               <div
-                key={message.id}
-                className={`flex ${message.sender === 'me' ? 'justify-end' : 'justify-start'}`}
+                className={`max-w-[75%] px-4 py-2 rounded-2xl ${
+                  message.sender === 'me'
+                    ? 'bg-primary text-primary-foreground'
+                    : 'bg-card border border-border text-foreground'
+                }`}
               >
-                <div
-                  className={`max-w-[75%] px-4 py-2 rounded-2xl ${
-                    message.sender === 'me'
-                      ? 'bg-primary text-primary-foreground'
-                      : 'bg-card border border-border text-foreground'
-                  }`}
-                >
-                  <p className="text-sm">{message.text}</p>
-                  <div className="flex items-center justify-end space-x-1 mt-1">
-                    <span className="text-xs opacity-70">{message.time}</span>
-                    {message.sender === 'me' && message.status && (
-                      <span className="text-xs opacity-70">✓✓</span>
-                    )}
-                  </div>
+                <p className="text-sm">{message.text}</p>
+                <div className="flex items-center justify-end space-x-1 mt-1">
+                  <span className="text-xs opacity-70">{message.time}</span>
+                  {message.sender === 'me' && message.status && (
+                    <span className="text-xs opacity-70">✓✓</span>
+                  )}
                 </div>
               </div>
-            ))}
-            <div ref={messagesEndRef} />
-          </div>
-
-          {/* Message Input - Fixed at bottom */}
-          <div 
-            className="px-4 py-3 border-t border-border bg-background/95 backdrop-blur-sm"
-            style={{ marginBottom: keyboardHeight > 0 ? 0 : 'env(safe-area-inset-bottom)' }}
-          >
-            <div className="flex items-center space-x-3">
-              <Button variant="ghost" size="icon" className="h-9 w-9 text-muted-foreground ios-button">
-                <Paperclip size={18} />
-              </Button>
-              <div className="flex-1">
-                <Input
-                  placeholder="Type a message..."
-                  value={newMessage}
-                  onChange={(e) => setNewMessage(e.target.value)}
-                  onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-                  className="ios-input"
-                />
-              </div>
-              <Button variant="ghost" size="icon" className="h-9 w-9 text-muted-foreground ios-button">
-                <Smile size={18} />
-              </Button>
-              <Button 
-                onClick={handleSendMessage}
-                size="icon" 
-                className="h-9 w-9 bg-primary text-primary-foreground rounded-xl hover:bg-primary/90 ios-button"
-                disabled={!newMessage.trim()}
-              >
-                <Send size={16} />
-              </Button>
             </div>
+          ))}
+          <div ref={messagesEndRef} />
+        </div>
+
+        {/* Message Input Area - Fixed at bottom */}
+        <div className="fixed inset-x-0 bottom-0 z-50 px-4 py-3 border-t border-border bg-background safe-area-bottom">
+          <div className="flex items-center space-x-3">
+            <Button variant="ghost" size="icon" className="h-9 w-9 text-muted-foreground ios-button">
+              <Paperclip size={18} />
+            </Button>
+            <div className="flex-1">
+              <Input
+                placeholder="Type a message..."
+                value={newMessage}
+                onChange={(e) => setNewMessage(e.target.value)}
+                onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+                className="ios-input"
+              />
+            </div>
+            <Button variant="ghost" size="icon" className="h-9 w-9 text-muted-foreground ios-button">
+              <Smile size={18} />
+            </Button>
+            <Button 
+              onClick={handleSendMessage}
+              size="icon" 
+              className="h-9 w-9 bg-primary text-primary-foreground rounded-xl hover:bg-primary/90 ios-button"
+              disabled={!newMessage.trim()}
+            >
+              <Send size={16} />
+            </Button>
           </div>
         </div>
-      </MobileLayout>
+      </div>
     );
   }
 
   return (
     <MobileLayout>
-      <div className="flex flex-col min-h-screen bg-background pb-20">
-        <div className="gradient-bg" />
-        
+      <div className="flex flex-col h-screen bg-background overflow-hidden">
         {/* Header */}
-        <div className="px-4 pt-safe pb-6 bg-background/95 backdrop-blur-sm relative z-10">
+        <div className="flex-shrink-0 pt-safe px-4 py-6 bg-background/95 backdrop-blur-sm">
           <div className="max-w-sm mx-auto">
-            <h1 className="text-3xl font-bold text-foreground mb-4 animate-fade-in">Messages</h1>
-            
+            <h1 className="text-2xl font-bold text-foreground">Messages</h1>
+          </div>
+        </div>
+
+        {/* Scrollable Content */}
+        <div className="flex-1 overflow-y-auto px-4 py-2 pb-24">
+          <div className="max-w-sm mx-auto space-y-6">
             {/* Search */}
             <div className="relative animate-fade-in" style={{ animationDelay: '0.1s' }}>
               <Search size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
@@ -261,12 +196,8 @@ const Chat = () => {
                 className="pl-10 ios-input"
               />
             </div>
-          </div>
-        </div>
 
-        {/* Chat List */}
-        <div className="flex-1 px-4 overflow-y-auto relative z-10">
-          <div className="max-w-sm mx-auto">
+            {/* Chat List */}
             {filteredChats.length === 0 ? (
               <div className="text-center py-16 animate-fade-in">
                 <div className="text-6xl mb-4">💬</div>
@@ -296,9 +227,8 @@ const Chat = () => {
                           <h3 className="font-semibold text-foreground truncate">{chat.name}</h3>
                           <span className="text-xs text-muted-foreground flex-shrink-0">{chat.time}</span>
                         </div>
-                        <p className="text-xs text-muted-foreground mb-1">Applied for: {chat.jobTitle}</p>
+                        <p className="text-sm text-muted-foreground truncate">{chat.lastMessage}</p>
                         <div className="flex items-center justify-between">
-                          <p className="text-sm text-muted-foreground truncate">{chat.lastMessage}</p>
                           {chat.unread > 0 && (
                             <span className="bg-primary text-primary-foreground text-xs rounded-full px-2 py-1 min-w-[20px] text-center flex-shrink-0 ml-2">
                               {chat.unread}
@@ -314,6 +244,7 @@ const Chat = () => {
           </div>
         </div>
 
+        {/* Bottom Navigation */}
         <EmployerBottomNav />
       </div>
     </MobileLayout>
