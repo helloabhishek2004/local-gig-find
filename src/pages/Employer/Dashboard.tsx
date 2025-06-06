@@ -116,7 +116,7 @@ const Dashboard = () => {
 
   return (
     <MobileLayout>
-      <div className="flex flex-col min-h-screen bg-background relative">
+      <div className="flex flex-col min-h-screen bg-background relative pb-24">
         {/* Header */}
         <div className="pt-safe px-4 py-6 bg-background/95 backdrop-blur-sm">
           <div className="max-w-sm mx-auto">
@@ -126,7 +126,7 @@ const Dashboard = () => {
         </div>
 
         {/* Content */}
-        <div className="flex-1 px-4 py-2 overflow-y-auto pb-24">
+        <div className="flex-1 px-4 py-2 overflow-y-auto">
           <div className="max-w-sm mx-auto space-y-6">
             {/* Quick Post Job Button */}
             <Button 

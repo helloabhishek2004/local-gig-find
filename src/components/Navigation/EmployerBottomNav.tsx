@@ -33,28 +33,30 @@ const EmployerBottomNav = ({ activeTab }: EmployerBottomNavProps) => {
   };
 
   return (
-    <div className="fixed bottom-ios-md left-1/2 transform -translate-x-1/2 z-50 bottom-nav">
-      <div className="bg-card/95 backdrop-blur-ios border border-border/30 rounded-ios-xl shadow-ios-lg px-ios-xs py-ios-sm mx-ios-md">
-        <div className="flex justify-center gap-1">
-          {tabs.map(({ id, icon: Icon, label, path }) => {
-            const isActive = currentActiveTab === id;
-            
-            return (
-              <button
-                key={id}
-                onClick={() => handleNavigation(path)}
-                className={cn(
-                  "flex flex-col items-center p-ios-sm min-w-0 rounded-ios ios-button transition-all duration-200",
-                  isActive 
-                    ? "text-primary bg-primary/10 shadow-ios" 
-                    : "text-muted-foreground hover:text-primary hover:bg-accent/10"
-                )}
-              >
-                <Icon size={20} className="transition-transform duration-200" />
-                <span className="text-ios-caption mt-1 font-medium">{label}</span>
-              </button>
-            );
-          })}
+    <div className="fixed bottom-0 left-0 right-0 z-50 safe-area-bottom-nav">
+      <div className="bg-card/95 backdrop-blur-lg border-t border-border/20 shadow-lg">
+        <div className="max-w-sm mx-auto px-4 py-3">
+          <div className="flex justify-center gap-1">
+            {tabs.map(({ id, icon: Icon, label, path }) => {
+              const isActive = currentActiveTab === id;
+              
+              return (
+                <button
+                  key={id}
+                  onClick={() => handleNavigation(path)}
+                  className={cn(
+                    "flex flex-col items-center p-2 min-w-0 rounded-lg ios-button transition-all duration-200 flex-1",
+                    isActive 
+                      ? "text-primary bg-primary/10 shadow-sm" 
+                      : "text-muted-foreground hover:text-primary hover:bg-accent/10"
+                  )}
+                >
+                  <Icon size={20} className="transition-transform duration-200" />
+                  <span className="text-xs mt-1 font-medium">{label}</span>
+                </button>
+              );
+            })}
+          </div>
         </div>
       </div>
     </div>
