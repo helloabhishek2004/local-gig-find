@@ -29,70 +29,35 @@ const EmployerBottomNav = ({ activeTab }: EmployerBottomNavProps) => {
   const currentActiveTab = getActiveTab();
 
   const handleNavigation = (path: string) => {
-    // Use replace for smooth navigation without full page reload
     navigate(path, { replace: false });
   };
 
   return (
-    <>
-      {/* Fixed bottom navigation with proper positioning */}
-      <div className="fixed bottom-0 left-0 right-0 w-full z-[1000]">
-        {/* Gradient overlay for visual separation */}
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/95 to-transparent h-20 pointer-events-none" />
-        
-        {/* Navigation container */}
-        <div className="relative bg-background/90 backdrop-blur-xl border-t border-border/40 shadow-lg">
-          {/* Safe area handling for iOS devices */}
-          <div className="max-w-sm mx-auto px-4 py-2 pb-safe">
-            <div className="flex justify-between items-center gap-1">
-              {tabs.map(({ id, icon: Icon, label, path }) => {
-                const isActive = currentActiveTab === id;
-                
-                return (
-                  <button
-                    key={id}
-                    onClick={() => handleNavigation(path)}
-                    className={cn(
-                      "flex flex-col items-center justify-center p-3 min-w-0 rounded-xl transition-all duration-300 flex-1 group relative",
-                      "transform-gpu", // Hardware acceleration for smoother animations
-                      isActive 
-                        ? "text-primary bg-primary/15 scale-105" 
-                        : "text-muted-foreground hover:text-primary hover:bg-accent/10 hover:scale-102"
-                    )}
-                  >
-                    {/* Active tab indicator */}
-                    {isActive && (
-                      <div className="absolute -top-0.5 left-1/2 transform -translate-x-1/2 w-8 h-1 bg-primary rounded-full transition-all duration-300" />
-                    )}
-                    
-                    <Icon 
-                      size={20} 
-                      className={cn(
-                        "transition-all duration-300 mb-1",
-                        isActive 
-                          ? "scale-110 drop-shadow-sm" 
-                          : "group-hover:scale-105",
-                        "transform-gpu" // Hardware acceleration
-                      )} 
-                    />
-                    <span 
-                      className={cn(
-                        "text-xs font-medium text-center leading-tight transition-all duration-300",
-                        isActive 
-                          ? "font-semibold" 
-                          : "group-hover:font-medium"
-                      )}
-                    >
-                      {label}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
+    <div className="fixed bottom-ios-md left-1/2 transform -translate-x-1/2 z-50 bottom-nav">
+      <div className="bg-card/95 backdrop-blur-ios border border-border/30 rounded-ios-xl shadow-ios-lg px-ios-xs py-ios-sm mx-ios-md">
+        <div className="flex justify-center gap-1">
+          {tabs.map(({ id, icon: Icon, label, path }) => {
+            const isActive = currentActiveTab === id;
+            
+            return (
+              <button
+                key={id}
+                onClick={() => handleNavigation(path)}
+                className={cn(
+                  "flex flex-col items-center p-ios-sm min-w-0 rounded-ios ios-button transition-all duration-200",
+                  isActive 
+                    ? "text-primary bg-primary/10 shadow-ios" 
+                    : "text-muted-foreground hover:text-primary hover:bg-accent/10"
+                )}
+              >
+                <Icon size={20} className="transition-transform duration-200" />
+                <span className="text-ios-caption mt-1 font-medium">{label}</span>
+              </button>
+            );
+          })}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
