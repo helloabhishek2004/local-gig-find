@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -45,7 +46,7 @@ const PostJob = () => {
 
   return (
     <MobileLayout>
-      <div className="min-h-screen pb-24">
+      <div className="min-h-screen page-with-bottom-nav tab-transition">
         {/* Header */}
         <div className="ios-navbar px-ios-lg py-ios-md border-b border-border/30">
           <div className="flex items-center">

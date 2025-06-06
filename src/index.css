@@ -172,13 +172,13 @@ body {
   animation: slide-up 0.3s ease-out;
 }
 
-/* Safe area padding for devices with notches */
+/* Enhanced Safe area padding for devices with notches */
 .pt-safe {
   padding-top: max(env(safe-area-inset-top, 0px), 16px);
 }
 
 .pb-safe {
-  padding-bottom: max(env(safe-area-inset-bottom, 0px), 16px);
+  padding-bottom: max(env(safe-area-inset-bottom, 0px), 12px);
 }
 
 .safe-area-top {
@@ -187,6 +187,11 @@ body {
 
 .safe-area-bottom {
   padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Enhanced safe area for bottom navigation */
+.safe-area-bottom-nav {
+  padding-bottom: max(env(safe-area-inset-bottom, 0px), 16px);
 }
 
 /* Button variants */
@@ -251,4 +256,47 @@ body {
 .chat-container {
   height: 100vh;
   height: 100dvh; /* Use dynamic viewport height if supported */
+}
+
+/* Bottom navigation specific styles */
+.bottom-nav-fixed {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+/* Page content with bottom navigation padding */
+.page-with-bottom-nav {
+  padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px));
+}
+
+/* Enhanced tab transition animations */
+@keyframes tab-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.tab-transition {
+  animation: tab-slide-in 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Hardware acceleration for smooth animations */
+.transform-gpu {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Hover scale utilities */
+.hover\:scale-102:hover {
+  transform: scale(1.02);
 }
