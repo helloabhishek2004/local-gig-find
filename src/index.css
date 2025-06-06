@@ -156,20 +156,6 @@ body {
   @apply sticky top-0 z-50 bg-background/95 backdrop-blur-lg border-b border-border/20;
 }
 
-/* Bottom Navigation - Fixed positioning */
-.bottom-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  z-index: 1000;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  height: 64px;
-  padding-bottom: env(safe-area-inset-bottom);
-}
-
 /* Animation for modal slide up */
 @keyframes slide-up {
   from {

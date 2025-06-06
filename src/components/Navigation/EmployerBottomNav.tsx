@@ -33,8 +33,8 @@ const EmployerBottomNav = ({ activeTab }: EmployerBottomNavProps) => {
   };
 
   return (
-    <div className="bottom-nav">
-      <div className="bg-card/95 backdrop-blur-lg border-t border-border/20 shadow-lg w-full">
+    <div className="fixed bottom-0 left-0 right-0 z-50 safe-area-bottom-nav">
+      <div className="bg-card/95 backdrop-blur-lg border-t border-border/20 shadow-lg">
         <div className="max-w-sm mx-auto px-4 py-3">
           <div className="flex justify-center gap-1">
             {tabs.map(({ id, icon: Icon, label, path }) => {
