@@ -163,9 +163,11 @@ const Applications = () => {
                 <Select value={sortBy} onValueChange={val => setSortBy(val as 'newest' | 'closest')}>
                   <SelectTrigger
                     className={cn(
-                      // Match filter button, NOT selected
                       "flex-shrink-0 px-ios-md py-ios-sm rounded-ios-lg text-ios-footnote font-medium transition-all duration-200",
-                      "bg-card text-muted-foreground hover:bg-accent/10 border border-border h-8 min-w-[98px]"
+                      sortBy === "newest"
+                        ? "bg-primary text-primary-foreground border-0"
+                        : "bg-card text-muted-foreground hover:bg-accent/10 border border-border",
+                      "h-8 min-w-[98px]"
                     )}
                   >
                     <SelectValue placeholder="Sort" />
