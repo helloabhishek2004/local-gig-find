@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -28,9 +29,29 @@ const PostJob = () => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
-  const handleSubmit = () => {
-    console.log('Job post data:', formData);
-    navigate('/employer/manage-jobs');
+  // Check required fields
+  const requiredFilled = [
+    formData.jobTitle,
+    formData.businessName,
+    formData.category,
+    formData.location,
+    formData.payment,
+    formData.description
+  ].every(Boolean);
+
+  const [posting, setPosting] = useState(false);
+
+  const handleSubmit = async () => {
+    setPosting(true);
+    // Fake post: simulate success/failure
+    await new Promise(r => setTimeout(r, 1750));
+    setPosting(false);
+    // Randomly route to success or failure for demo (replace with your real logic)
+    if (Math.random() > 0.3) {
+      navigate('/employer/post-job-success');
+    } else {
+      navigate('/employer/post-job-failure');
+    }
   };
 
   const categories = [
@@ -45,9 +66,10 @@ const PostJob = () => {
 
   return (
     <MobileLayout>
-      <div className="flex flex-col h-screen bg-background overflow-hidden">
+      <div className="flex flex-col h-screen bg-background overflow-hidden relative">
+        <div className="gradient-bg-employer" />
         {/* Header */}
-        <div className="flex-shrink-0 pt-safe px-4 py-6 bg-background/95 backdrop-blur-sm">
+        <div className="flex-shrink-0 pt-safe px-4 py-6 bg-background/80 backdrop-blur-sm">
           <div className="max-w-sm mx-auto">
             <div className="flex items-center">
               <button 
@@ -62,8 +84,8 @@ const PostJob = () => {
         </div>
 
         {/* Scrollable Content */}
-        <div className="flex-1 overflow-y-auto px-4 py-2 pb-24">
-          <div className="max-w-sm mx-auto space-y-6">
+        <div className="flex-1 overflow-y-auto px-4 py-2 pb-28">
+          <div className="max-w-sm mx-auto space-y-6 animate-fade-slide-up">
             {/* Job Details */}
             <Card className="card-enhanced">
               <CardHeader>
@@ -226,9 +248,11 @@ const PostJob = () => {
             {/* Submit Button */}
             <Button 
               onClick={handleSubmit}
-              className="w-full h-12 text-base font-semibold"
+              loading={posting}
+              className="w-full h-12 text-base font-semibold btn-accent ios-button"
+              disabled={!requiredFilled || posting}
             >
-              Post Job
+              {posting ? 'Posting...' : 'Post Job'}
             </Button>
           </div>
         </div>
@@ -242,3 +266,4 @@ const PostJob = () => {
 
 export default PostJob;
 
+// Note: This file is getting too long. Consider refactoring into smaller components for better maintainability.
