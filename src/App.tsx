@@ -23,6 +23,7 @@ const EmployerRegister = React.lazy(() => import("./pages/Employer/Register"));
 const EmployerDashboard = React.lazy(() => import("./pages/Employer/Dashboard"));
 const PostJob = React.lazy(() => import("./pages/Employer/PostJob"));
 const EmployerApplications = React.lazy(() => import("./pages/Employer/Applications"));
+const ApplicantDetails = React.lazy(() => import("./pages/Employer/ApplicantDetails"));
 const EmployerChat = React.lazy(() => import("./pages/Employer/Chat"));
 const EmployerProfile = React.lazy(() => import("./pages/Employer/Profile"));
 const EmployerSettings = React.lazy(() => import("./pages/Employer/Settings"));
@@ -69,6 +70,7 @@ const App = () => (
               <Route path="/employer/dashboard" element={<EmployerDashboard />} />
               <Route path="/employer/post-job" element={<PostJob />} />
               <Route path="/employer/applications" element={<EmployerApplications />} />
+              <Route path="/employer/applications/:applicantId" element={<ApplicantDetails />} />
               <Route path="/employer/chat" element={<EmployerChat />} />
               <Route path="/employer/profile" element={<EmployerProfile />} />
               <Route path="/employer/settings" element={<EmployerSettings />} />

@@ -14,6 +14,7 @@ import {
   SelectContent,
   SelectItem,
 } from '@/components/ui/select';
+import { useNavigate } from 'react-router-dom';
 
 interface Application {
   id: string;
@@ -35,6 +36,7 @@ const Applications = () => {
   const [rejectedIds, setRejectedIds] = useState<string[]>([]);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [currentApplication, setCurrentApplication] = useState<Application | null>(null);
+  const navigate = useNavigate();
 
   const mockApplications: Application[] = [
     {
@@ -117,8 +119,7 @@ const Applications = () => {
   };
 
   const handleViewProfile = (app: Application) => {
-    setCurrentApplication(app);
-    setDialogOpen(true);
+    navigate(`/employer/applications/${app.id}`);
   };
 
   return (
@@ -252,57 +253,6 @@ const Applications = () => {
             )}
           </div>
         </div>
-        {/* Profile Resume Dialog */}
-        <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>
-                {currentApplication?.applicantName}'s Profile
-              </DialogTitle>
-              <DialogDescription>
-                Applied for: <span className="font-medium">{currentApplication?.jobTitle}</span>
-              </DialogDescription>
-            </DialogHeader>
-            {currentApplication?.hasResume ? (
-              <div className="flex flex-col items-center gap-3 mt-4">
-                <FileText size={48} className="text-primary" />
-                <div className="font-medium">Resume available</div>
-                {/* Mock download */}
-                <Button
-                  asChild
-                  variant="outline"
-                  className="flex items-center gap-1"
-                  >
-                  <a
-                    href="#"
-                    download={`${currentApplication?.applicantName}-resume.pdf`}
-                    onClick={e => {
-                      e.preventDefault();
-                      alert("This is a demo. Resume download not implemented.");
-                    }}
-                  >
-                    <Download size={18} className="mr-1" />
-                    Download Resume
-                  </a>
-                </Button>
-                <div className="bg-muted border border-border/20 rounded-lg p-3 w-full min-h-[120px] flex items-center justify-center">
-                  <span className="text-muted-foreground text-center">[ Resume preview not available in demo ]</span>
-                </div>
-              </div>
-            ) : (
-              <div className="text-center mt-6 text-muted-foreground">
-                <FileText size={36} className="mx-auto mb-2" />
-                No resume attached to this application.
-              </div>
-            )}
-            <DialogFooter>
-              <Button onClick={() => setDialogOpen(false)} variant="secondary">
-                Close
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-
         {/* Bottom Navigation */}
         <EmployerBottomNav />
       </div>
