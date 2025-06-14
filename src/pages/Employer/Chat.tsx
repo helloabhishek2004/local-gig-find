@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import MobileLayout from '@/components/Layout/MobileLayout';
 import EmployerBottomNav from '@/components/Navigation/EmployerBottomNav';
+import { useKeyboardAwareBottom } from '@/hooks/useKeyboardAwareBottom';
 
 interface Chat {
   id: string;
@@ -29,6 +30,8 @@ const Chat = () => {
   const [newMessage, setNewMessage] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesAreaRef = useRef<HTMLDivElement>(null);
+  const inputAreaRef = useRef<HTMLDivElement>(null);
 
   const mockChats: Chat[] = [
     { id: '1', name: 'Rajesh Kumar', lastMessage: 'When should I start?', time: '2:30 PM', unread: 2, avatar: 'RK', online: true, jobTitle: 'Restaurant Server' },
@@ -70,6 +73,8 @@ const Chat = () => {
   };
 
   if (selectedChat) {
+    useKeyboardAwareBottom(messagesAreaRef, inputAreaRef);
+
     return (
       <div className="flex flex-col h-screen bg-background">
         {/* Chat Header */}
@@ -114,8 +119,10 @@ const Chat = () => {
         </div>
 
         {/* Scrollable Messages Area */}
-        {/* Add pb- to account for message input. Approx message input height ~56px. Use 60px for padding. */}
-        <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4 pb-[60px]">
+        <div
+          ref={messagesAreaRef}
+          className="flex-1 overflow-y-auto px-4 py-4 space-y-4 transition-all duration-150"
+        >
           {mockMessages.map((message) => (
             <div
               key={message.id}
@@ -142,7 +149,10 @@ const Chat = () => {
         </div>
 
         {/* Message Input Area - Fixed at bottom */}
-        <div className="fixed inset-x-0 bottom-0 z-50 px-4 py-3 border-t border-border bg-background safe-area-bottom">
+        <div
+          ref={inputAreaRef}
+          className="fixed inset-x-0 bottom-0 z-50 px-4 py-3 border-t border-border bg-background safe-area-bottom"
+        >
           <div className="flex items-center space-x-3">
             <Button variant="ghost" size="icon" className="h-9 w-9 text-muted-foreground ios-button">
               <Paperclip size={18} />
