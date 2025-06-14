@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -248,7 +247,6 @@ const PostJob = () => {
             {/* Submit Button */}
             <Button 
               onClick={handleSubmit}
-              loading={posting}
               className="w-full h-12 text-base font-semibold btn-accent ios-button"
               disabled={!requiredFilled || posting}
             >
