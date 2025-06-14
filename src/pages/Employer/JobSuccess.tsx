@@ -1,9 +1,8 @@
 
 import React, { useEffect } from "react";
-import { CheckCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-const REDIRECT_DELAY = 3000; // ms
+const REDIRECT_DELAY = 2500; // ms
 
 const EmployerJobSuccess = () => {
   const navigate = useNavigate();
@@ -16,40 +15,53 @@ const EmployerJobSuccess = () => {
   }, [navigate]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center relative overflow-hidden">
-      {/* Gradient animated background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-green-400 via-emerald-200 to-yellow-200 animate-gradient-move opacity-90 z-0" />
-      <div className="relative z-10 flex flex-col items-center bg-white/80 backdrop-blur-md rounded-3xl shadow-2xl px-8 py-12 gap-6 animate-fade-slide-up border border-green-400/10">
-        <div className="bg-green-500/20 rounded-full w-28 h-28 flex items-center justify-center animate-success-pop shadow-inner">
-          <CheckCircle size={62} className="text-green-600 animate-bounce" />
+    <div className="min-h-screen flex items-center justify-center bg-background">
+      <div className="flex flex-col items-center gap-4">
+        <div className="relative w-32 h-32 flex items-center justify-center">
+          {/* Animated SVG Checkmark (tick) */}
+          <svg
+            className="block"
+            width="110"
+            height="110"
+            viewBox="0 0 110 110"
+          >
+            <circle
+              cx="55"
+              cy="55"
+              r="50"
+              fill="#eafaf4"
+              stroke="#4CAF50"
+              strokeWidth="5"
+              style={{
+                opacity: 0.5,
+              }}
+            />
+            <path
+              className="animate-check"
+              d="M35 58 L50 75 L78 38"
+              fill="none"
+              stroke="#4CAF50"
+              strokeWidth="8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+          <style>{`
+            .animate-check {
+              stroke-dasharray: 80;
+              stroke-dashoffset: 80;
+              animation: dash 0.8s cubic-bezier(.8,.2,.5,1) forwards 0.4s;
+            }
+            @keyframes dash {
+              to {
+                stroke-dashoffset: 0;
+              }
+            }
+          `}</style>
         </div>
-        <h1 className="text-3xl font-bold text-green-700 animate-fade-in">Job posted successfully!</h1>
-        <p className="text-muted-foreground text-center text-lg">
-          Your job is now live and visible to jobseekers. Redirecting you to your dashboard…
-        </p>
-        <div className="w-full flex flex-col items-center mt-2">
-          <span className="text-xs text-green-800/80 animate-pulse">You will be redirected in a moment.</span>
-        </div>
+        <h2 className="text-2xl font-semibold text-green-700 text-center animate-fade-in">Job Posted!</h2>
+        <p className="text-muted-foreground text-center text-base">Job posted successfully.<br/>Redirecting to dashboard…</p>
       </div>
-      {/* Keyframes for gradient move */}
-      <style>{`
-        @keyframes gradient-move {
-          0%, 100% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-        }
-        .animate-gradient-move {
-          background-size: 200% 200%;
-          animation: gradient-move 4s ease-in-out infinite;
-        }
-        @keyframes success-pop {
-          0% { transform: scale(0.7); opacity: 0.3; }
-          70% { transform: scale(1.1); opacity: 1; }
-          100% { transform: scale(1); }
-        }
-        .animate-success-pop {
-          animation: success-pop 0.6s cubic-bezier(0.4,2,0.2,1);
-        }
-      `}</style>
     </div>
   );
 };

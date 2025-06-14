@@ -1,9 +1,8 @@
 
 import React, { useEffect } from "react";
-import { XCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-const REDIRECT_DELAY = 4000; // ms
+const REDIRECT_DELAY = 3000; // ms
 
 const EmployerJobFailure = () => {
   const navigate = useNavigate();
@@ -16,40 +15,63 @@ const EmployerJobFailure = () => {
   }, [navigate]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center relative overflow-hidden">
-      {/* Gradient animated background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-red-400 via-red-100 to-yellow-100 animate-gradient-move opacity-90 z-0" />
-      <div className="relative z-10 flex flex-col items-center bg-white/90 backdrop-blur-lg rounded-3xl shadow-2xl px-8 py-12 gap-6 animate-fade-slide-up border border-red-400/10">
-        <div className="bg-red-400/20 rounded-full w-28 h-28 flex items-center justify-center animate-fail-pop shadow-inner">
-          <XCircle size={62} className="text-red-600 animate-bounce" />
+    <div className="min-h-screen flex items-center justify-center bg-background">
+      <div className="flex flex-col items-center gap-4">
+        <div className="relative w-32 h-32 flex items-center justify-center">
+          {/* Animated SVG Cross */}
+          <svg
+            className="block"
+            width="110"
+            height="110"
+            viewBox="0 0 110 110"
+          >
+            <circle
+              cx="55"
+              cy="55"
+              r="50"
+              fill="#fff0f0"
+              stroke="#FF6B6B"
+              strokeWidth="5"
+              style={{
+                opacity: 0.4,
+              }}
+            />
+            <path
+              className="animate-cross"
+              d="M38 38 L72 72"
+              fill="none"
+              stroke="#FF6B6B"
+              strokeWidth="8"
+              strokeLinecap="round"
+            />
+            <path
+              className="animate-cross"
+              d="M72 38 L38 72"
+              fill="none"
+              stroke="#FF6B6B"
+              strokeWidth="8"
+              strokeLinecap="round"
+            />
+          </svg>
+          <style>{`
+            .animate-cross {
+              stroke-dasharray: 50;
+              stroke-dashoffset: 50;
+              animation: dash-cross 0.6s cubic-bezier(.8,.2,.5,1) forwards;
+            }
+            .animate-cross:nth-of-type(2) {
+              animation-delay: 0.33s;
+            }
+            @keyframes dash-cross {
+              to {
+                stroke-dashoffset: 0;
+              }
+            }
+          `}</style>
         </div>
-        <h1 className="text-3xl font-bold text-red-700 animate-fade-in">Job post failed</h1>
-        <p className="text-muted-foreground text-center text-lg">
-          Something went wrong. Please try again later. Redirecting you to your dashboard…
-        </p>
-        <div className="w-full flex flex-col items-center mt-2">
-          <span className="text-xs text-red-700/70 animate-pulse">You will be redirected in a moment.</span>
-        </div>
+        <h2 className="text-2xl font-semibold text-red-600 text-center animate-fade-in">Job Post Failed</h2>
+        <p className="text-muted-foreground text-center text-base">Something went wrong.<br/>Redirecting to dashboard…</p>
       </div>
-      {/* Keyframes for gradient move */}
-      <style>{`
-        @keyframes gradient-move {
-          0%, 100% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-        }
-        .animate-gradient-move {
-          background-size: 200% 200%;
-          animation: gradient-move 4s ease-in-out infinite;
-        }
-        @keyframes fail-pop {
-          0% { transform: scale(0.7); opacity: .4; }
-          60% { transform: scale(1.12); opacity: 1; }
-          100% { transform: scale(1); }
-        }
-        .animate-fail-pop {
-          animation: fail-pop 0.7s cubic-bezier(0.4,2,0.2,1);
-        }
-      `}</style>
     </div>
   );
 };
