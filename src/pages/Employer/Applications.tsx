@@ -153,7 +153,7 @@ const Applications = () => {
                     "flex-shrink-0 px-ios-md py-ios-sm rounded-ios-lg text-ios-footnote font-medium transition-all duration-200",
                     selectedFilter === filter.id
                       ? "bg-primary text-primary-foreground"
-                      : "bg-card text-muted-foreground hover:bg-accent/10"
+                      : "bg-card text-foreground border border-border"
                   )}
                 >
                   {filter.label} ({filter.count})
@@ -163,11 +163,8 @@ const Applications = () => {
                 <Select value={sortBy} onValueChange={val => setSortBy(val as 'newest' | 'closest')}>
                   <SelectTrigger
                     className={cn(
-                      "flex-shrink-0 px-ios-md py-ios-sm rounded-ios-lg text-ios-footnote font-medium transition-all duration-200",
-                      sortBy === "newest"
-                        ? "bg-primary text-primary-foreground border-0"
-                        : "bg-card text-muted-foreground hover:bg-accent/10 border border-border",
-                      "h-8 min-w-[98px]"
+                      "flex-shrink-0 px-ios-md py-ios-sm rounded-ios-lg text-ios-footnote font-medium transition-all duration-200 bg-card text-foreground border border-border h-8 min-w-[98px]", 
+                      // Matches unselected filter button exactly (even when active)
                     )}
                   >
                     <SelectValue placeholder="Sort" />
