@@ -159,10 +159,15 @@ const Applications = () => {
                   {filter.label} ({filter.count})
                 </button>
               ))}
-              {/* Sort Dropdown using shadcn/ui Select */}
               <div className="ml-auto min-w-[120px]">
                 <Select value={sortBy} onValueChange={val => setSortBy(val as 'newest' | 'closest')}>
-                  <SelectTrigger className="w-full bg-background border border-border rounded-lg text-xs h-8 min-w-[98px] px-2">
+                  <SelectTrigger
+                    className={cn(
+                      // Match filter button, NOT selected
+                      "flex-shrink-0 px-ios-md py-ios-sm rounded-ios-lg text-ios-footnote font-medium transition-all duration-200",
+                      "bg-card text-muted-foreground hover:bg-accent/10 border border-border h-8 min-w-[98px]"
+                    )}
+                  >
                     <SelectValue placeholder="Sort" />
                   </SelectTrigger>
                   <SelectContent className="z-50">
