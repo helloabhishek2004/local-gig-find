@@ -4,6 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { ArrowLeft, FileText, Star, MapPin, Phone, Clock, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import MobileLayout from "@/components/Layout/MobileLayout";
+import EmployerBottomNav from "@/components/Navigation/EmployerBottomNav";
 
 const mockApplications = [
   {
@@ -55,13 +56,14 @@ const ApplicantDetails = () => {
           <h2 className="text-lg font-bold mb-2">Applicant Not Found</h2>
           <Button onClick={() => navigate(-1)} variant="secondary">Back</Button>
         </div>
+        <EmployerBottomNav activeTab="applications" />
       </MobileLayout>
     );
   }
 
   return (
     <MobileLayout>
-      <div className="flex flex-col min-h-screen bg-background">
+      <div className="flex flex-col min-h-screen bg-background pb-[86px]">
         {/* Header */}
         <div className="flex-shrink-0 px-4 pt-safe py-6 bg-background/95 backdrop-blur-sm">
           <div className="max-w-sm mx-auto flex items-center gap-2">
@@ -158,6 +160,7 @@ const ApplicantDetails = () => {
             </div>
           </div>
         </div>
+        <EmployerBottomNav activeTab="applications" />
       </div>
     </MobileLayout>
   );
