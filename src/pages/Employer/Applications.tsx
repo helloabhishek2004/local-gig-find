@@ -7,6 +7,13 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Di
 import { cn } from '@/lib/utils';
 import MobileLayout from '@/components/Layout/MobileLayout';
 import EmployerBottomNav from '@/components/Navigation/EmployerBottomNav';
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from '@/components/ui/select';
 
 interface Application {
   id: string;
@@ -152,16 +159,18 @@ const Applications = () => {
                   {filter.label} ({filter.count})
                 </button>
               ))}
-              {/* Sort Dropdown */}
-              <select
-                value={sortBy}
-                onChange={e => setSortBy(e.target.value as 'newest' | 'closest')}
-                className="ml-auto bg-background border border-border px-2 rounded-lg text-xs h-8 min-w-[98px]"
-                style={{ marginLeft: 'auto' }}
-              >
-                <option value="newest">Sort: Newest</option>
-                <option value="closest">Sort: Closest</option>
-              </select>
+              {/* Sort Dropdown using shadcn/ui Select */}
+              <div className="ml-auto min-w-[120px]">
+                <Select value={sortBy} onValueChange={val => setSortBy(val as 'newest' | 'closest')}>
+                  <SelectTrigger className="w-full bg-background border border-border rounded-lg text-xs h-8 min-w-[98px] px-2">
+                    <SelectValue placeholder="Sort" />
+                  </SelectTrigger>
+                  <SelectContent className="z-50">
+                    <SelectItem value="newest">Sort: Newest</SelectItem>
+                    <SelectItem value="closest">Sort: Closest</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
             {/* Content */}
             {filteredApplications.length === 0 ? (
