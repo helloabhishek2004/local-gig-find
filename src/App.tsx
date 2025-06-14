@@ -1,4 +1,3 @@
-
 import React, { Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -28,6 +27,8 @@ const EmployerChat = React.lazy(() => import("./pages/Employer/Chat"));
 const EmployerProfile = React.lazy(() => import("./pages/Employer/Profile"));
 const EmployerSettings = React.lazy(() => import("./pages/Employer/Settings"));
 const EmployerEditProfile = React.lazy(() => import("./pages/Employer/EditProfile"));
+const EmployerJobSuccess = React.lazy(() => import("./pages/Employer/JobSuccess"));
+const EmployerJobFailure = React.lazy(() => import("./pages/Employer/JobFailure"));
 
 const NotFound = React.lazy(() => import("./pages/NotFound"));
 
@@ -72,6 +73,8 @@ const App = () => (
               <Route path="/employer/profile" element={<EmployerProfile />} />
               <Route path="/employer/settings" element={<EmployerSettings />} />
               <Route path="/employer/edit-profile" element={<EmployerEditProfile />} />
+              <Route path="/employer/post-job-success" element={<EmployerJobSuccess />} />
+              <Route path="/employer/post-job-failure" element={<EmployerJobFailure />} />
               
               {/* Redirect old routes for backward compatibility */}
               <Route path="/login" element={<Navigate to="/jobseeker/login" replace />} />
