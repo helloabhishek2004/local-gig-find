@@ -1,11 +1,11 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Moon, Sun, Smartphone, Palette, Bell, Shield, HelpCircle, Info } from 'lucide-react';
+import { ArrowLeft, Moon, Sun, Smartphone, Palette, Bell, Shield, HelpCircle, Info, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import MobileLayout from '@/components/Layout/MobileLayout';
+import ConfirmDeleteAccountDialog from "./ConfirmDeleteAccountDialog";
 
 interface SettingsScreenProps {
   onBack: () => void;
@@ -93,6 +93,23 @@ const SettingsScreen = ({ onBack }: SettingsScreenProps) => {
         },
       ],
     },
+    {
+      title: 'Account',
+      items: [
+        {
+          icon: LogOut,
+          label: 'Sign Out',
+          type: 'link' as const,
+          danger: true,
+        },
+        {
+          icon: Shield, // Use Shield or Trash for Delete
+          label: 'Delete Account',
+          type: 'delete' as const,
+          danger: true,
+        },
+      ],
+    },
   ];
 
   return (
@@ -155,6 +172,20 @@ const SettingsScreen = ({ onBack }: SettingsScreenProps) => {
                             onCheckedChange={item.onChange}
                           />
                         </div>
+                      ) : item.type === 'delete' ? (
+                        <ConfirmDeleteAccountDialog
+                          trigger={
+                            <button
+                              className="w-full flex items-center justify-between group"
+                              type="button"
+                            >
+                              <div className="flex items-center gap-3">
+                                <item.icon size={20} className="text-destructive" />
+                                <span className="font-medium text-destructive">{item.label}</span>
+                              </div>
+                            </button>
+                          }
+                        />
                       ) : (
                         <button className="w-full flex items-center justify-between group">
                           <div className="flex items-center gap-3">

@@ -1,10 +1,10 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Moon, Sun, Smartphone, Palette, Bell, Shield, HelpCircle, Info, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import MobileLayout from '@/components/Layout/MobileLayout';
+import ConfirmDeleteAccountDialog from "@/components/Settings/ConfirmDeleteAccountDialog";
 
 type Theme = 'light' | 'dark' | 'system';
 
@@ -114,6 +114,12 @@ const Settings = () => {
           action: () => navigate('/'),
           danger: true,
         },
+        {
+          icon: Shield, // Use a suitable icon for deletion, e.g., Shield or Trash
+          label: 'Delete Account',
+          type: 'delete' as const,
+          danger: true,
+        },
       ],
     },
   ];
@@ -190,10 +196,27 @@ const Settings = () => {
                             onCheckedChange={item.onChange}
                           />
                         </div>
+                      ) : item.type === 'delete' ? (
+                        <ConfirmDeleteAccountDialog
+                          trigger={
+                            <button
+                              className="w-full flex items-center justify-between group ios-button rounded-xl p-2 -m-2 hover:bg-destructive/10 transition-all duration-200"
+                              type="button"
+                            >
+                              <div className="flex items-center gap-3">
+                                <div className="w-8 h-8 bg-destructive/10 rounded-full flex items-center justify-center">
+                                  {/* You could use the Shield or a Trash icon (change Shield for Trash if preferred) */}
+                                  <Shield size={18} className="text-destructive" />
+                                </div>
+                                <span className="font-medium text-destructive">{item.label}</span>
+                              </div>
+                            </button>
+                          }
+                        />
                       ) : (
                         <button 
                           onClick={item.action}
-                          className="w-full flex items-center justify-between group ios-button rounded-xl p-2 -m-2 hover:bg-accent/5 transition-all duration-200"
+                          className={`w-full flex items-center justify-between group ios-button rounded-xl p-2 -m-2 hover:bg-accent/5 transition-all duration-200 ${item.danger ? "hover:bg-destructive/10" : ""}`}
                         >
                           <div className="flex items-center gap-3">
                             <div className={`w-8 h-8 rounded-full flex items-center justify-center ${item.danger ? 'bg-destructive/10' : 'bg-primary/10'}`}>
