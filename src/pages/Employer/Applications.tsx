@@ -23,6 +23,7 @@ interface Application {
 const Applications = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedFilter, setSelectedFilter] = useState<string>('all');
+  const [rejectedIds, setRejectedIds] = useState<string[]>([]);
 
   const mockApplications: Application[] = [
     {
@@ -84,6 +85,11 @@ const Applications = () => {
     const matchesFilter = selectedFilter === 'all' || app.status === selectedFilter;
     return matchesSearch && matchesFilter;
   });
+
+  const handleReject = (id: string) => {
+    setRejectedIds((prev) => [...prev, id]);
+    // Here you'd call an API or set rejection status in the DB.
+  };
 
   return (
     <MobileLayout>
@@ -183,6 +189,16 @@ const Applications = () => {
                       </Button>
                       <Button size="sm" variant="outline" className="ios-button">
                         <Phone size={16} />
+                      </Button>
+                      {/* New Reject button */}
+                      <Button
+                        size="sm"
+                        variant="destructive"
+                        className="ios-button ml-auto" // pushes to end (or adjust as needed)
+                        disabled={rejectedIds.includes(application.id)}
+                        onClick={() => handleReject(application.id)}
+                      >
+                        Reject
                       </Button>
                     </div>
                   </div>
