@@ -6,6 +6,15 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { ArrowLeft, Camera, MapPin, Briefcase, Image, Upload } from 'lucide-react';
 import MobileLayout from '@/components/Layout/MobileLayout';
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from '@/components/ui/dialog';
 
 interface EditProfileScreenProps {
   onSave: () => void;
@@ -108,6 +117,9 @@ const EditProfileScreen = ({ onSave, onBack }: EditProfileScreenProps) => {
     onSave();
   };
 
+  // Dialog for modern modal
+  const [open, setOpen] = useState(false);
+
   return (
     <MobileLayout>
       <div className="flex flex-col h-full safe-area-top">
@@ -142,12 +154,55 @@ const EditProfileScreen = ({ onSave, onBack }: EditProfileScreenProps) => {
                     </span>
                   )}
                 </div>
-                <button 
-                  onClick={() => setShowImageOptions(true)}
-                  className="absolute -bottom-2 -right-2 w-8 h-8 bg-accent rounded-full flex items-center justify-center shadow-ios-md hover:scale-110 transition-transform ios-button"
-                >
-                  <Camera size={16} className="text-accent-foreground" />
-                </button>
+                <Dialog open={open} onOpenChange={setOpen}>
+                  <DialogTrigger asChild>
+                    <button
+                      onClick={() => setOpen(true)}
+                      className="absolute -bottom-2 -right-2 w-8 h-8 bg-accent rounded-full flex items-center justify-center shadow-ios-md hover:scale-110 transition-transform ios-button"
+                      aria-label="Change photo"
+                      type="button"
+                    >
+                      <Camera size={16} className="text-accent-foreground" />
+                    </button>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-xs w-full p-5 rounded-xl">
+                    <DialogHeader>
+                      <DialogTitle className="text-center">Choose Photo</DialogTitle>
+                      <DialogDescription className="text-center pb-2">
+                        Select an option to update your profile photo.
+                      </DialogDescription>
+                    </DialogHeader>
+                    <div className="space-y-3">
+                      <Button
+                        onClick={() => {
+                          handleImageUpload('camera');
+                          setOpen(false);
+                        }}
+                        className="w-full flex items-center gap-2 h-12 justify-start rounded-ios ios-button"
+                        variant="outline"
+                      >
+                        <Camera size={20} />
+                        <span className="text-ios-callout">Take Photo</span>
+                      </Button>
+                      <Button
+                        onClick={() => {
+                          handleImageUpload('gallery');
+                          setOpen(false);
+                        }}
+                        className="w-full flex items-center gap-2 h-12 justify-start rounded-ios ios-button"
+                        variant="outline"
+                      >
+                        <Image size={20} />
+                        <span className="text-ios-callout">Choose from Gallery</span>
+                      </Button>
+                      <Button
+                        onClick={() => setOpen(false)}
+                        className="w-full h-12 rounded-ios ios-button text-ios-callout"
+                        variant="ghost"
+                      >Cancel</Button>
+                    </div>
+                  </DialogContent>
+                </Dialog>
               </div>
               <p className="text-ios-caption text-muted-foreground">Tap to change photo</p>
             </div>
@@ -276,43 +331,11 @@ const EditProfileScreen = ({ onSave, onBack }: EditProfileScreenProps) => {
             </div>
           </div>
         </div>
-
-        {/* iOS-style Modal for Image Upload Options */}
-        {showImageOptions && (
-          <div className="modal-backdrop">
-            <div className="modal-content">
-              <h3 className="text-ios-headline font-semibold mb-ios-lg text-center">Choose Photo</h3>
-              <div className="space-y-ios-sm">
-                <Button
-                  onClick={() => handleImageUpload('camera')}
-                  className="w-full flex items-center gap-ios-sm h-12 justify-start rounded-ios ios-button"
-                  variant="outline"
-                >
-                  <Camera size={20} />
-                  <span className="text-ios-callout">Take Photo</span>
-                </Button>
-                <Button
-                  onClick={() => handleImageUpload('gallery')}
-                  className="w-full flex items-center gap-ios-sm h-12 justify-start rounded-ios ios-button"
-                  variant="outline"
-                >
-                  <Image size={20} />
-                  <span className="text-ios-callout">Choose from Gallery</span>
-                </Button>
-                <Button
-                  onClick={() => setShowImageOptions(false)}
-                  className="w-full h-12 rounded-ios ios-button text-ios-callout"
-                  variant="ghost"
-                >
-                  Cancel
-                </Button>
-              </div>
-            </div>
-          </div>
-        )}
+        {/* Remove custom modal-backdrop and modal-content. Use Dialog above. */}
       </div>
     </MobileLayout>
   );
 };
 
 export default EditProfileScreen;
+
