@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Filter, Search, MapPin, Phone, MessageCircle, Star, Eye, Clock } from 'lucide-react';
+import { Filter, Search, MapPin, Phone, MessageCircle, Star, Eye, Clock, FileText, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
 import { cn } from '@/lib/utils';
 import MobileLayout from '@/components/Layout/MobileLayout';
 import EmployerBottomNav from '@/components/Navigation/EmployerBottomNav';
@@ -12,7 +13,7 @@ interface Application {
   jobTitle: string;
   applicantName: string;
   location: string;
-  distance: string;
+  distance: string; // e.g. "2.3 km"
   appliedDate: string;
   status: 'new' | 'reviewed' | 'shortlisted' | 'hired' | 'rejected';
   rating: number;
@@ -23,7 +24,10 @@ interface Application {
 const Applications = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedFilter, setSelectedFilter] = useState<string>('all');
+  const [sortBy, setSortBy] = useState<'newest' | 'closest'>('newest');
   const [rejectedIds, setRejectedIds] = useState<string[]>([]);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [currentApplication, setCurrentApplication] = useState<Application | null>(null);
 
   const mockApplications: Application[] = [
     {
@@ -79,16 +83,35 @@ const Applications = () => {
     }
   };
 
-  const filteredApplications = mockApplications.filter(app => {
-    const matchesSearch = app.applicantName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         app.jobTitle.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesFilter = selectedFilter === 'all' || app.status === selectedFilter;
-    return matchesSearch && matchesFilter;
-  });
+  // Helper to convert "2.3 km" to number for sorting
+  const kmToNumber = (str: string) => {
+    if (!str) return Infinity;
+    return Number(str.replace(/\s?km/, ''));
+  };
+
+  // Filtering, then sorting
+  const filteredApplications = mockApplications
+    .filter(app => {
+      const matchesSearch = app.applicantName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                            app.jobTitle.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesFilter = selectedFilter === 'all' || app.status === selectedFilter;
+      return matchesSearch && matchesFilter;
+    })
+    .sort((a, b) => {
+      if (sortBy === 'closest') {
+        return kmToNumber(a.distance) - kmToNumber(b.distance);
+      }
+      // Default to "newest" (keep mock order)
+      return 0;
+    });
 
   const handleReject = (id: string) => {
     setRejectedIds((prev) => [...prev, id]);
-    // Here you'd call an API or set rejection status in the DB.
+  };
+
+  const handleViewProfile = (app: Application) => {
+    setCurrentApplication(app);
+    setDialogOpen(true);
   };
 
   return (
@@ -114,7 +137,6 @@ const Applications = () => {
                 className="pl-10 ios-input"
               />
             </div>
-
             <div className="flex gap-2 overflow-x-auto category-scroll">
               {filters.map((filter) => (
                 <button
@@ -130,8 +152,17 @@ const Applications = () => {
                   {filter.label} ({filter.count})
                 </button>
               ))}
+              {/* Sort Dropdown */}
+              <select
+                value={sortBy}
+                onChange={e => setSortBy(e.target.value as 'newest' | 'closest')}
+                className="ml-auto bg-background border border-border px-2 rounded-lg text-xs h-8 min-w-[98px]"
+                style={{ marginLeft: 'auto' }}
+              >
+                <option value="newest">Sort: Newest</option>
+                <option value="closest">Sort: Closest</option>
+              </select>
             </div>
-
             {/* Content */}
             {filteredApplications.length === 0 ? (
               <div className="text-center py-16">
@@ -180,7 +211,9 @@ const Applications = () => {
                     </div>
 
                     <div className="flex gap-ios-sm">
-                      <Button size="sm" variant="outline" className="flex-1 ios-button">
+                      <Button size="sm" variant="outline" className="flex-1 ios-button"
+                        onClick={() => handleViewProfile(application)}
+                      >
                         <Eye size={16} className="mr-1" />
                         View Profile
                       </Button>
@@ -190,11 +223,10 @@ const Applications = () => {
                       <Button size="sm" variant="outline" className="ios-button">
                         <Phone size={16} />
                       </Button>
-                      {/* New Reject button */}
                       <Button
                         size="sm"
                         variant="destructive"
-                        className="ios-button ml-auto" // pushes to end (or adjust as needed)
+                        className="ios-button ml-auto"
                         disabled={rejectedIds.includes(application.id)}
                         onClick={() => handleReject(application.id)}
                       >
@@ -207,6 +239,56 @@ const Applications = () => {
             )}
           </div>
         </div>
+        {/* Profile Resume Dialog */}
+        <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>
+                {currentApplication?.applicantName}'s Profile
+              </DialogTitle>
+              <DialogDescription>
+                Applied for: <span className="font-medium">{currentApplication?.jobTitle}</span>
+              </DialogDescription>
+            </DialogHeader>
+            {currentApplication?.hasResume ? (
+              <div className="flex flex-col items-center gap-3 mt-4">
+                <FileText size={48} className="text-primary" />
+                <div className="font-medium">Resume available</div>
+                {/* Mock download */}
+                <Button
+                  asChild
+                  variant="outline"
+                  className="flex items-center gap-1"
+                  >
+                  <a
+                    href="#"
+                    download={`${currentApplication?.applicantName}-resume.pdf`}
+                    onClick={e => {
+                      e.preventDefault();
+                      alert("This is a demo. Resume download not implemented.");
+                    }}
+                  >
+                    <Download size={18} className="mr-1" />
+                    Download Resume
+                  </a>
+                </Button>
+                <div className="bg-muted border border-border/20 rounded-lg p-3 w-full min-h-[120px] flex items-center justify-center">
+                  <span className="text-muted-foreground text-center">[ Resume preview not available in demo ]</span>
+                </div>
+              </div>
+            ) : (
+              <div className="text-center mt-6 text-muted-foreground">
+                <FileText size={36} className="mx-auto mb-2" />
+                No resume attached to this application.
+              </div>
+            )}
+            <DialogFooter>
+              <Button onClick={() => setDialogOpen(false)} variant="secondary">
+                Close
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
 
         {/* Bottom Navigation */}
         <EmployerBottomNav />
