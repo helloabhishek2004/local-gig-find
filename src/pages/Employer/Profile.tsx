@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Edit3, MapPin, Phone, Mail, Star, ChevronRight, Building2, Users, Calendar, Settings } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -39,8 +40,17 @@ const Profile = () => {
       <div className="flex flex-col h-screen bg-background overflow-hidden">
         {/* Header */}
         <div className="flex-shrink-0 pt-safe px-4 py-6 bg-background/95 backdrop-blur-sm">
-          <div className="max-w-sm mx-auto">
+          <div className="max-w-sm mx-auto flex items-center justify-between">
             <h1 className="text-2xl font-bold text-foreground">Profile</h1>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="ml-2"
+              aria-label="Edit Profile"
+              onClick={() => navigate('/employer/edit-profile')}
+            >
+              <Edit3 size={22} />
+            </Button>
           </div>
         </div>
 
