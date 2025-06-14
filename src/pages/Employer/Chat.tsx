@@ -45,12 +45,8 @@ const Chat = () => {
     { id: '3', text: 'When should I start?', time: '2:30 PM', sender: 'other' }
   ];
 
-  // Scroll to bottom when messages change
-  useEffect(() => {
-    if (selectedChat && messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
-    }
-  }, [selectedChat]);
+  // Always call hooks at the top-level; inside useKeyboardAwareBottom handle non-active state gracefully
+  useKeyboardAwareBottom(messagesAreaRef, inputAreaRef);
 
   const filteredChats = mockChats.filter(chat =>
     chat.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -73,8 +69,6 @@ const Chat = () => {
   };
 
   if (selectedChat) {
-    useKeyboardAwareBottom(messagesAreaRef, inputAreaRef);
-
     return (
       <div className="flex flex-col h-screen bg-background">
         {/* Chat Header */}
