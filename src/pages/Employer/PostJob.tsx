@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -251,18 +250,18 @@ const PostJob = () => {
             </Card>
 
             {/* Submit and Clear Buttons */}
-            <div className="flex flex-col gap-3 pt-2">
+            <div className="flex gap-3 pt-2">
               <Button 
                 onClick={handleSubmit}
-                className="w-full h-12 text-base font-semibold btn-accent ios-button"
+                className="h-12 w-1/2 text-base font-semibold btn-accent ios-button"
                 disabled={!requiredFilled || posting}
               >
                 {posting ? 'Posting...' : 'Post Job'}
               </Button>
               <Button
                 type="button"
-                variant="outline"
-                className="w-full h-12 text-base font-semibold"
+                variant="destructive"
+                className="h-12 w-1/2 text-base font-semibold ios-button"
                 onClick={handleClear}
                 disabled={posting}
               >
@@ -282,4 +281,3 @@ const PostJob = () => {
 export default PostJob;
 
 // Note: This file is getting too long. Consider refactoring into smaller components for better maintainability.
-
