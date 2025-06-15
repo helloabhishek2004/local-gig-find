@@ -266,14 +266,6 @@ const PostJob = () => {
 
             {/* Submit and Clear Buttons */}
             <div className="flex gap-3 pt-2">
-              <Button 
-                onClick={handleSubmit}
-                className="h-12 w-1/2 text-base font-semibold btn-accent ios-button"
-                disabled={!requiredFilled || posting}
-              >
-                {posting ? 'Posting...' : 'Post Job'}
-              </Button>
-
               <AlertDialog open={dialogOpen} onOpenChange={setDialogOpen}>
                 <AlertDialogTrigger asChild>
                   <Button
@@ -303,6 +295,14 @@ const PostJob = () => {
                   </AlertDialogFooter>
                 </AlertDialogContent>
               </AlertDialog>
+
+              <Button 
+                onClick={handleSubmit}
+                className="h-12 w-1/2 text-base font-semibold btn-accent ios-button"
+                disabled={!requiredFilled || posting}
+              >
+                {posting ? 'Posting...' : 'Post Job'}
+              </Button>
             </div>
           </div>
         </div>
