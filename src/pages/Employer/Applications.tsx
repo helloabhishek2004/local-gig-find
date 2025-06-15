@@ -234,8 +234,22 @@ const Applications = () => {
                       <Button size="sm" variant="outline" className="ios-button">
                         <MessageCircle size={16} />
                       </Button>
-                      <Button size="sm" variant="outline" className="ios-button">
-                        <Phone size={16} />
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="ios-button"
+                        asChild
+                      >
+                        <a
+                          href="tel:+919876543210"
+                          onClick={e => {
+                            // Optional: analytics or custom logic can go here
+                          }}
+                          tabIndex={0}
+                          aria-label={`Call ${application.applicantName}`}
+                        >
+                          <Phone size={16} />
+                        </a>
                       </Button>
                       <Button
                         size="sm"
