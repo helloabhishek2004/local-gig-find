@@ -192,7 +192,6 @@ const Chat = () => {
           <div className="max-w-sm mx-auto space-y-6">
             {/* Search */}
             <div className="relative animate-fade-in" style={{ animationDelay: '0.1s' }}>
-              {/* Improve icon visibility and layering */}
               <Search size={20} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 z-10 pointer-events-none" />
               <Input
                 placeholder="Search conversations..."
@@ -201,10 +200,48 @@ const Chat = () => {
                 className="pl-10 ios-input"
               />
             </div>
-            {/* ... keep existing code (chat list, no conversations state, etc.) ... */}
+            {/* Render chat list */}
+            <div className="space-y-2 animate-fade-in" style={{ animationDelay: '0.2s' }}>
+              {filteredChats.length === 0 ? (
+                <div className="text-center text-muted-foreground py-12">
+                  No conversations found.
+                </div>
+              ) : (
+                filteredChats.map(chat => (
+                  <button
+                    key={chat.id}
+                    onClick={() => handleChatSelect(chat)}
+                    className="w-full flex items-center p-3 rounded-xl transition hover:bg-accent/10 group ios-list-item gap-3"
+                  >
+                    <div className="relative">
+                      <div className="w-11 h-11 bg-primary/10 rounded-xl flex items-center justify-center">
+                        <span className="text-base font-semibold text-primary">{chat.avatar}</span>
+                      </div>
+                      {chat.online && (
+                        <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-success rounded-full border-2 border-background"></div>
+                      )}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex justify-between items-center mb-0.5">
+                        <span className="font-medium text-foreground truncate">{chat.name}</span>
+                        <span className="text-xs text-muted-foreground">{chat.time}</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-xs text-muted-foreground truncate">{chat.lastMessage}</span>
+                        {chat.unread > 0 && (
+                          <span className="ml-1 bg-primary text-primary-foreground text-xs px-2 py-0.5 rounded-full font-semibold">{chat.unread}</span>
+                        )}
+                      </div>
+                      <div className="text-[11px] text-muted-foreground truncate">Applied for {chat.jobTitle}</div>
+                    </div>
+                  </button>
+                ))
+              )}
+            </div>
           </div>
         </div>
-        {/* ... keep existing code (bottom nav, etc.) ... */}
+        {/* Bottom Navigation (keep as is if exists) */}
+        <EmployerBottomNav />
       </div>
     </MobileLayout>
   );
