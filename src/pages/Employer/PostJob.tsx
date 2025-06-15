@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -5,24 +6,27 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowLeft, MapPin, DollarSign, Clock, Users } from 'lucide-react';
+import { MapPin, DollarSign, Clock, Users } from 'lucide-react';
 import MobileLayout from '@/components/Layout/MobileLayout';
 import EmployerBottomNav from '@/components/Navigation/EmployerBottomNav';
 
+// Define initial state for use in reset
+const initialFormData = {
+  jobTitle: '',
+  businessName: '',
+  category: '',
+  location: '',
+  paymentType: 'hourly',
+  payment: '',
+  jobType: 'part-time',
+  experience: 'entry',
+  workingHours: '',
+  description: ''
+};
+
 const PostJob = () => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    jobTitle: '',
-    businessName: '',
-    category: '',
-    location: '',
-    paymentType: 'hourly',
-    payment: '',
-    jobType: 'part-time',
-    experience: 'entry',
-    workingHours: '',
-    description: ''
-  });
+  const [formData, setFormData] = useState(initialFormData);
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -53,6 +57,13 @@ const PostJob = () => {
     }
   };
 
+  // Handle clear all fields
+  const handleClear = () => {
+    if (window.confirm("Are you sure you want to clear all job details?")) {
+      setFormData(initialFormData);
+    }
+  };
+
   const categories = [
     'Restaurant & Food',
     'Delivery & Logistics',
@@ -71,19 +82,14 @@ const PostJob = () => {
         <div className="flex-shrink-0 pt-safe px-4 py-6 bg-background/80 backdrop-blur-sm">
           <div className="max-w-sm mx-auto">
             <div className="flex items-center">
-              <button 
-                onClick={() => navigate('/employer/dashboard')}
-                className="text-muted-foreground hover:text-foreground transition-colors p-2 -ml-2 mr-2"
-              >
-                <ArrowLeft size={24} />
-              </button>
+              {/* Removed ArrowLeft back button */}
               <h1 className="text-2xl font-bold text-foreground">Post a Job</h1>
             </div>
           </div>
         </div>
 
         {/* Scrollable Content */}
-        <div className="flex-1 overflow-y-auto px-4 py-2 pb-28">
+        <div className="flex-1 overflow-y-auto px-4 py-2 pb-36">
           <div className="max-w-sm mx-auto space-y-6 animate-fade-slide-up">
             {/* Job Details */}
             <Card className="card-enhanced">
@@ -244,14 +250,25 @@ const PostJob = () => {
               </CardContent>
             </Card>
 
-            {/* Submit Button */}
-            <Button 
-              onClick={handleSubmit}
-              className="w-full h-12 text-base font-semibold btn-accent ios-button"
-              disabled={!requiredFilled || posting}
-            >
-              {posting ? 'Posting...' : 'Post Job'}
-            </Button>
+            {/* Submit and Clear Buttons */}
+            <div className="flex flex-col gap-3 pt-2">
+              <Button 
+                onClick={handleSubmit}
+                className="w-full h-12 text-base font-semibold btn-accent ios-button"
+                disabled={!requiredFilled || posting}
+              >
+                {posting ? 'Posting...' : 'Post Job'}
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                className="w-full h-12 text-base font-semibold"
+                onClick={handleClear}
+                disabled={posting}
+              >
+                Clear
+              </Button>
+            </div>
           </div>
         </div>
 
@@ -265,3 +282,4 @@ const PostJob = () => {
 export default PostJob;
 
 // Note: This file is getting too long. Consider refactoring into smaller components for better maintainability.
+
