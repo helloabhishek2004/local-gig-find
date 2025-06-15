@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Plus, Users, MessageCircle, TrendingUp, Eye, Clock, CheckCircle, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -19,12 +19,36 @@ interface JobPost {
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const [greeting] = useState(() => {
+  
+  const [currentTime, setCurrentTime] = useState(() => {
+    const now = new Date();
+    return now.toLocaleTimeString();
+  });
+
+  // This combines greeting and keeps it up to date
+  const [greeting, setGreeting] = useState(() => {
     const hour = new Date().getHours();
     if (hour < 12) return 'Good Morning';
     if (hour < 17) return 'Good Afternoon';
     return 'Good Evening';
   });
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      const now = new Date();
+      setCurrentTime(now.toLocaleTimeString());
+
+      // Update greeting if hour changes
+      const hour = now.getHours();
+      setGreeting((prevGreeting) => {
+        if (hour < 12 && prevGreeting !== 'Good Morning') return 'Good Morning';
+        if (hour >= 12 && hour < 17 && prevGreeting !== 'Good Afternoon') return 'Good Afternoon';
+        if (hour >= 17 && prevGreeting !== 'Good Evening') return 'Good Evening';
+        return prevGreeting;
+      });
+    }, 1000);
+    return () => clearInterval(intervalId);
+  }, []);
 
   const stats = [
     { 
@@ -120,7 +144,9 @@ const Dashboard = () => {
         {/* Header */}
         <div className="flex-shrink-0 pt-safe px-4 py-6 bg-background/95 backdrop-blur-sm">
           <div className="max-w-sm mx-auto">
-            <h1 className="text-3xl font-bold text-foreground mb-2">{greeting}! 👋</h1>
+            <h1 className="text-3xl font-bold text-foreground mb-2">
+              {greeting}! 👋 <span className="text-base font-normal text-muted-foreground">({currentTime})</span>
+            </h1>
             <p className="text-muted-foreground text-lg">Beach Cafe Varkala</p>
           </div>
         </div>
