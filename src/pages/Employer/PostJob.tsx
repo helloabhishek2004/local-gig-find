@@ -8,6 +8,17 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { MapPin, DollarSign, Clock, Users } from 'lucide-react';
 import MobileLayout from '@/components/Layout/MobileLayout';
 import EmployerBottomNav from '@/components/Navigation/EmployerBottomNav';
+import {
+  AlertDialog,
+  AlertDialogTrigger,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogFooter,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogAction,
+  AlertDialogCancel,
+} from '@/components/ui/alert-dialog';
 
 // Define initial state for use in reset
 const initialFormData = {
@@ -31,7 +42,11 @@ const PostJob = () => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
-  // Check required fields
+  // Enable clear if any non-empty field
+  const clearEnabled = Object.entries(formData).some(
+    ([k, v]) => typeof v === 'string' && v.length > 0 && initialFormData[k as keyof typeof initialFormData] !== v
+  );
+
   const requiredFilled = [
     formData.jobTitle,
     formData.businessName,
@@ -43,12 +58,13 @@ const PostJob = () => {
 
   const [posting, setPosting] = useState(false);
 
+  // Control AlertDialog open state
+  const [dialogOpen, setDialogOpen] = useState(false);
+
   const handleSubmit = async () => {
     setPosting(true);
-    // Fake post: simulate success/failure
     await new Promise(r => setTimeout(r, 1750));
     setPosting(false);
-    // Randomly route to success or failure for demo (replace with your real logic)
     if (Math.random() > 0.3) {
       navigate('/employer/post-job-success');
     } else {
@@ -56,11 +72,10 @@ const PostJob = () => {
     }
   };
 
-  // Handle clear all fields
+  // Called after confirm in dialog
   const handleClear = () => {
-    if (window.confirm("Are you sure you want to clear all job details?")) {
-      setFormData(initialFormData);
-    }
+    setFormData(initialFormData);
+    setDialogOpen(false);
   };
 
   const categories = [
@@ -258,15 +273,36 @@ const PostJob = () => {
               >
                 {posting ? 'Posting...' : 'Post Job'}
               </Button>
-              <Button
-                type="button"
-                variant="destructive"
-                className="h-12 w-1/2 text-base font-semibold ios-button"
-                onClick={handleClear}
-                disabled={posting}
-              >
-                Clear
-              </Button>
+
+              <AlertDialog open={dialogOpen} onOpenChange={setDialogOpen}>
+                <AlertDialogTrigger asChild>
+                  <Button
+                    type="button"
+                    variant="destructive"
+                    className="h-12 w-1/2 text-base font-semibold ios-button"
+                    disabled={!clearEnabled || posting}
+                  >
+                    Clear
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Clear all job details?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      Are you sure you want to clear all the information you have entered? This action cannot be undone.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction
+                      className="bg-destructive text-destructive-foreground"
+                      onClick={handleClear}
+                    >
+                      Yes, Clear All
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
             </div>
           </div>
         </div>
